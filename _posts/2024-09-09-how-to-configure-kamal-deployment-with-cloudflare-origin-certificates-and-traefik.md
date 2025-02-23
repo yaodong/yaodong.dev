@@ -1,7 +1,6 @@
 ---
 layout: post
 category: dives
-stage: budding
 title: How to Configure Your Kamal Deployment with Cloudflare Origin Certificates and Traefik
 excerpt: Learn how to secure your Kamal deployments using Cloudflare Origin Certificates and Traefik.
 created_date: 2024-09-09
@@ -16,9 +15,9 @@ While the configuration is not complicated, it's beneficial to understand how Tr
 
 ## How Traefik Works
 
-- **entrypoints**: Traefik manages incoming requests through defined *entrypoints*, which are specific ports or protocols.
-- **routes**: Once traffic hits an entrypoint, Traefik uses *routes* to decide where the request should go. Routes match incoming requests based on rules like domain name, URL patterns, or headers.
-- **services**: After a route is matched, Traefik forwards the request to the appropriate *service*, which represents the actual backend application.
+- **entrypoints**: Traefik manages incoming requests through defined _entrypoints_, which are specific ports or protocols.
+- **routes**: Once traffic hits an entrypoint, Traefik uses _routes_ to decide where the request should go. Routes match incoming requests based on rules like domain name, URL patterns, or headers.
+- **services**: After a route is matched, Traefik forwards the request to the appropriate _service_, which represents the actual backend application.
 
 We're keeping things simple here, so we skipped advanced features like providers and middlewares. Don't worry – you don't need them for this setup.
 

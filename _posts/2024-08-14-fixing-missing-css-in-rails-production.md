@@ -1,7 +1,6 @@
 ---
 layout: post
 category: dives
-stage: budding
 title: Fixing Missing Assets Files in Rails Production
 excerpt: A simple Rails asset issue evolved into a complex debugging journey.
 created_date: 2024-08-14
@@ -9,23 +8,23 @@ updated_date: 2024-08-14
 ---
 
 Recently, I ran into a frustrating issue where `application.css` couldn't ebe found in my Rails app.
-I thought it would be a quick fix for a precompile configuration error. 
+I thought it would be a quick fix for a precompile configuration error.
 Instead, it turned into a wild goose chase. This chase involved three separate problems.
 Here's the story of how I figured it out and what I learned along the way.
 
 ## Problem 1: The missing builds folder
 
 In production, Rails kept complaining that it couldn't find the `application.css` file.
-It was weird. The rails `assets:precompile` command worked fine on my local machine. 
+It was weird. The rails `assets:precompile` command worked fine on my local machine.
 This was true for both the `RAILS_ENV=development` and `RAILS_ENV=production` options.
 But when I ran the same process in GitHub Actions, `application.css` was nowhere to be found in the precompiled assets.
 
 I tried building the `Dockerfile` locally to see if I could reproduce the issue, but no dice. It was specific to the GitHub Actions environment.
-I poked around in the running containers on production. 
-There, I found that application.css was hanging out in the `app/assets/builds` directory. 
+I poked around in the running containers on production.
+There, I found that application.css was hanging out in the `app/assets/builds` directory.
 However, it was missing in `public/assets`.
 
-After banging my head against the wall for a while, I stumbled upon a post on fly.io community [^1]. 
+After banging my head against the wall for a while, I stumbled upon a post on fly.io community [^1].
 The post suggested two things:
 
 1. Make sure the `app/assets/builds` directory exists.
@@ -37,21 +36,21 @@ Intrigued by this solution, I dug into the `sprockets-rails` code, which reveale
 2. Rails uses a JavaScript bundler to build the application CSS, outputting to the assets/build directory.
 3. Sprockets precompiles all assets, outputting to the public/assets directory.
 
-The less-known but critical detail was that Sprockets caches a list of directories during initialization. 
+The less-known but critical detail was that Sprockets caches a list of directories during initialization.
 If the `assets/builds` directory doesn't exist in the code, Sprockets skips over it in the later stages.
 This cache strategy explained why the `application.css` file was visible in `assets/builds`, but Sprockets wasn't processing it.
 
 My local environment had the `assets/builds` directory because I had run the rails server at least once.
-However, the GitHub Actions checkouts were fresh, so the directory was missing. 
+However, the GitHub Actions checkouts were fresh, so the directory was missing.
 
 The fix? Add the empty assets/builds directory to the git repo.
 
 ## Problem 2: debug mode causes skipped manifest resolver
 
-With the first issue sorted, the assets were precompiling correctly, but production still complained they were missing. 
+With the first issue sorted, the assets were precompiling correctly, but production still complained they were missing.
 More digging revealed that `config.assets.debug = true` was the culprit.
 
-This debug flag has a sneaky side effect in production: it removes the manifest resolver, which means Sprockets can't recognize manifest.json files. 
+This debug flag has a sneaky side effect in production: it removes the manifest resolver, which means Sprockets can't recognize manifest.json files.
 
 Here's the relevant code [^3]:
 
@@ -75,12 +74,12 @@ I was using `s3cmd` to upload files to a CDN bucket. When I wrote the github wor
 The discussion suggested using the `--no-mime-magic` and `--guess-mime-type` options with `s3cmd`.
 However, this advice was addressing a problem where certain versions of `python-magic` were producing incorrect MIME types.
 After testing it on my local machine, I confirmed the latest version of `python-magic` has fixed this issue.
-The solution was to adjust the `s3cmd` options. I removed the `--no-mime-magic` flag but kept the `--guess-mime-type` flag. 
+The solution was to adjust the `s3cmd` options. I removed the `--no-mime-magic` flag but kept the `--guess-mime-type` flag.
 This adjustment allowed `s3cmd` to correctly detect and set MIME types.
 
 ## Conclusion
 
-Finally, after all that, the website could load CSS and JS files without throwing a fit. 
+Finally, after all that, the website could load CSS and JS files without throwing a fit.
 While I ran into a few other minor hiccups along the way, these three problems were real time sinks.
 This whole ordeal taught me a few valuable lessons:
 
