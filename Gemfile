@@ -1,8 +1,8 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "jekyll", "~> 4.3.3"
+gem 'jekyll', '~> 4.4.1'
 
 group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
-  gem "jekyll-compose", "~> 0.12.0"
+  gem 'jekyll-compose', '~> 0.12.0'
+  gem 'jekyll-feed', '~> 0.17'
 end

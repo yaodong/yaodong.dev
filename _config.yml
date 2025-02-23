@@ -26,3 +26,4 @@ exclude:
   - .idea
   - .github
   - .devcontainer
+  - .bun-version
