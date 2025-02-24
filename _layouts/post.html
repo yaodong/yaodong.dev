@@ -2,31 +2,31 @@
 layout: default
 ---
 
-<div class="-mx-5 sm:mx-auto p-5 bg-white sm:rounded-sm sm:shadow-sm">
+<div class="-mx-5 sm:mx-auto p-5 bg-white sm:rounded-lg sm:shadow-sm mb-12">
+
+  <div class="flex justify-between -mx-3 sm:ml-0 sm:px-5">
+    <a href="/" class="flex items-center space-x-2 text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-100 px-2 py-1 rounded-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="icon icon-tabler icons-tabler-outline icon-tabler-circle-arrow-left">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18" />
+        <path d="M8 12l4 4" />
+        <path d="M8 12h8" />
+        <path d="M12 8l-4 4" />
+      </svg>
+      <span>Back</span>
+    </a>
+    <p class="space-x-3 text-sm text-stone-500">
+      <span>Created on {{ page.created_date | date_to_string }}</span>
+      {% if page.updated_date %}<span>Last updated on {{ page.updated_date | date_to_string }}</span>{% endif %}
+    </p>
+  </div>
 
   <div class="max-w-3xl mx-auto">
-
-    <div class="flex flex-col my-5 sm:my-10 space-y-2">
-      <div class="flex items-center space-x-1">
-        {% include post-stage.html stage=page.stage %}
-        <span class="font-bold text-sm">{{ page.stage | upcase }}</span>
-      </div>
-      <div>
-        <h1 class="text-3xl font-bold text-gray-800">{{ page.title }}</h1>
-      </div>
-      <div class="flex justify-evenly">
-        <div class="grow"></div>
-        <div class="flex-initial text-gray-600 text-sm">
-          <p>Planted on {{ page.created_date | date_to_string }}</p>
-          {% if page.updated_date %}<p>Last tended on {{ page.updated_date | date_to_string }}</p>{% endif %}
-        </div>
-      </div>
-    </div>
-
-    <div class="prose max-w-3xl mx-auto">
+    <h1 class="block my-5 text-3xl font-bold text-gray-800">{{ page.title }}</h1>
+    <div class="prose max-w-3xl mx-auto mb-20">
       {{content}}
     </div>
-
-    <div class="mt-20"></div>
   </div>
 </div>

@@ -3,22 +3,28 @@ layout: default
 title: Yaodong Zhao
 ---
 
-<div class="-mx-5 sm:mx-auto p-5 bg-white sm:rounded-sm sm:shadow-sm">
-  <div class="py-10"></div>
-
+<div class="max-w-3xl mx-auto pt-8">
   {% include posts-section.html
-    title="Notes"
-    description="Loose, unopinionated notes on things."
-    category="notes"
-    sort_by="updated_date"
+      title="Journal"
+      description="Reflecting on experiences, clarifying thoughts, and sharing personal insights"
+      category="journal"
+      sort_by="created_date"
+      color="#ffbf63"
   %}
 
   {% include posts-section.html
-    title="Dives"
-    description="Some random rabbit holes I fell into."
-    category="dives"
-    sort_by="created_date"
+      title="Notes"
+      description="Concise and unopinionated snippets offering quick references, observations, and tidbits."
+      category="notes"
+      sort_by="updated_date"
+      color="#c1b7ff"
   %}
 
-  <div class="py-5"></div>
+  {% include posts-section.html
+      title="Dives"
+      description="Chasing curiosities down rabbit holes and documenting the trails I uncover."
+      category="dives"
+      sort_by="created_date"
+      color="#cde4e1"
+  %}
 </div>

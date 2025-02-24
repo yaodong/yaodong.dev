@@ -4,7 +4,6 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.8",
     "@tailwindcss/typography": "^0.5.16",
-    "caniuse-lite": "^1.0.30001700",
     "postcss": "^8.5.3",
     "postcss-cli": "^11.0.0",
     "postcss-nesting": "^13.0.1",
