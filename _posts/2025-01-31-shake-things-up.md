@@ -13,7 +13,7 @@ However, recently, seeing how some engineers leverage ChatGPT has made me recons
 
 Writing does more than solve issues — it also captures how we feel at a given moment. Our daily experiences — those instances of discovery, struggle, and growth — ultimately shape us as both engineers and people. By recording them, we don’t just document solutions; we preserve the essence of our journey. These small, ordinary moments form the main thread of our lives, and writing them down helps us reflect on ourselves, avoid forgetting, and hold on to what’s truly valuable.
 
-Aside from writing, I’ve also been exploring some new tools: Neovim, [Tana](https://tana.inc/), and [Cursor AI](https://www.cursor.com/).
+Aside from writing, I’ve also been exploring some new tools: [Neovim](https://neovim.io/), [Tana](https://tana.inc/), and [Cursor AI](https://www.cursor.com/).
 
 My shift to Neovim began when I discovered [avante.nvim](https://github.com/yetone/avante.nvim), which made me realize that Emacs wasn’t truly boosting my productivity — I was mostly grappling with upgrade issues. Since switching, I’ve written around a third of this month’s code in Neovim. Whenever I use a different IDE, I find myself missing Neovim’s convenient key mappings.
 
