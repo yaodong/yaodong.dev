@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: " en-US" }}">
+<html lang="{{ site.lang | default: "en-US" }}" class="scroll-smooth">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
   <title>{{ page.title }}</title>
   {% include head.html %}
 </head>
-<body>
-  <div class="max-w-6xl mx-auto p-5 lg:px-5 xl:px-10">
-
-    <div class="flex justify-between font-serif mb-6">
-      <div class="flex items-center space-x-2">
+<body class="bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 min-h-screen">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <header class="flex justify-between items-center font-serif mb-8">
+      <div class="flex items-center space-x-3">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="text-stone-700 dark:text-stone-300">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <path d="M6 15h15" />
           <path d="M21 19h-15" />
@@ -21,12 +21,24 @@
           <path d="M9 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" />
           <path d="M3 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" />
         </svg>
-        <a href="/" class="text-stone-800 font-bold">{{ site.title }}</a>
+        <a href="/" class="text-stone-800 dark:text-stone-200 font-bold hover:text-stone-600 dark:hover:text-stone-400 transition-colors">
+          {{ site.title }}
+        </a>
       </div>
-      <div><a href="/about">About</a></div>
-    </div>
+      <nav>
+        <a href="/about" class="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-200 transition-colors">
+          About
+        </a>
+      </nav>
+    </header>
 
-    {{ content }}
+    <main>
+      {{ content }}
+    </main>
+
+    <footer class="my-12 text-stone-600 dark:text-stone-400 text-sm">
+      <div class="text-center">&copy; {{ site.time | date: '%Y' }} Yaodong Zhao. All rights reserved.</div>
+    </footer>
   </div>
 </body>
 </html>

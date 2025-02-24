@@ -3,28 +3,14 @@ layout: default
 title: Yaodong Zhao
 ---
 
-<div class="max-w-3xl mx-auto pt-8">
-  {% include posts-section.html
-      title="Journal"
-      description="Reflecting on experiences, clarifying thoughts, and sharing personal insights"
-      category="journal"
-      sort_by="created_date"
-      color="#ffbf63"
-  %}
-
-  {% include posts-section.html
-      title="Notes"
-      description="Concise and unopinionated snippets offering quick references, observations, and tidbits."
-      category="notes"
-      sort_by="updated_date"
-      color="#c1b7ff"
-  %}
-
-  {% include posts-section.html
-      title="Dives"
-      description="Chasing curiosities down rabbit holes and documenting the trails I uncover."
-      category="dives"
-      sort_by="created_date"
-      color="#cde4e1"
-  %}
+<div class="max-w-3xl mx-auto pt-8 space-y-8">
+  {% for section in site.data.content_sections.sections %}
+    {% include posts-section.html
+        title=section.title
+        description=section.description
+        category=section.category
+        sort_by=section.sort_by
+        color=section.color
+    %}
+  {% endfor %}
 </div>

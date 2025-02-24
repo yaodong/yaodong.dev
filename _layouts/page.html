@@ -2,18 +2,16 @@
 layout: default
 ---
 
-<div class="-mx-5 sm:mx-auto p-5 bg-white sm:rounded-sm sm:shadow-sm">
+<article class="bg-white dark:bg-stone-800 sm:rounded-lg shadow-sm mx-auto max-w-4xl">
+  <div class="p-4 sm:p-6 lg:p-8">
+    <header class="mb-8">
+      <h1 class="text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100">
+        {{ page.title }}
+      </h1>
+    </header>
 
-  <div class="max-w-3xl mx-auto">
-
-    <div class="flex flex-col my-5 sm:my-10 space-y-2">
-      <h1 class="text-3xl font-bold text-gray-800">{{ page.title }}</h1>
-    </div>
-
-    <div class="prose max-w-3xl mx-auto">
+    <div class="prose dark:prose-invert prose-stone prose-lg max-w-none">
       {{content}}
     </div>
-
-    <div class="mt-20"></div>
   </div>
-</div>
+</article>
