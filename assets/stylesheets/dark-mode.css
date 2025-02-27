@@ -203,16 +203,15 @@
   animation: spin-moon 0.5s ease-in-out;
 }
 
-/* System preference indicator pulse animation */
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
+/* Theme toggle styles */
+#theme-toggle {
+  min-width: 90px;
+  transition: all 0.3s ease;
 }
 
-#system-indicator {
-  animation: pulse 2s infinite ease-in-out;
-  box-shadow: 0 0 5px rgba(110, 231, 183, 0.5);
+#theme-text {
+  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 /* Reset button tooltip */
