@@ -22,7 +22,7 @@ permalink: /stream/
           <div class="space-y-3">
             <header class="flex justify-between items-center">
               <time datetime="{{ post.date | date_to_xmlschema }}" class="text-stone-500 dark:text-stone-400 text-sm">
-                {{ post.date | date: "%B %d, %Y" }}
+                {{ post.date | date: "%B %d, %Y %H:%M" }}
               </time>
               {% include permalink-button.html url=post.url %}
             </header>

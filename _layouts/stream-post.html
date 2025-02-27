@@ -20,7 +20,7 @@ layout: default
       
       <div class="flex flex-row items-center gap-4">
         <time datetime="{{ page.date | date: '%Y-%m-%d' }}" class="text-sm text-stone-500 dark:text-stone-400">
-          {{ page.date | date: "%B %d, %Y" }}
+          {{ page.date | date: "%B %d, %Y %H:%M" }}
         </time>
         {% include permalink-button.html url=page.url %}
       </div>
