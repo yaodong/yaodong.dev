@@ -1,5 +1,5 @@
 ---
-date: 2025-02-26 10:00:00 -0800
+date: 2025-02-26 19:38:00 -0800
 ---
 
 Discovered [Paywallscreens.com](https://www.paywallscreens.com/) today — a fascinating database of real-world paywalls from popular apps. 
