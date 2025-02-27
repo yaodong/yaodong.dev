@@ -14,7 +14,7 @@
 <section class="space-y-2">
   <div class="flex flex-col space-y-1">
     <div>
-      <h2 class="inline font-bold text-lg leading-relaxed" style="box-shadow: inset 0 -0.5em {{ section_color }};">
+      <h2 class="inline font-bold text-lg leading-relaxed" style="box-shadow: inset 0 -0.5em {{ section_color }}">
         {{ include.title }}
       </h2>
     </div>
@@ -24,18 +24,23 @@
   {% if posts.size > 0 %}
     <div class="grid gap-4">
       {% for post in posts %}
-      <article class="group bg-white dark:bg-stone-800 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
-        <a class="block space-y-2" href="{{ post.url }}">
-          <h3 class="font-semibold text-stone-900 dark:text-stone-100 group-hover:text-stone-600 dark:group-hover:text-stone-300 transition-colors duration-200">
-            {{ post.title }}
-          </h3>
+      <article class="bg-white dark:bg-stone-800 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
+        <div class="space-y-2">
+          <header class="flex justify-between items-center">
+            <a class="block" href="{{ post.url }}">
+              <h3 class="font-semibold text-stone-900 dark:text-stone-100 hover:text-stone-600 dark:hover:text-stone-300 transition-colors duration-200">
+                {{ post.title }}
+              </h3>
+            </a>
+            {% include permalink-button.html url=post.url %}
+          </header>
           <time class="block text-stone-500 dark:text-stone-400 text-sm">
             {{ post[sort_field] | date_to_string }}
           </time>
           <div class="text-stone-600 dark:text-stone-300 text-sm line-clamp-2">
             {{ post.excerpt }}
           </div>
-        </a>
+        </div>
       </article>
       {% endfor %}
     </div>
