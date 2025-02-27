@@ -32,6 +32,8 @@ Links, formatting, and other Markdown features are supported.
 
 ### Front Matter Requirements
 - `date`: Required. Format must be `YYYY-MM-DD HH:MM:SS TIMEZONE` (e.g., `2024-10-22 15:00:00 -0500`)
+  - Use the exact time when the post is created, obtain the current time automatically
+  - The timezone should reflect your current location
 
 ## URL Structure
 Stream posts will be accessible at: `/stream/post-slug/`
@@ -44,7 +46,7 @@ Stream posts are displayed chronologically in reverse order (newest first) on th
 To create a new stream post:
 
 1. Create a file in the `_stream/` directory with the naming convention `YYYY-MM-DD-post-slug.md`
-2. Add front matter with the date
+2. Add front matter with the date and time obtained from the current system time
 3. Write the content in Markdown format
 
 Example command to generate a stream post with the current date:
