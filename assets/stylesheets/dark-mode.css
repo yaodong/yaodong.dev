@@ -202,3 +202,28 @@
 #dark-icon.rotate-0 {
   animation: spin-moon 0.5s ease-in-out;
 }
+
+/* System preference indicator pulse animation */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+#system-indicator {
+  animation: pulse 2s infinite ease-in-out;
+  box-shadow: 0 0 5px rgba(110, 231, 183, 0.5);
+}
+
+/* Reset button tooltip */
+#reset-button {
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transform: translateY(0);
+  z-index: 10;
+}
+
+#reset-button.hidden {
+  opacity: 0;
+  transform: translateY(-5px);
+  pointer-events: none;
+}
