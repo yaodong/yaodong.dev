@@ -12,8 +12,9 @@
       const storedTheme = localStorage.getItem('theme');
       
       if (storedTheme) {
-        // Apply stored theme preference
+        // Apply stored theme preference and add a class to indicate manual override
         document.documentElement.classList.toggle('dark', storedTheme === 'dark');
+        document.documentElement.classList.add('theme-override');
       } else {
         // If no stored preference, check system preference
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -24,11 +25,25 @@
       
       // Update the toggle button state
       updateToggleIcon();
+      
+      // Listen for system theme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        // Only apply system preference changes if user hasn't manually overridden
+        if (!document.documentElement.classList.contains('theme-override')) {
+          const prefersDark = e.matches;
+          document.documentElement.classList.toggle('dark', prefersDark);
+          localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
+          updateToggleIcon();
+        }
+      });
     });
     
     function toggleTheme() {
       // Toggle dark class on html element
       document.documentElement.classList.toggle('dark');
+      
+      // Mark as manually overridden
+      document.documentElement.classList.add('theme-override');
       
       // Store preference
       const isDark = document.documentElement.classList.contains('dark');

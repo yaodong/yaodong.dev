@@ -2,41 +2,78 @@
  * Dark mode styles override for manual toggle
  */
 
-/* Override the media query-based dark mode with class-based selectors */
+/* Using :where to reduce specificity conflicts with media queries */
 /* Dark mode body background */
-.dark body {
+:where(.dark) body {
   background: #1c1917; /* Same as stone-900 */
   background: linear-gradient(212deg, rgba(28, 25, 23, 1) 0%, rgba(38, 35, 33, 1) 100%);
 }
-.dark .dark\:bg-stone-700 {
+
+/* Force override for system preference conflicts */
+.theme-override:not(.dark) body {
+  background: rgb(246, 245, 241) !important;
+  background: linear-gradient(212deg, rgba(246, 245, 241, 1) 0%, rgba(245, 245, 245, 1) 100%) !important;
+  color: #353534 !important;
+}
+
+:where(.dark) .dark\:bg-stone-700 {
   background-color: var(--color-stone-700);
 }
 
-.dark .dark\:bg-stone-800 {
+:where(.dark) .dark\:bg-stone-800 {
   background-color: var(--color-stone-800);
 }
 
-.dark .dark\:bg-stone-900 {
+:where(.dark) .dark\:bg-stone-900 {
   background-color: var(--color-stone-900);
 }
 
-.dark .dark\:text-stone-100 {
+:where(.dark) .dark\:text-stone-100 {
   color: var(--color-stone-100);
 }
 
-.dark .dark\:text-stone-200 {
+:where(.dark) .dark\:text-stone-200 {
   color: var(--color-stone-200);
 }
 
-.dark .dark\:text-stone-300 {
+:where(.dark) .dark\:text-stone-300 {
   color: var(--color-stone-300);
 }
 
-.dark .dark\:text-stone-400 {
+:where(.dark) .dark\:text-stone-400 {
   color: var(--color-stone-400);
 }
 
-.dark .dark\:prose-invert {
+/* Light mode overrides when manually set */
+.theme-override:not(.dark) .dark\:bg-stone-700 {
+  background-color: initial !important;
+}
+
+.theme-override:not(.dark) .dark\:bg-stone-800 {
+  background-color: var(--color-white) !important;
+}
+
+.theme-override:not(.dark) .dark\:bg-stone-900 {
+  background-color: var(--color-stone-50) !important;
+}
+
+.theme-override:not(.dark) .dark\:text-stone-100 {
+  color: var(--color-stone-900) !important;
+}
+
+.theme-override:not(.dark) .dark\:text-stone-200 {
+  color: var(--color-stone-800) !important;
+}
+
+.theme-override:not(.dark) .dark\:text-stone-300 {
+  color: var(--color-stone-700) !important;
+}
+
+.theme-override:not(.dark) .dark\:text-stone-400 {
+  color: var(--color-stone-600) !important;
+}
+
+:where(.dark) .dark\:prose-invert {
   --tw-prose-body: var(--tw-prose-invert-body);
   --tw-prose-headings: var(--tw-prose-invert-headings);
   --tw-prose-lead: var(--tw-prose-invert-lead);
@@ -57,39 +94,94 @@
   --tw-prose-td-borders: var(--tw-prose-invert-td-borders);
 }
 
+/* Force light mode prose when manually set */
+.theme-override:not(.dark) .dark\:prose-invert {
+  --tw-prose-body: oklch(0.373 0.034 259.733) !important;
+  --tw-prose-headings: oklch(0.21 0.034 264.665) !important;
+  --tw-prose-lead: oklch(0.446 0.03 256.802) !important;
+  --tw-prose-links: oklch(0.21 0.034 264.665) !important;
+  --tw-prose-bold: oklch(0.21 0.034 264.665) !important;
+  --tw-prose-counters: oklch(0.551 0.027 264.364) !important;
+  --tw-prose-bullets: oklch(0.872 0.01 258.338) !important;
+  --tw-prose-hr: oklch(0.928 0.006 264.531) !important;
+  --tw-prose-quotes: oklch(0.21 0.034 264.665) !important;
+  --tw-prose-quote-borders: oklch(0.928 0.006 264.531) !important;
+  --tw-prose-captions: oklch(0.551 0.027 264.364) !important;
+  --tw-prose-kbd: oklch(0.21 0.034 264.665) !important;
+  --tw-prose-code: oklch(0.21 0.034 264.665) !important;
+  --tw-prose-pre-code: oklch(0.928 0.006 264.531) !important;
+  --tw-prose-pre-bg: oklch(0.278 0.033 256.848) !important;
+  --tw-prose-th-borders: oklch(0.872 0.01 258.338) !important;
+  --tw-prose-td-borders: oklch(0.928 0.006 264.531) !important;
+}
+
 /* Hover states in dark mode */
-.dark .dark\:hover\:text-stone-200:hover {
+:where(.dark) .dark\:hover\:text-stone-200:hover {
   color: var(--color-stone-200);
 }
 
-.dark .dark\:hover\:text-stone-300:hover {
+:where(.dark) .dark\:hover\:text-stone-300:hover {
   color: var(--color-stone-300);
 }
 
-.dark .dark\:hover\:text-stone-400:hover {
+:where(.dark) .dark\:hover\:text-stone-400:hover {
   color: var(--color-stone-400);
 }
 
+/* Light mode hover overrides when manually selected */
+.theme-override:not(.dark) .dark\:hover\:text-stone-200:hover {
+  color: var(--color-stone-900) !important;
+}
+
+.theme-override:not(.dark) .dark\:hover\:text-stone-300:hover {
+  color: var(--color-stone-700) !important;
+}
+
+.theme-override:not(.dark) .dark\:hover\:text-stone-400:hover {
+  color: var(--color-stone-600) !important;
+}
+
 /* Improve visibility of section headings in dark mode */
-.dark h2[style*="box-shadow: inset 0 -0.5em"] {
+:where(.dark) h2[style*="box-shadow: inset 0 -0.5em"] {
   box-shadow: inset 0 -0.5em rgba(255, 255, 255, 0.25) !important;
 }
 
 /* Also adjust specific colors to be more visible in dark mode */
-.dark h2[style*="#ffbf63"] {
+:where(.dark) h2[style*="#ffbf63"] {
   box-shadow: inset 0 -0.5em rgba(255, 191, 99, 0.4) !important;
 }
 
-.dark h2[style*="#c1b7ff"] {
+:where(.dark) h2[style*="#c1b7ff"] {
   box-shadow: inset 0 -0.5em rgba(193, 183, 255, 0.4) !important;
 }
 
-.dark h2[style*="#cde4e1"] {
+:where(.dark) h2[style*="#cde4e1"] {
   box-shadow: inset 0 -0.5em rgba(205, 228, 225, 0.4) !important;
 }
 
-.dark h2[style*="#6ee7b7"] {
+:where(.dark) h2[style*="#6ee7b7"] {
   box-shadow: inset 0 -0.5em rgba(110, 231, 183, 0.4) !important;
+}
+
+/* Ensure section headings use original colors in light mode */
+.theme-override:not(.dark) h2[style*="box-shadow: inset 0 -0.5em"] {
+  box-shadow: inset 0 -0.5em #ffbf63 !important; 
+}
+
+.theme-override:not(.dark) h2[style*="#ffbf63"] {
+  box-shadow: inset 0 -0.5em #ffbf63 !important;
+}
+
+.theme-override:not(.dark) h2[style*="#c1b7ff"] {
+  box-shadow: inset 0 -0.5em #c1b7ff !important;
+}
+
+.theme-override:not(.dark) h2[style*="#cde4e1"] {
+  box-shadow: inset 0 -0.5em #cde4e1 !important;
+}
+
+.theme-override:not(.dark) h2[style*="#6ee7b7"] {
+  box-shadow: inset 0 -0.5em #6ee7b7 !important;
 }
 
 /* Theme toggle button animations */
