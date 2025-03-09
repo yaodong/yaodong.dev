@@ -10,24 +10,23 @@ permalink: /:title/
 # the name of your site, e.g. ACME Corp.
 title: "yaodong.dev"
 
-# Collections
-collections:
-  stream:
-    output: true
-    permalink: /stream/:title/
-
-# Default settings for specific paths
-defaults:
-  -
-    scope:
-      path: ""
-      type: "stream"
-    values:
-      layout: "stream-post"
-      category: "stream"
-
 plugins:
   - jekyll-feed
+  - jekyll-archives
+
+jekyll-archives:
+  enabled:
+    - year
+    - tags
+    - categories
+  layouts:
+    year: archive-year
+    tag: archive-tag
+    category: archive-category
+  permalinks:
+    year: '/archives/:year/'
+    tag: '/tags/:name/'
+    category: '/categories/:name/'
 
 exclude:
   - bin

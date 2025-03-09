@@ -3,14 +3,6 @@ layout: default
 title: Yaodong Zhao
 ---
 
-<div class="max-w-3xl mx-auto pt-8 space-y-8">
-  {% for section in site.data.content_sections.sections %}
-    {% include posts-section.html
-        title=section.title
-        description=section.description
-        category=section.category
-        sort_by=section.sort_by
-        color=section.color
-    %}
-  {% endfor %}
+<div class="max-w-3xl mx-auto pt-8">
+  {% include posts-list.html %}
 </div>

@@ -3,23 +3,18 @@ layout: default
 ---
 
 <div class="max-w-3xl mx-auto pt-8 space-y-8">
-  {% assign section = site.data.content_sections.sections | where: "category", page.category | first %}
-  
   <section class="space-y-2">
     <div class="flex flex-col space-y-1">
       <div>
-        <h2 class="inline font-bold text-lg leading-relaxed" style="box-shadow: inset 0 -0.5em {{ section.color }}">
-          {{ page.title }}
+        <h2 class="inline font-bold text-lg leading-relaxed" style="box-shadow: inset 0 -0.5em #ffbf63">
+          Posts tagged with "{{ page.title }}"
         </h2>
       </div>
-      <p class="text-stone-600 dark:text-stone-400 italic text-sm">{{ section.description }}</p>
     </div>
 
-    {% assign posts = site.categories[page.category] | sort: section.sort_by | reverse %}
-    
-    {% if posts.size > 0 %}
+    {% if page.posts.size > 0 %}
       <div class="grid gap-4">
-        {% for post in posts %}
+        {% for post in page.posts %}
         <article class="bg-white dark:bg-stone-800 p-5 rounded-lg shadow-sm hover:shadow-md transition-all duration-200">
           <div class="space-y-2">
             <header class="flex justify-between items-center">
@@ -31,7 +26,7 @@ layout: default
               {% include permalink-button.html url=post.url %}
             </header>
             <time class="block text-stone-500 dark:text-stone-400 text-sm">
-              {{ post[section.sort_by] | date_to_string }}
+              {{ post.date | date_to_string }}
             </time>
             <div class="text-stone-600 dark:text-stone-300 text-sm line-clamp-2">
               {{ post.excerpt }}
@@ -41,7 +36,7 @@ layout: default
         {% endfor %}
       </div>
     {% else %}
-      <p class="text-stone-500 dark:text-stone-400 italic text-sm">No posts found in this category.</p>
+      <p class="text-stone-500 dark:text-stone-400 italic text-sm">No posts found with this tag.</p>
     {% endif %}
   </section>
 </div>
