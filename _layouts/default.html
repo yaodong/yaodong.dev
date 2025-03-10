@@ -23,10 +23,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ "/assets/stylesheets/application.css" | asset_digest }}">
-  <link rel="stylesheet" href="{{ "/assets/stylesheets/dark-mode.css" | asset_digest }}">
-  <script src="{{ "/assets/javascripts/theme-toggle.js" | asset_digest }}"></script>
-  <script src="{{ "/assets/javascripts/permalink-button.js" | asset_digest }}"></script>
+  <link rel="stylesheet" href="/assets/stylesheets/application.css?t={{ site.time | date: '%s' }}">
+  <link rel="stylesheet" href="/assets/stylesheets/dark-mode.css?t={{ site.time | date: '%s' }}">
+  <script src="/assets/javascripts/theme-toggle.js?t={{ site.time | date: '%s' }}"></script>
+  <script src="/assets/javascripts/permalink-button.js?t={{ site.time | date: '%s' }}"></script>
   {% seo %}
 </head>
 <body class="bg-stone-50 dark:bg-stone-900 text-stone-900 dark:text-stone-100 min-h-screen">
