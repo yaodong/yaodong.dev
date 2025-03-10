@@ -1,19 +1,4 @@
 ---
 layout: archive
-prefix: Posts tagged with
+title_prefix: Posts tagged with
 ---
-
-<!-- Tag Navigation -->
-<div class="tag-navigation mb-4">
-  {% assign all_tags = site.tags | map: "name" | sort %}
-  {% assign current_tag = page.title %}
-
-  <div class="flex flex-wrap gap-2 py-2">
-    {% for tag in all_tags %}
-      <a href="/tags/{{ tag }}/"
-         class="px-3 py-1 rounded-md text-sm {% if tag == current_tag %}bg-amber-200 dark:bg-amber-800 text-stone-900 dark:text-stone-100 font-medium{% else %}bg-stone-200 dark:bg-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-300 dark:hover:bg-stone-600{% endif %} transition-colors">
-        #{{ tag }}
-      </a>
-    {% endfor %}
-  </div>
-</div>

@@ -9,7 +9,7 @@ layout: default
     {% endif %}
     <header class="flex flex-col space-y-1">
       <h2 class="inline font-bold text-3xl leading-relaxed">
-        {{ page.prefix }} {{ page.title }}
+        {% if layout.title_prefix %}{{ layout.title_prefix }} {% endif %}{{ page.title }}
       </h2>
     </header>
 
