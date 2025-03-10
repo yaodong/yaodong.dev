@@ -3,6 +3,18 @@ layout: default
 title: Yaodong Zhao
 ---
 
-<div class="max-w-3xl mx-auto pt-8">
-  {% include posts-list.html %}
-</div>
+{% assign posts = site.posts | sort: "created_date" | reverse %}
+
+<main class="max-w-3xl mx-auto pt-8">
+  <section class="space-y-2">
+    {% if posts.size > 0 %}
+      <div class="grid gap-4 list-none p-0">
+        {% for post in posts %}
+          {% include post.html post=post %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-stone-500 dark:text-stone-400 italic text-sm">No posts found.</p>
+    {% endif %}
+  </section>
+</main>

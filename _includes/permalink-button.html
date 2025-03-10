@@ -6,12 +6,7 @@
 <div class="relative inline-block">
   <button
     class="peer cursor-pointer text-stone-400 hover:text-stone-600 dark:hover:text-stone-300 transition-colors"
-    onclick="
-      navigator.clipboard.writeText(window.location.origin + '{{ include.url }}');
-      const tooltip = this.parentNode.querySelector('[data-tooltip]');
-      tooltip.textContent = 'Copied!';
-      setTimeout(() => tooltip.textContent = 'Click to copy link', 2000);
-    "
+    onclick="copyPermalink('{{ include.url }}', this)"
     title="Copy link"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -22,4 +17,4 @@
   <span data-tooltip class="opacity-0 peer-hover:opacity-100 absolute -top-8 left-1/2 -translate-x-1/2 bg-stone-800 dark:bg-stone-700 text-white px-2 py-1 rounded text-xs whitespace-nowrap transition-opacity pointer-events-none">
     Click to copy link
   </span>
-</div> 
+</div>
