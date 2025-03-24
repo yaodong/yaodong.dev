@@ -5,7 +5,7 @@ url: "https://yaodong.dev"
 baseurl: ""
 
 # Permalink structure with year to avoid conflicts
-permalink: /:year/:title/
+permalink: /:title/
 
 # Date format for consistent display
 date_format: "%b %-d, %Y"

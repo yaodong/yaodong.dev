@@ -1,0 +1,22 @@
+---
+layout: post
+category: essay
+title: Next.js Is Built for Vercel
+created_date: 2025-03-23
+---
+
+Yesterday (March 22, 2025), a [critical vulnerability](https://github.com/advisories/GHSA-f82v-jwr5-mffw) in Next.js Middleware was publicly disclosed. If you're unfamiliar with this issue, Rachid Allam offers a comprehensive overview in the article [Next.js and the Corrupt Middleware: The Authorizing Artifact](https://zhero-web-sec.github.io/research-and-things/nextjs-and-the-corrupt-middleware).
+
+While reading about the origins of this flaw, an intriguing architectural question emerged: Why does Next.js Middleware rely on HTTP headers for managing internal request contexts in the first place?
+
+To understand this architectural choice better, it helps to consider what makes a framework effective. David Heinemeier Hansson (DHH), the creator of Ruby on Rails, famously coined the concept of "[conceptual compression](https://www.youtube.com/watch?v=zKyv-IGvgGE&t=1057s)." Good frameworks apply conceptual compression by eliminating complexity and providing clear, consistent abstractions, enabling developers to accomplish more with less cognitive overhead.
+
+In this light, Next.js’s decision to embed middleware state into client-accessible HTTP headers adds unnecessary complexity, even becoming counterintuitive. In other Node.js frameworks, such as [Fastify](https://fastify.dev/docs/v3.29.x/Reference/Middleware/) or [Express](https://expressjs.com/en/guide/using-middleware.html), middleware are just simple functions. Digging deeper, Next.js documentation clarifies that Middleware runs within Vercel's "[Edge Runtime](https://vercel.com/docs/edge-middleware)." However, this also exposes a critical issue: the complexity introduced by Middleware often prioritizes Vercel's platform goals rather than genuinely addressing developer needs.
+
+Most developers, particularly those building typical websites or simple applications, have little need for edge runtimes or globally-distributed middleware logic. Yet, Next.js [pushes these architectural choices upon them](https://blog.webf.zone/you-dont-need-next-js-and-ssr-7c6bd27e78d8#:~:text=Next%2012.2%20severely%20cut%20down%20the%20middleware%20functionality%20to%20fit%20it%20with%20Vercel%E2%80%99s%20serverless/edge%20computing%20model). Developers find themselves forced to learn new paradigms, handle unfamiliar pitfalls, and [spend time migrating away from Vercel](https://feliperohdee.medium.com/from-next-js-to-react-edge-with-cloudflare-workers-a-story-of-liberation-23e8155d36d7).
+
+Unfortunately, this middleware incident isn't isolated. Over recent years, Next.js has dramatically expanded its feature set, evolving far beyond a simple React server-rendering solution. It now includes multiple routing systems, incremental static regeneration (ISR), React Server Components, image optimization APIs, and numerous other highly specialized features. On the surface, these additions promise convenience. However, beneath the polished developer experience lies [mounting complexity](https://blog.activeno.de/why-nextjs-should-focus-on-reducing-source-code-complexity), with many features closely [tied to Vercel’s managed services](https://www.epicweb.dev/why-i-wont-use-nextjs#:~:text=OpenNext%20exists%20because,to%20deploy%20anywhere.). Developers off-platform often discover hidden complexities and significant maintenance burdens, finding themselves unintentionally locked into Vercel's ecosystem.
+
+This runs counter to the core philosophy DHH advocates. Frameworks should genuinely simplify development — not merely conceal complexity beneath the surface. If complexity is introduced purely for the strategic interest of a hosting provider, developers inevitably pay the price.
+
+As DHH reminds us, truly empowering frameworks [reduce complexity and enhance developer autonomy](https://world.hey.com/dhh/the-one-person-framework-711e6318). Choose wisely — know your tools, but more importantly, understand clearly whose interests your tools are designed to serve.
