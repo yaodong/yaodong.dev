@@ -16,6 +16,8 @@ navigation:
     url: /
   - title: Archive
     url: /archives/2025/
+  - title: Library
+    url: /library/
   - title: About
     url: /about/
 

@@ -1,0 +1,6 @@
+<svg width="200" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="300" fill="#dc2626" stroke="#b91c1c" stroke-width="2"/>
+  <text x="100" y="60" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Remote</text>
+  <text x="100" y="85" text-anchor="middle" fill="#fecaca" font-family="Arial, sans-serif" font-size="12">Jason Fried &amp; DHH</text>
+  <text x="100" y="250" text-anchor="middle" fill="#fca5a5" font-family="Arial, sans-serif" font-size="10">Office Not Required</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg width="200" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="300" fill="#1f2937" stroke="#374151" stroke-width="2"/>
+  <text x="100" y="60" text-anchor="middle" fill="#f9fafb" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Getting Real</text>
+  <text x="100" y="85" text-anchor="middle" fill="#d1d5db" font-family="Arial, sans-serif" font-size="12">37signals</text>
+  <text x="100" y="250" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="10">The smarter, faster, easier</text>
+  <text x="100" y="265" text-anchor="middle" fill="#9ca3af" font-family="Arial, sans-serif" font-size="10">way to build a web application</text>
+</svg>

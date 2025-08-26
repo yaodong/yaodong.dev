@@ -1,0 +1,7 @@
+<svg width="200" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="300" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="100" y="60" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Shape Up</text>
+  <text x="100" y="85" text-anchor="middle" fill="#fef3c7" font-family="Arial, sans-serif" font-size="12">Ryan Singer</text>
+  <text x="100" y="250" text-anchor="middle" fill="#fed7aa" font-family="Arial, sans-serif" font-size="10">Stop Running in Circles</text>
+  <text x="100" y="265" text-anchor="middle" fill="#fed7aa" font-family="Arial, sans-serif" font-size="10">and Ship Work that Matters</text>
+</svg>
