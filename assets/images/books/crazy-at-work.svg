@@ -1,7 +1,0 @@
-<svg width="200" height="300" xmlns="http://www.w3.org/2000/svg">
-  <rect width="200" height="300" fill="#7c3aed" stroke="#6d28d9" stroke-width="2"/>
-  <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">It Doesn't Have</text>
-  <text x="100" y="60" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">to Be Crazy</text>
-  <text x="100" y="80" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="12" font-weight="bold">at Work</text>
-  <text x="100" y="105" text-anchor="middle" fill="#e9d5ff" font-family="Arial, sans-serif" font-size="12">Jason Fried &amp; DHH</text>
-</svg>
