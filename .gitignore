@@ -1,6 +1,7 @@
 .jekyll-cache
 .DS_Store
 .idea
+.claude/settings.local.json
 
 node_modules
 
