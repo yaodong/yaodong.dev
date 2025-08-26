@@ -55,3 +55,4 @@ exclude:
   - .github
   - .devcontainer
   - .bun-version
+  - .claude
