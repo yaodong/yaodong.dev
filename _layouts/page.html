@@ -2,16 +2,14 @@
 layout: default
 ---
 
-<article class="bg-white dark:bg-stone-800 sm:rounded-lg shadow-sm mx-auto max-w-4xl">
-  <div class="p-4 sm:p-6 lg:p-8">
-    <header class="mb-8">
-      <h1 class="text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100">
-        {{ page.title }}
-      </h1>
-    </header>
+<article class="mx-auto w-full max-w-3xl">
+  <header class="mb-6">
+    <h1 class="text-3xl sm:text-4xl font-bold text-stone-900">
+      {{ page.title }}
+    </h1>
+  </header>
 
-    <div class="prose dark:prose-invert prose-stone prose-lg max-w-none">
-      {{content}}
-    </div>
+  <div class="prose prose-stone prose-lg">
+    {{content}}
   </div>
 </article>

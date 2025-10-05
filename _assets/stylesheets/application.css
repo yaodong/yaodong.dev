@@ -21,8 +21,8 @@
 }
 
 :root {
-  --font-serif: "Merriweather", Georgia, serif;
-  --font-sans: "Mulish", --apple-system, Helvetica, Arial, sans-serif;
+  --font-heading: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Merriweather", Georgia, serif;
 }
 
 body {
@@ -30,85 +30,22 @@ body {
   background: rgb(246, 245, 241);
   background: linear-gradient(212deg, rgba(246, 245, 241, 1) 0%, rgba(245, 245, 245, 1) 100%);
   color: #353534;
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-body);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif), serif;
+  font-family: var(--font-heading);
+  font-weight: 900;
 }
 
 .font-serif {
-  font-family: var(--font-serif), serif;
+  font-family: var(--font-body);
 }
 
 .font-sans {
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-heading);
 }
 
 .boundary {
   @apply w-full p-10;
-}
-
-.book-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-}
-
-.book-item {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-}
-
-.book-cover {
-  flex-shrink: 0;
-}
-
-.book-cover a {
-  display: block;
-}
-
-.book-cover a:hover {
-  opacity: 0.8;
-}
-
-.book-cover img {
-  height: 8rem;
-  width: 5.5rem;
-  border-radius: 0.25rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  object-fit: cover;
-}
-
-.book-details {
-  flex: 1;
-}
-
-.book-details h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 1.25;
-  margin-bottom: 0.5rem;
-}
-
-.book-details h3 a {
-  text-decoration: none;
-}
-
-.book-details h3 a:hover {
-  opacity: 0.8;
-}
-
-.book-details .author {
-  font-size: 0.875rem;
-  margin-bottom: 0.75rem;
-  font-weight: 500;
-}
-
-.book-details .description {
-  font-size: 0.875rem;
-  line-height: 1.5;
-  margin: 0;
 }

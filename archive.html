@@ -1,14 +1,19 @@
 ---
 layout: default
-title: Yaodong Zhao
+title: Archive
+permalink: /archive/
 ---
 
 {% assign posts = site.posts | sort: "created_date" | reverse %}
 
-<main class="max-w-3xl mx-auto pt-6">
+<main class="max-w-3xl mx-auto pt-6 space-y-4">
+  <header>
+    <h1 class="text-3xl sm:text-4xl font-bold text-stone-900">Archive</h1>
+  </header>
+
   {% if posts.size > 0 %}
     <ul class="space-y-3">
-      {% for post in posts limit:10 %}
+      {% for post in posts %}
       <li class="flex items-baseline justify-between gap-3 text-sm sm:text-base">
         <a href="{{ post.url | relative_url }}" class="text-stone-900 hover:text-stone-600 transition-colors">
           {{ post.title }}
@@ -20,6 +25,6 @@ title: Yaodong Zhao
       {% endfor %}
     </ul>
   {% else %}
-    <p class="text-stone-500 italic text-sm">No posts found.</p>
+    <p class="text-stone-500 italic text-sm">No posts published yet.</p>
   {% endif %}
 </main>

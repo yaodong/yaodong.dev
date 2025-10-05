@@ -15,31 +15,14 @@ navigation:
   - title: Home
     url: /
   - title: Archive
-    url: /archives/2025/
-  - title: Library
-    url: /library/
+    url: /archive/
   - title: About
     url: /about/
 
 # Plugin settings
 plugins:
   - jekyll-feed
-  - jekyll-archives
   - jekyll-seo-tag
-
-jekyll-archives:
-  enabled:
-    - year
-    - tags
-    - categories
-  layouts:
-    year: archive-year
-    tag: archive-tag
-    category: archive-category
-  permalinks:
-    year: '/archives/:year/'
-    tag: '/tags/:name/'
-    category: '/categories/:name/'
 
 exclude:
   - bin
@@ -51,6 +34,7 @@ exclude:
   - tailwind.config.js
   - tsconfig.json
   - README.md
+  - AGENTS.md
   - .idea
   - .github
   - .devcontainer
