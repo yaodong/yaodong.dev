@@ -5,21 +5,25 @@ title: Yaodong Zhao
 
 {% assign posts = site.posts | sort: "created_date" | reverse %}
 
-<main class="max-w-3xl mx-auto pt-6">
+<section class="content-card">
+  <header class="mb-6">
+    <h2>Recent Posts</h2>
+  </header>
+
   {% if posts.size > 0 %}
-    <ul class="space-y-3">
-      {% for post in posts limit:10 %}
-      <li class="flex items-baseline justify-between gap-3 text-sm sm:text-base">
-        <a href="{{ post.url | relative_url }}" class="text-stone-900 hover:text-stone-600 transition-colors">
-          {{ post.title }}
-        </a>
-        <time class="text-stone-500 text-sm whitespace-nowrap">
-          {{ post.created_date | date: site.date_format | default: "%b %-d, %Y" }}
-        </time>
-      </li>
-      {% endfor %}
-    </ul>
+  <ul>
+    {% for post in posts limit:10 %}
+    <li class="post-item">
+      <a href="{{ post.url | relative_url }}">
+        {{ post.title }}
+      </a>
+      <time datetime="{{ post.created_date | date: '%Y-%m-%d' }}">
+        {{ post.created_date | date: "%b %d, %Y" }}
+      </time>
+    </li>
+    {% endfor %}
+  </ul>
   {% else %}
-    <p class="text-stone-500 italic text-sm">No posts found.</p>
+  <p class="meta">No posts found.</p>
   {% endif %}
-</main>
+</section>

@@ -7,22 +7,9 @@
     </a>
   </header>
 
-  {% assign show_category = include.show_category | default: true %}
-  {% if show_category %}
-  <div class="flex items-center space-x-1 text-sm">
-    <time class="text-stone-500">
-      {{ post.created_date | date: site.date_format | default: "%b %-d, %Y" }}
-    </time>
-    <span class="text-stone-400">•</span>
-    <a href="{{ '/categories/' | append: post.category | append: '/' | relative_url }}" class="text-stone-600 hover:text-stone-800 transition-colors duration-200">
-      {{ post.category | capitalize }}
-    </a>
-  </div>
-  {% else %}
   <time class="block text-stone-500 text-sm">
     {{ post.created_date | date: site.date_format | default: "%b %-d, %Y" }}
   </time>
-  {% endif %}
 
   {% if post.tags.size > 0 and include.show_tags != false %}
   <div class="flex flex-wrap gap-1 mt-1">

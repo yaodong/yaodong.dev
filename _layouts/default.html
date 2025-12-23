@@ -22,43 +22,31 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/stylesheets/application.css?t={{ site.time | date: '%s' }}">
   {% seo %}
 </head>
-<body class="bg-stone-50 text-stone-900 min-h-screen antialiased">
-  <header class="mx-auto flex w-full max-w-3xl items-center justify-between px-5 pt-8 font-sans">
-    <div class="flex items-center space-x-3">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-           class="text-stone-700">
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M6 15h15" />
-        <path d="M21 19h-15" />
-        <path d="M15 11h6" />
-        <path d="M21 7h-6" />
-        <path d="M9 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" />
-        <path d="M3 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" />
-      </svg>
-      <a href="{{ '/' | relative_url }}" class="text-stone-800 font-bold hover:text-stone-600 transition-colors">
-        {{ site.title }}
-      </a>
-    </div>
-    <nav class="flex items-center space-x-4">
+<body class="min-h-screen antialiased">
+  <header class="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-10">
+    <a href="{{ '/' | relative_url }}" class="logo-text text-lg hover:text-[var(--color-accent)]">
+      {{ site.title }}
+    </a>
+    <nav class="flex items-center gap-6">
       {% for item in site.navigation %}
-      <a href="{{ item.url | relative_url }}" class="text-stone-600 hover:text-stone-900 transition-colors">
+      <a href="{{ item.url | relative_url }}" class="nav-link{% if page.url == item.url %} nav-link-active{% endif %}">
         {{ item.title }}
       </a>
       {% endfor %}
     </nav>
   </header>
 
-  <div class="mx-auto w-full max-w-3xl px-5 py-8">
+  <main class="mx-auto w-full max-w-4xl px-6 pb-16">
     {{ content }}
-  </div>
+  </main>
 
-  <footer class="mx-auto w-full max-w-3xl px-5 pb-12 text-center text-sm text-stone-600">
-    &copy; {{ site.time | date: '%Y' }} Yaodong Zhao. All rights reserved.
+  <footer class="site-footer mx-auto w-full max-w-4xl px-6 pb-12 text-center">
+    <div class="divider mb-8"></div>
+    <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}</p>
   </footer>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-E8XC309H1N"></script>

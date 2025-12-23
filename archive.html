@@ -6,25 +6,26 @@ permalink: /archive/
 
 {% assign posts = site.posts | sort: "created_date" | reverse %}
 
-<main class="max-w-3xl mx-auto pt-6 space-y-4">
-  <header>
-    <h1 class="text-3xl sm:text-4xl font-bold text-stone-900">Archive</h1>
+<section class="content-card">
+  <header class="mb-8">
+    <h1>Archive</h1>
+    <p class="meta mt-2">{{ posts.size }} posts</p>
   </header>
 
   {% if posts.size > 0 %}
-    <ul class="space-y-3">
-      {% for post in posts %}
-      <li class="flex items-baseline justify-between gap-3 text-sm sm:text-base">
-        <a href="{{ post.url | relative_url }}" class="text-stone-900 hover:text-stone-600 transition-colors">
-          {{ post.title }}
-        </a>
-        <time class="text-stone-500 text-sm whitespace-nowrap">
-          {{ post.created_date | date: site.date_format | default: "%b %-d, %Y" }}
-        </time>
-      </li>
-      {% endfor %}
-    </ul>
+  <ul>
+    {% for post in posts %}
+    <li class="post-item">
+      <a href="{{ post.url | relative_url }}">
+        {{ post.title }}
+      </a>
+      <time datetime="{{ post.created_date | date: '%Y-%m-%d' }}">
+        {{ post.created_date | date: "%b %d, %Y" }}
+      </time>
+    </li>
+    {% endfor %}
+  </ul>
   {% else %}
-    <p class="text-stone-500 italic text-sm">No posts published yet.</p>
+  <p class="meta">No posts published yet.</p>
   {% endif %}
-</main>
+</section>
