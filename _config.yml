@@ -4,6 +4,7 @@ description: "Personal blog of Yaodong Zhao"
 url: "https://yaodong.dev"
 baseurl: ""
 author: "Yaodong Zhao"
+default_image: "/assets/images/og-image.png"
 
 # Permalink structure with year to avoid conflicts
 permalink: /:title/
