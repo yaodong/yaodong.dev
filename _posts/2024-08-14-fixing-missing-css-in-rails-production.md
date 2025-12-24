@@ -1,6 +1,5 @@
 ---
 layout: post
-category: notes
 title: Fixing Missing Assets Files in Rails Production
 excerpt: A simple Rails asset issue evolved into a complex debugging journey.
 created_date: 2024-08-14

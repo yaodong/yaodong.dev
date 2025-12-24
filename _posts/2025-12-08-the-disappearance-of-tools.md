@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: The Disappearance of Tools
 created_date: 2025-12-08
 ---

@@ -1,6 +1,5 @@
 ---
 layout: post
-category: essay
 title: Who Is Next.js Built For?
 created_date: 2025-03-23
 ---

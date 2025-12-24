@@ -1,6 +1,5 @@
 ---
 layout: post
-category: notes
 title: Building Reliable LLM Streaming in Rails
 created_date: 2025-12-20
 ---

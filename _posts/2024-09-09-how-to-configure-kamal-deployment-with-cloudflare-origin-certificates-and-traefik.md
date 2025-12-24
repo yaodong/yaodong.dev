@@ -1,6 +1,5 @@
 ---
 layout: post
-category: notes
 title: How to Configure Your Kamal Deployment with Cloudflare Origin Certificates and Traefik
 excerpt: Learn how to secure your Kamal deployments using Cloudflare Origin Certificates and Traefik.
 created_date: 2024-09-09

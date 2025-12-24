@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: Shake Things Up
 created_date: 2025-01-31
 ---

@@ -1,6 +1,5 @@
 ---
 layout: post
-category: notes
 title: Understanding Bridge Component Messaging in Hotwire Native
 created_date: 2025-05-12
 ---

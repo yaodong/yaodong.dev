@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: AI as an Ally
 created_date: 2025-03-03
 ---
