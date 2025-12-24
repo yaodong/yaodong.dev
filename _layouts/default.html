@@ -11,6 +11,7 @@
   <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}">
   <meta property="og:description" content="{% if page.description %}{{ page.description }}{% elsif page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncatewords: 100 }}{% else %}{{ site.description }}{% endif %}">
+  <meta property="article:author" content="{{ site.author }}">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary">
