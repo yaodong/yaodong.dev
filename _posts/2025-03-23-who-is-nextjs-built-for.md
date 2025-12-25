@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Who Is Next.js Built For?
-created_date: 2025-03-23
+created_date: 2025-03-23T00:00:00.000Z
+image: /assets/images/og/2025-03-23-who-is-nextjs-built-for.png
 ---
 
 Yesterday (March 22, 2025), a [critical vulnerability](https://github.com/advisories/GHSA-f82v-jwr5-mffw) in Next.js Middleware was publicly disclosed. If you're unfamiliar with this issue, Rachid Allam offers a comprehensive overview in the article [Next.js and the Corrupt Middleware: The Authorizing Artifact](https://zhero-web-sec.github.io/research-and-things/nextjs-and-the-corrupt-middleware).

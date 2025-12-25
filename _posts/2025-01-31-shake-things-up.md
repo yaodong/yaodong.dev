@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Shake Things Up
-created_date: 2025-01-31
+created_date: 2025-01-31T00:00:00.000Z
+image: /assets/images/og/2025-01-31-shake-things-up.png
 ---
 
 Maybe it's the start of a new year that’s motivating me to shake things up, and the first step is getting back into writing.

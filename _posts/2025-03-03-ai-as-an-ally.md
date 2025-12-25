@@ -1,7 +1,8 @@
 ---
 layout: post
 title: AI as an Ally
-created_date: 2025-03-03
+created_date: 2025-03-03T00:00:00.000Z
+image: /assets/images/og/2025-03-03-ai-as-an-ally.png
 ---
 
 From [The End of Programming as We Know It](https://www.oreilly.com/radar/the-end-of-programming-as-we-know-it/):

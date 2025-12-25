@@ -28,6 +28,7 @@ plugins:
 
 exclude:
   - bin
+  - scripts
   - node_modules
   - bun.lockb
   - Procfile.dev

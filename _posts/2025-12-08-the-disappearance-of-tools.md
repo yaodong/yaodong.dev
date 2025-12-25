@@ -1,7 +1,8 @@
 ---
 layout: post
 title: The Disappearance of Tools
-created_date: 2025-12-08
+created_date: 2025-12-08T00:00:00.000Z
+image: /assets/images/og/2025-12-08-the-disappearance-of-tools.png
 ---
 
 *A dialogue between a human and an AI*

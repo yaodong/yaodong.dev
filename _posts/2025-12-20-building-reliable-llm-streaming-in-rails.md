@@ -1,7 +1,8 @@
 ---
 layout: post
 title: Building Reliable LLM Streaming in Rails
-created_date: 2025-12-20
+created_date: 2025-12-20T00:00:00.000Z
+image: /assets/images/og/2025-12-20-building-reliable-llm-streaming-in-rails.png
 ---
 
 When I started building an AI chatbot, my first instinct was to reach for Turbo Streams and Active Job. Users would send a message, a background job would call the LLM API, and Turbo Streams would broadcast each chunk to the browser. It felt like the right approach: clean separation of concerns, proper use of job infrastructure for long-running tasks.
