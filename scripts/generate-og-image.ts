@@ -131,7 +131,7 @@ async function generateOgImage(postPath: string) {
                       type: "span",
                       props: {
                         style: {
-                          fontSize: "18px",
+                          fontSize: "28px",
                           fontWeight: 500,
                           color: "#ffffff",
                           backgroundColor: COLORS.text,
@@ -188,7 +188,7 @@ async function generateOgImage(postPath: string) {
                                   type: "p",
                                   props: {
                                     style: {
-                                      fontSize: "24px",
+                                      fontSize: "28px",
                                       fontWeight: 400,
                                       color: COLORS.textSecondary,
                                       lineHeight: 1.5,
