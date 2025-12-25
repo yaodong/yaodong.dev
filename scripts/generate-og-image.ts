@@ -76,26 +76,11 @@ async function generateOgImage(postPath: string) {
       description = paragraphs.slice(0, 3).join(" ").replace(/\n/g, " ").trim();
     }
   }
-  // Strip markdown syntax and truncate for fading effect
+  // Strip markdown syntax - use plenty of text, overflow will be hidden with fade effect
   description = stripMarkdown(description);
-  // Truncate to roughly 3 lines worth of text (~200 chars at 24px font)
-  // This ensures we have full lines for the fade effect
-  if (description.length > 200) {
-    const truncated = description.substring(0, 200);
-    const lastSpace = truncated.lastIndexOf(" ");
-    // Try to end at a sentence boundary (. ! ?)
-    const lastSentence = Math.max(
-      truncated.lastIndexOf(". "),
-      truncated.lastIndexOf("! "),
-      truncated.lastIndexOf("? ")
-    );
-    if (lastSentence > 120) {
-      description = truncated.substring(0, lastSentence + 1);
-    } else if (lastSpace > 150) {
-      description = truncated.substring(0, lastSpace);
-    } else {
-      description = truncated;
-    }
+  // Keep up to 600 chars - the container will clip overflow and gradient will fade it out
+  if (description.length > 600) {
+    description = description.substring(0, 600);
   }
 
   // Load Fira Sans font from local files
@@ -194,7 +179,7 @@ async function generateOgImage(postPath: string) {
                                 flexDirection: "column",
                                 position: "relative",
                                 maxWidth: "90%",
-                                maxHeight: "140px",
+                                maxHeight: "160px",
                                 overflow: "hidden",
                               },
                               children: [
