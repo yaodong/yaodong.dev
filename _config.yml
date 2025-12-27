@@ -6,6 +6,10 @@ baseurl: ""
 author: "Yaodong Zhao"
 default_image: "/assets/images/og-image.png"
 
+# Social links for jekyll-seo-tag
+twitter:
+  username: YaodongDev
+
 # Permalink structure with year to avoid conflicts
 permalink: /:title/
 
@@ -25,11 +29,13 @@ navigation:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 exclude:
   - bin
   - scripts
   - node_modules
+  - bun.lock
   - bun.lockb
   - Procfile.dev
   - package.json
@@ -38,6 +44,7 @@ exclude:
   - tsconfig.json
   - README.md
   - AGENTS.md
+  - CLAUDE.md
   - .idea
   - .github
   - .devcontainer

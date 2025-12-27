@@ -1,7 +1,23 @@
 ---
 layout: page
 title: About
+description: "Yaodong Zhao is a software engineer who writes about Ruby, Rails, AI coding tools, and the questions that surface while building web applications."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yaodong Zhao",
+  "url": "https://yaodong.dev",
+  "sameAs": [
+    "https://www.linkedin.com/in/yaodong/",
+    "https://github.com/yaodong",
+    "https://x.com/YaodongDev"
+  ],
+  "jobTitle": "Software Engineer"
+}
+</script>
 
 I'm Yaodong Zhao, a software engineer.
 
