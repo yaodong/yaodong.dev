@@ -5,6 +5,7 @@ permalink: /archive/
 ---
 
 {% assign posts = site.posts | sort: "created_date" | reverse %}
+{% assign posts_by_year = posts | group_by_exp: "post", "post.created_date | date: '%Y'" %}
 
 <section class="content-card">
   <header class="mb-8">
@@ -13,18 +14,21 @@ permalink: /archive/
   </header>
 
   {% if posts.size > 0 %}
+  {% for year in posts_by_year %}
+  <h2 class="archive-year">{{ year.name }}</h2>
   <ul>
-    {% for post in posts %}
+    {% for post in year.items %}
     <li class="post-item">
       <a href="{{ post.url | relative_url }}">
         {{ post.title }}
       </a>
       <time datetime="{{ post.created_date | date: '%Y-%m-%d' }}">
-        {{ post.created_date | date: "%b %d, %Y" }}
+        {{ post.created_date | date: "%b %d" }}
       </time>
     </li>
     {% endfor %}
   </ul>
+  {% endfor %}
   {% else %}
   <p class="meta">No posts published yet.</p>
   {% endif %}

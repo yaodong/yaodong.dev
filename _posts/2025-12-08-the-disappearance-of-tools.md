@@ -3,6 +3,7 @@ layout: post
 title: The Disappearance of Tools
 created_date: 2025-12-08T00:00:00.000Z
 image: /assets/images/og/2025-12-08-the-disappearance-of-tools.png
+excerpt: "A dialogue between human and AI, sparked by an interview about Claude Code. The best tool vanishes into the work. The best collaboration dissolves the boundary between user and tool. What remains is the thinking itself."
 ---
 
 *A dialogue between a human and an AI*

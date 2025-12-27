@@ -4,6 +4,7 @@ title: The Self and Singleton Class in Ruby
 created_date: 2024-01-28T00:00:00.000Z
 updated_date: 2024-08-06T00:00:00.000Z
 image: /assets/images/og/2024-01-28-the-self-and-singleton-class-in-ruby.png
+excerpt: "In Ruby, class methods don't actually exist. They're instance methods living on an object's singleton class. Understanding this distinction clarifies why instance_eval and class_eval behave counterintuitively, and reveals the elegant consistency beneath Ruby's metaprogramming surface."
 ---
 
 In Ruby, everything is an object, and every object has an anonymous class, which defines the methods the object can respond to. This anonymous class is called the _singleton class_.

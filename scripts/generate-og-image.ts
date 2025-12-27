@@ -66,7 +66,7 @@ async function generateOgImage(postPath: string) {
     .replace(/```[\s\S]*?```/g, "") // Remove fenced code blocks
     .replace(/`[^`]+`/g, ""); // Remove inline code
   
-  let description = data.custom_excerpt || data.description || "";
+  let description = data.excerpt || data.custom_excerpt || data.description || "";
   if (!description) {
     const paragraphs = contentWithoutCode
       .split(/\n\n+/)
@@ -179,7 +179,7 @@ async function generateOgImage(postPath: string) {
                                 flexDirection: "column",
                                 position: "relative",
                                 maxWidth: "90%",
-                                maxHeight: "160px",
+                                maxHeight: "200px",
                                 overflow: "hidden",
                               },
                               children: [

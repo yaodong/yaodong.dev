@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Fixing Missing Assets Files in Rails Production
-excerpt: A simple Rails asset issue evolved into a complex debugging journey.
 created_date: 2024-08-14T00:00:00.000Z
 updated_date: 2024-08-14T00:00:00.000Z
 image: /assets/images/og/2024-08-14-fixing-missing-css-in-rails-production.png
+excerpt: "A missing CSS file led me down three separate rabbit holes. A missing directory, a debug flag, a MIME type mismatch. Each fix revealed another problem hiding underneath. Here's what I learned about the Rails asset pipeline."
 ---
 
 Recently, I ran into a frustrating issue where `application.css` couldn't ebe found in my Rails app.

@@ -3,6 +3,7 @@ layout: post
 title: Shake Things Up
 created_date: 2025-01-31T00:00:00.000Z
 image: /assets/images/og/2025-01-31-shake-things-up.png
+excerpt: "The new year brings a return to writing, plus experiments with Neovim, Tana, and Cursor AI. While AI can generate answers, it can't capture the trade-offs made under constraints or the personal experiences that shape decisions. Those details still matter."
 ---
 
 Maybe it's the start of a new year that’s motivating me to shake things up, and the first step is getting back into writing.

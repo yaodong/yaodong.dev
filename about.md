@@ -1,8 +1,14 @@
 ---
 layout: page
-title: Hello, I'm Yaodong Zhao 👋
+title: About
 ---
 
-I'm a passionate software engineer with a deep interest in building elegant solutions to complex problems. During the day, I work with Python and Java ecosystems to build robust enterprise applications. By night, I explore modern web technologies, crafting side projects with React and Ruby on Rails. I specialize in creating efficient, scalable, and user-friendly applications that make a real impact.
+I'm Yaodong Zhao, a software engineer.
 
-I'm always open to interesting conversations and collaboration opportunities. Connect with me on [LinkedIn](https://www.linkedin.com/in/yaodong/), check out my projects on [GitHub](https://github.com/yaodong), or follow me on [X (Twitter)](https://x.com/YaodongDev) for tech updates and discussions.
+I build web applications. But what keeps me interested isn't the building itself. It's the questions that surface along the way. Why did the designers make this trade-off? What gets lost when we optimize for convenience? When a constraint feels limiting, is it a flaw, or is it the point?
+
+These days, I've been exploring AI coding tools, trying to understand what changes when the tool starts thinking alongside you. It's a strange shift: watching something else write code while you guide it, wondering where your judgment ends and its suggestions begin.
+
+That's part of why I write here. AI can summarize solutions, but it can't capture what it felt like to find them. The dead ends, the debugging at midnight, the trade-offs made under constraints nobody else will see. I want to hold onto those details, even the ordinary ones. They're what actually happened.
+
+So this space is part technical blog, part thinking-out-loud. Software, design decisions, and sometimes a connection to something further afield. If you want to talk, find me on [LinkedIn](https://www.linkedin.com/in/yaodong/), [GitHub](https://github.com/yaodong), or [X](https://x.com/YaodongDev).

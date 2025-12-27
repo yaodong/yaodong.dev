@@ -11,18 +11,23 @@ title: Yaodong Zhao
   </header>
 
   {% if posts.size > 0 %}
-  <ul>
+  <div class="post-list">
     {% for post in posts limit:10 %}
-    <li class="post-item">
-      <a href="{{ post.url | relative_url }}">
-        {{ post.title }}
-      </a>
-      <time datetime="{{ post.created_date | date: '%Y-%m-%d' }}">
-        {{ post.created_date | date: "%b %d, %Y" }}
-      </time>
-    </li>
+    <article class="post-card">
+      <header class="post-card-header">
+        <a href="{{ post.url | relative_url }}" class="post-card-title">
+          {{ post.title }}
+        </a>
+        <time datetime="{{ post.created_date | date: '%Y-%m-%d' }}">
+          {{ post.created_date | date: "%b %d, %Y" }}
+        </time>
+      </header>
+      <p class="post-card-excerpt">
+        {% if post.excerpt != post.content %}{{ post.excerpt | strip_html }}{% else %}{{ post.content | strip_html | truncatewords: 100 }}{% endif %}
+      </p>
+    </article>
     {% endfor %}
-  </ul>
+  </div>
   {% else %}
   <p class="meta">No posts found.</p>
   {% endif %}
