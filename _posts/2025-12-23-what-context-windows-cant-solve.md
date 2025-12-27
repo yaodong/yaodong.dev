@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Context Is a Choice
+title: What Context Windows Can't Solve
 created_date: 2025-12-23T00:00:00.000Z
-image: /assets/images/og/2025-12-23-context-is-a-choice.png
+image: /assets/images/og/2025-12-23-what-context-windows-cant-solve.png
 excerpt: "A patient named Elliot lost the ability to make decisions after brain surgery. Not because he couldn't think, but because he analyzed too well. Without emotions to filter options, all choices seemed equally important. Damasio's insight applies to AI: constraints aren't obstacles to decision-making; they're prerequisites for it."
 ---
 
