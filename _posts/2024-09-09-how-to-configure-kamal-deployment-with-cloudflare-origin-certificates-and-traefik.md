@@ -5,6 +5,7 @@ created_date: 2024-09-09T00:00:00.000Z
 updated_date: 2024-09-09T00:00:00.000Z
 image: >-
   /assets/images/og/2024-09-09-how-to-configure-kamal-deployment-with-cloudflare-origin-certificates-and-traefik.png
+excerpt: "Setting up HTTPS with Kamal and Traefik using Cloudflare Origin Certificates requires understanding entrypoints, routes, and TLS configuration. This guide walks through the complete setup for secure Docker deployments."
 ---
 
 Kamal, developed by 37signals, is a flexible tool for automating Docker deployments and streamlining the process. One of its key features is ensuring zero-downtime deployments. To achieve this, Kamal uses Traefik as a reverse proxy to route traffic to the correct container. Traefik is a popular reverse proxy that can automatically discover new containers and create routing rules for them. This makes it easy to manage and scale applications in a dynamic environment like Docker.

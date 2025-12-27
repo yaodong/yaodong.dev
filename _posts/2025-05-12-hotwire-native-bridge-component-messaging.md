@@ -8,7 +8,7 @@ excerpt: "Bridge components in Hotwire Native intentionally hide navigation from
 
 In Hotwire Native, a Bridge Component simultaneously exists in JavaScript and native code. The interaction begins from JavaScript by calling `send(event, data, callback)`. The native side receives a structured `Message` object, processes it, and replies by calling `reply(...)`.
 
-![Hotwire Native Bridge Component Messageing](../assets/images/hotwire-native-bridge-component-messaging.png)
+![Hotwire Native Bridge Component Messaging](/assets/images/hotwire-native-bridge-component-messaging.png)
 
 ## Why the Bridge Component Hides Navigation
 
