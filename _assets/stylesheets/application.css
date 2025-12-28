@@ -120,13 +120,18 @@ body {
 /* Content card with light background */
 .content-card {
   background: var(--color-bg-content);
-  border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 2rem;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  padding: 1.5rem 1rem;
 }
 
 @media (min-width: 640px) {
   .content-card {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
     padding: 2.5rem;
   }
 }
@@ -140,8 +145,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2.25rem;
-  line-height: 1.2;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+  }
 }
 
 h2 {
@@ -186,10 +198,16 @@ a:hover {
 /* Navigation link style */
 .nav-link {
   color: var(--color-text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-family: var(--font-heading);
   font-weight: 500;
   letter-spacing: 0.01em;
+}
+
+@media (min-width: 640px) {
+  .nav-link {
+    font-size: 0.875rem;
+  }
 }
 
 .nav-link:hover {
@@ -254,11 +272,25 @@ a:hover {
   font-family: "Fira Mono", monospace;
   border-radius: 8px;
   border: 1px solid var(--color-border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .prose pre code {
   background: transparent;
   padding: 0;
+}
+
+/* Mobile: smaller code font */
+@media (max-width: 639px) {
+  .prose pre {
+    font-size: 0.8125rem;
+    padding: 0.875rem;
+  }
+  
+  .prose code {
+    font-size: 0.8125em;
+  }
 }
 
 .prose blockquote {
@@ -290,10 +322,18 @@ a:hover {
 
 .post-card-header {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.25rem;
   margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .post-card-header {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
 }
 
 .post-card-title {
@@ -341,11 +381,19 @@ a:hover {
 /* Legacy post list item (for archive) */
 .post-item {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.125rem;
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 640px) {
+  .post-item {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
 }
 
 .post-item:last-child {

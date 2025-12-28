@@ -26,11 +26,11 @@
   {% seo %}
 </head>
 <body class="min-h-screen antialiased">
-  <header class="mx-auto flex w-full max-w-4xl items-center justify-between px-6 py-10">
+  <header class="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-6 sm:px-6 sm:py-10">
     <a href="{{ '/' | relative_url }}" class="logo-text text-lg hover:text-[var(--color-accent)]">
       {{ site.title }}
     </a>
-    <nav class="flex items-center gap-6">
+    <nav class="flex items-center gap-4 sm:gap-6">
       {% for item in site.navigation %}
       <a href="{{ item.url | relative_url }}" class="nav-link{% if page.url == item.url %} nav-link-active{% endif %}">
         {{ item.title }}
@@ -55,11 +55,11 @@
     </nav>
   </header>
 
-  <main class="mx-auto w-full max-w-4xl px-6 pb-16">
+  <main class="mx-auto w-full max-w-4xl px-0 pb-12 sm:px-6 sm:pb-16">
     {{ content }}
   </main>
 
-  <footer class="site-footer mx-auto w-full max-w-4xl px-6 pb-12 text-center">
+  <footer class="site-footer mx-auto w-full max-w-4xl px-4 pb-10 text-center sm:px-6 sm:pb-12">
     <div class="divider mb-8"></div>
     <p>&copy; {{ site.time | date: '%Y' }} {{ site.title }}</p>
   </footer>
