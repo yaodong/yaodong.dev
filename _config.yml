@@ -22,6 +22,8 @@ navigation:
     url: /
   - title: Archive
     url: /archive/
+  - title: Library
+    url: /library/
   - title: About
     url: /about/
 
