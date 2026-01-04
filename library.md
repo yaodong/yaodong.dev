@@ -18,6 +18,7 @@ A collection of resources I've found useful.
 
 ## Apps and Services
 
+- [OrbStack](https://orbstack.dev/) Fast, light Docker and Linux on Mac.
 - [Zed](https://zed.dev/) Fast, collaborative code editor.
 - [Ghostty](https://ghostty.org/) Fast, native terminal emulator.
 - [Milanote](https://milanote.com/) Visual boards for organizing creative projects.
