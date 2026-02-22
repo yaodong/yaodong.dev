@@ -27,10 +27,7 @@ Analyze the post and identify potential issues. Output suggestions only. Do NOT 
 
 ### Note-like Expressions
 
-- Fragment sentences that read like bullet points ("The insight: ...", "Dead simple.")
-- Excessive short sentences in a row
-- Lists formatted as prose (Pros/Cons patterns)
-- Missing subjects ("Added logging everywhere. Watched it happen.")
+Prose that reads like unfinished notes rather than written-out thoughts. Look for fragments, missing subjects, and bullet-point rhythm disguised as sentences.
 
 ### Punctuation Patterns
 
@@ -43,11 +40,20 @@ Analyze the post and identify potential issues. Output suggestions only. Do NOT 
 - Is the pacing appropriate (not too rushed, not too slow)?
 - Are code examples introduced with context?
 
+### Rhetorical Packaging
+
+Sentences that don't carry new information but perform a "this matters" posture. The surrounding prose already does the work; these just wrap it in rhetoric. They tend to cluster at paragraph boundaries. The fix is usually to cut them entirely.
+
+### Soft Claims
+
+Sentences that carry real information but state it too vaguely. The test: if a reader would ask "how so?" or "like what?", the sentence needs a concrete detail or example instead of an assertion.
+
 ### Clarity
 
 - Ambiguous pronouns
 - Sentences that require re-reading
 - Jargon that needs explanation
+- Voice/person consistency (e.g. unexpected shifts between "I" and "you")
 
 ## Output Format
 
