@@ -25,7 +25,7 @@ Both were happening at the same time. I wasn't waiting for either.
 
 ---
 
-That's the system in motion. Here's what's behind it: three agents, three Docker containers, one Discord server.
+That's the system in motion. Here's what's behind it: three agents, two Docker containers, one Discord server.
 
 **Helm** lives on the host machine and acts as the orchestrator. She has `requireMention: false`, which means she sees every message in every channel. Not to respond to everything, but to stay aware. She's the one who coordinates across the system: writing handoff documents, calling other agents, doing reviews, tracking what's in flight.
 
