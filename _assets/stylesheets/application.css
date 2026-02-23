@@ -492,6 +492,45 @@ input, textarea, button, select {
   transition: none;
 }
 
+/* Link card */
+.prose a.link-card,
+.link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg-subtle);
+  text-decoration: none;
+  margin: 1.5rem 0;
+  transition: border-color 0.15s ease;
+}
+
+.link-card:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.link-card-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.link-card-description {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.link-card-url {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
 /* Dark mode toggle */
 .theme-toggle {
   display: flex;
