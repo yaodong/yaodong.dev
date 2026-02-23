@@ -2,7 +2,9 @@
 layout: post
 category: journal
 title: What I Learned Building AI Agents in 2025
-created_date: 2025-12-30
+created_date: 2025-12-30T00:00:00.000Z
+image: /assets/images/og/2025-12-30-what-i-learned-ai-agent-in-2025.png
+excerpt: "I spent the year copying elegant agent architectures and watching them fail. The lesson kept repeating: agent architecture is forced into existence by problems, not designed in advance. This is the path from that realization to something that actually works."
 ---
 
 I spent this year building AI agents and kept learning the same lesson the hard way: agent architecture is forced into existence by problems, not designed in advance. This post is how I got there. It's not a tutorial. It's a memo to myself, written so I don't repeat the same mistakes next year.
