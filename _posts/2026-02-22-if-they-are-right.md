@@ -23,8 +23,6 @@ This isn't a prediction. Neither Citrini nor Shah is claiming this is the base c
 
 You don't need to believe the 2028 crisis happens to find this useful. You just need to take it seriously enough to ask: *if it did, would I be okay?*
 
----
-
 ## The Scenario: What They're Actually Saying
 
 The story begins not with collapse, but with euphoria.
@@ -67,8 +65,6 @@ The cruelest part of the scenario is the corporate response. Faced with an exist
 
 This is different from every historical disruption pattern. Kodak resisted. Blockbuster resisted. They died slowly. In this scenario, the incumbents don't resist; they can't afford to. But their rational individual responses create a collective doom loop. By November 2027, the crash arrives. By June 2028, unemployment is at 10.2% and the S&P is down 38% from its highs.
 
----
-
 ## The Mechanisms Already Running
 
 You don't have to believe the 2028 timeline to take the mechanisms seriously. Most of what the scenario describes isn't speculation about the future. It's extrapolation of trends already visible today.
@@ -90,8 +86,6 @@ The ServiceNow dynamic in the scenario isn't hypothetical either. Any company th
 The intermediation compression and the reflexive corporate loop described in the scenario are both already observable. Real estate commissions are compressing for the first time in decades, catalyzed by the 2024 NAR settlement and accelerated by AI-equipped buyers and sellers. Financial advice fees are under pressure from robo-advisors and AI-augmented platforms. Travel booking platforms are losing relevance as AI assistants plan and book end-to-end. Insurance, tax preparation, and routine legal work are all in the early stages of commoditization.
 
 Meanwhile, every round of tech layoffs partially funds the next generation of AI infrastructure. Every SaaS company under pricing pressure accelerates its AI feature development to justify its contract. Every bank cutting analyst headcount is simultaneously investing in AI research tools. The mechanisms are live. The question is only whether they reach crisis velocity.
-
----
 
 ## What Gets Destroyed
 
@@ -118,8 +112,6 @@ Workflow automation tools, lightweight project management, business intelligence
 This is the mechanism that turns an economic slowdown into a financial crisis. Prime mortgages are underwritten on the assumption that white-collar income is stable and growing. If that assumption is structurally impaired, the $13 trillion mortgage market, and everything levered against it, gets repriced.
 
 It doesn't require most white-collar workers to lose their jobs. It just requires enough uncertainty about white-collar income stability that underwriting assumptions break.
-
----
 
 ## What Survives
 
@@ -151,8 +143,6 @@ The most durable near-term position isn't competing with AI; it's directing it. 
 
 This isn't "learn to prompt." It's developing genuine fluency with how AI systems work: their capabilities, their failure modes, their limits. The gap between someone who uses AI superficially and someone who understands it deeply is growing, not shrinking.
 
----
-
 ## What to Actually Do
 
 Three tracks. Be honest about which one applies to you. Most people need all three in different proportions.
@@ -181,8 +171,6 @@ The deepest implication of the scenario is a shift in the returns-to-capital vs.
 
 This isn't a new idea. But the scenario makes the urgency sharper. Building wealth through labor income is the dominant strategy of the professional class. If the value of cognitive labor deteriorates structurally, the people who are *only* selling their time are the most exposed.
 
----
-
 ## The Asymmetry That Matters
 
 To be clear about what this article is and isn't: it's not a prediction. Citrini and Shah weren't making one either. The scenario might not happen. History does suggest that technological disruption creates new categories of work faster than it destroys old ones.
@@ -190,7 +178,5 @@ To be clear about what this article is and isn't: it's not a prediction. Citrini
 But there's something different about cognitive labor. Every prior wave of automation targeted physical tasks, leaving the cognitive premium intact. The Industrial Revolution, computerization, even early AI: all displaced hands while increasing the returns to minds. This time, the minds are in scope. Whether the historical pattern holds is a genuine open question, not a settled one.
 
 You don't need certainty to act. You need asymmetry. The cost of stress-testing your exposure, building some liquidity, developing genuine AI fluency, and reorienting toward ownership is low. The cost of being wrong about income stability and business model durability is high.
-
----
 
 *This article draws on scenario analysis by [CitriniResearch](https://www.citriniresearch.com/p/2028gic) and [Alap Shah](https://alapshah1.substack.com/p/the-global-intelligence-crisis). Both are worth reading in full.*

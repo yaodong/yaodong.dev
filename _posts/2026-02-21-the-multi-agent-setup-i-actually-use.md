@@ -13,8 +13,6 @@ What I actually wanted was one agent per domain. Not one assistant stretched acr
 
 The solution I landed on was Discord. Its server, channel, and thread structure map naturally onto this: multiple agents, each in its own domain, with layered context isolation built into how the platform works.
 
----
-
 Last week I was in my `#brainstorming` channel, thinking out loud with Helm, my primary agent, about a project idea. We got interested. I opened a thread, went deeper, and decided it was worth building. Helm wrote a handoff document summarizing what we'd discussed, created a `#project-hobby` channel, and ran `gh repo create` to set up the GitHub repo. Then she pinged Builder.
 
 Builder is my coding agent. She received the handoff document, fired up Claude Code, and started building. Partway through she hit a database problem and reported it to Helm. Helm spun up a PostgreSQL Docker container, resolved the environment issue, and handed control back. Builder kept going. When she had a working first version, Helm came in to review. Helm found a bug: users couldn't log out. Builder opened a PR. Helm reviewed it, left a comment, approved it, and merged.
@@ -24,8 +22,6 @@ While all of that was happening, I'd noticed something interesting about the pro
 Both were happening at the same time. I wasn't waiting for either.
 
 ![Two Discord threads running simultaneously, Builder writing code on the left, Explorer developing an idea on the right](/assets/images/2026-02-21/parallel-work.png)
-
----
 
 That's the system in motion. Here's what's behind it: three agents, two Docker containers, one Discord server.
 
@@ -47,8 +43,6 @@ There's another dimension to this isolation that I didn't anticipate when I star
 
 ![System architecture: three agents connected through Discord, with Builder and Explorer in Docker containers and Helm on the host](/assets/images/2026-02-21/architecture.png)
 
----
-
 The agents are the moving parts. The Discord server is what makes them usable.
 
 Each channel is a domain. `#brainstorming` is for thinking out loud. `#write-room` is where Explorer lives. For engineering work, I create a dedicated channel per project, named `#project-xxx`, rather than lumping everything into a generic `#dev`. Builder passively follows these project channels; Helm only comes in when called. The thing I didn't expect to matter so much is the channel topic. That topic is effectively a prompt. The topic for `#write-room` describes Explorer's style and approach. The topic for a project channel carries the codebase context Builder should assume, so the channel itself carries the instruction. I don't have to repeat it every time I show up.
@@ -63,18 +57,12 @@ One detail that required some thought: `requireMention` is configured per channe
 
 OpenClaw also isolates context per user, which means multiple agents can coexist on the same server without bleeding into each other's sessions. When agents need to coordinate without going through Discord, they can call each other directly over the shared Docker network.
 
----
-
 What changed for me isn't speed. It's that parallel work became possible at all.
 
 Parallel work sounds simple, but it has a precondition: the tasks have to be genuinely independent. With a single agent, they aren't. They share context, and mixing them creates confusion. With isolated agents on isolated channels, they are. While Builder is building, I can be thinking with Explorer. While Explorer is drafting, I can be reviewing with Helm. The waiting time between responses, which used to feel like dead time, becomes the space where everything else moves forward.
 
 The other thing that changes is my own mental load. With a single agent, I had to track things myself: what was in progress, where a conversation left off, what context to bring back in. With multiple agents and dedicated channels, I don't have to. The context is just there. I can drop into `#project-hobby` a day later and Builder already knows where things stand. I can pick up a thread with Explorer without re-explaining the idea we were developing. The state lives in the system, not in my head.
 
----
-
 The work is still the same: engineering projects, ideas worth writing about, research that feeds both. What changed is how I move between them. Not by switching modes in my head, but by switching channels. The context for each domain is already there, tended by an agent that knows it well.
-
----
 
 *Disclaimer: Illustrations are recreated from real sessions for privacy. The agent described in this piece reviewed it for technical accuracy — which felt appropriate.*

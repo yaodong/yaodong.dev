@@ -2,19 +2,19 @@
 layout: post
 title: Push It Until It Breaks
 created_date: 2026-03-01T00:00:00.000Z
-excerpt: "You can't find the boundary of a tool without crossing it. Push it too far, watch it fail, pull back. Then something changes, a new model, a better tool, a new category of problem, and you push again."
+excerpt: "You can't find the boundary of a tool without crossing it. Push too far, watch it fail, recalibrate. The models keep changing. The tools keep changing. So I keep pushing."
 image: /assets/images/og/2026-03-01-push-it-until-it-breaks.png
 ---
 
-A year ago I was accepting tab completions. Now AI is in every stage of my development workflow, from problem definition to deployment. The shift didn't happen in a weekend. It happened through a repeating cycle: push the tool too far, watch it fail, pull back. Then something changes, a new model, a better tool, a different workflow, a new category of problem, and I push again.
+A year ago I was accepting tab completions. Now AI is in every stage of my development workflow, from problem definition to deployment. The shift didn't happen in a weekend. It happened through a repeating cycle: push the tool too far, watch it fail, recalibrate. Then something changes, a new model, a better tool, a different workflow, a new category of problem, and I push again.
 
 I work on production systems. The kind with years of accumulated decisions, implicit constraints, and code that nobody fully understands anymore. This is not a story about building something new in three days. It's about what happens when you bring AI into a codebase that fights back.
 
 ## The overuse cycle
 
-You can't find the boundary of a tool without crossing it. My method, if you can call it that, is deliberate overuse. Every time I get access to a new model or a meaningful upgrade, I push it past what I think it can handle. I let it take on tasks I'm not sure it's ready for. It fails. I learn something specific about where it breaks. I pull back to a level I can deliver at. Then something changes, a new model, a better tool, a different approach, a new category of problem, and I push again.
+You can't find the boundary of a tool without crossing it. My method, if you can call it that, is deliberate overuse. Every time I get access to a new model or a meaningful upgrade, I push it past what I think it can handle. I let it take on tasks I'm not sure it's ready for. It fails. I learn something specific about where it breaks. I recalibrate to a level I can deliver at. Then something changes, a new model, a better tool, a different approach, a new category of problem, and I push again.
 
-In mid-2025, I tried delegating legacy refactoring to AI. It would confidently rename internal methods, then call the old names elsewhere in the codebase. It would invent helper functions that didn't exist. On complex tasks, the time I spent fixing AI's mistakes ate into the time I was supposed to be saving, so I pulled back. When Opus 4.5 dropped in late November 2025, I tried the same category of task again. The model handled the renames correctly, and it caught something an IDE wouldn't: mock annotations in pytest that still referenced the old names as strings. Three months later, Opus 4.6 pushed it further. It could read through legacy code and answer detailed questions about behavior that used to require digging through years of commits. Each cycle teaches me something the previous one couldn't, because the tool is genuinely different from the one I calibrated against last time.
+In mid-2025, I tried delegating legacy refactoring to AI. It would confidently rename internal methods, then call the old names elsewhere in the codebase. It would invent helper functions that didn't exist. On complex tasks, the time I spent fixing AI's mistakes ate into the time I was supposed to be saving, so I dialed it back. When Opus 4.5 dropped in late November 2025, I tried the same category of task again. The model handled the renames correctly, and it caught something an IDE wouldn't: mock annotations in pytest that still referenced the old names as strings. Three months later, Opus 4.6 pushed it further. It could read through legacy code and answer detailed questions about behavior that used to require digging through years of commits. Each cycle teaches me something the previous one couldn't, because the tool is genuinely different from the one I calibrated against last time.
 
 ## Make your codebase legible
 
