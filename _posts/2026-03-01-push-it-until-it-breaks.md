@@ -2,21 +2,17 @@
 layout: post
 title: Push It Until It Breaks
 created_date: 2026-03-01T00:00:00.000Z
-excerpt: >-
-  A year ago I was accepting tab completions. Now AI is in every stage of my
-  development workflow. The shift happened through deliberate overreach, painful
-  correction, and one realization: the bottleneck was never code generation. It
-  was context.
+excerpt: "You can't find the boundary of a tool without crossing it. Push it too far, watch it fail, pull back. Then something changes, a new model, a better tool, a new category of problem, and you push again."
 image: /assets/images/og/2026-03-01-push-it-until-it-breaks.png
 ---
 
-A year ago I was accepting tab completions. Now AI is in every stage of my development workflow, from problem definition to deployment. The shift didn't happen in a weekend. It happened through a repeating cycle: push the tool too far, watch it fail, pull back, then push again when the next model drops.
+A year ago I was accepting tab completions. Now AI is in every stage of my development workflow, from problem definition to deployment. The shift didn't happen in a weekend. It happened through a repeating cycle: push the tool too far, watch it fail, pull back. Then something changes, a new model, a better tool, a different workflow, a new category of problem, and I push again.
 
 I work on production systems. The kind with years of accumulated decisions, implicit constraints, and code that nobody fully understands anymore. This is not a story about building something new in three days. It's about what happens when you bring AI into a codebase that fights back.
 
 ## The overuse cycle
 
-You can't find the boundary of a tool without crossing it. My method, if you can call it that, is deliberate overuse. Every time I get access to a new model or a meaningful upgrade, I push it past what I think it can handle. I let it take on tasks I'm not sure it's ready for. It fails. I learn something specific about where it breaks. I pull back to a level I can deliver at. Then the next model drops, and I push again.
+You can't find the boundary of a tool without crossing it. My method, if you can call it that, is deliberate overuse. Every time I get access to a new model or a meaningful upgrade, I push it past what I think it can handle. I let it take on tasks I'm not sure it's ready for. It fails. I learn something specific about where it breaks. I pull back to a level I can deliver at. Then something changes, a new model, a better tool, a different approach, a new category of problem, and I push again.
 
 In mid-2025, I tried delegating legacy refactoring to AI. It would confidently rename internal methods, then call the old names elsewhere in the codebase. It would invent helper functions that didn't exist. On complex tasks, the time I spent fixing AI's mistakes ate into the time I was supposed to be saving, so I pulled back. When Opus 4.5 dropped in late November 2025, I tried the same category of task again. The model handled the renames correctly, and it caught something an IDE wouldn't: mock annotations in pytest that still referenced the old names as strings. Three months later, Opus 4.6 pushed it further. It could read through legacy code and answer detailed questions about behavior that used to require digging through years of commits. Each cycle teaches me something the previous one couldn't, because the tool is genuinely different from the one I calibrated against last time.
 
@@ -24,11 +20,11 @@ In mid-2025, I tried delegating legacy refactoring to AI. It would confidently r
 
 That cycle taught me something else: more often than not, the failures weren't about model capability. They were about what I was feeding the model.
 
-The single most important thing I've learned is that the real work of AI-assisted development is making your codebase legible to the AI. People have started calling this context engineering. For me, it came down to something concrete: the quality of AI output had less to do with how I asked and more to do with what I gave the model to work with. Documentation, code structure, architectural constraints, type systems, tool definitions, conversation history — all of it matters more than the prompt.
+The single most important thing I've learned is that the real work of AI-assisted development is making your codebase legible to the AI. People have started calling this context engineering. For me, it came down to something concrete: the quality of AI output had less to do with how I asked and more to do with what I gave the model to work with. Documentation, code structure, architectural constraints, type systems, tool definitions, conversation history. All of it matters more than the prompt.
 
 In practice, this means clear module boundaries so the AI knows where one concern ends and another begins. It means typed interfaces so it can reason about contracts without reading every implementation. Documentation maintained as infrastructure, not an afterthought. Architectural constraints enforced mechanically by linters and CI, not by convention that the AI can't see.
 
-I've started evaluating every task through this lens. When I look at a piece of work, I'm asking: what context does this need, where does it live, and how hard is it to gather? A new feature is usually straightforward because the context has natural boundaries: a PRD, a design spec, an API doc. But troubleshooting a subtle bug in a business workflow is a completely different situation. The context is implicit, scattered across code paths, old Slack threads, and the heads of people who built the system. You can't hand that to AI. Not yet, anyway. You have to drive the conversation yourself, peeling back layers until the picture becomes clear.
+I've started evaluating every task through this lens. When I look at a piece of work, I'm asking: what context does this need, where does it live, and how hard is it to gather? A new feature is usually straightforward because the context has natural boundaries: a PRD, a design spec, an API doc. But troubleshooting a subtle bug in a business workflow is a completely different situation. The context is implicit, scattered across code paths, old Slack threads, and the heads of people who built the system. You can't hand that to AI. Not yet, anyway. You have to drive the conversation yourself, digging until you understand what's actually going on.
 
 ## Build context before writing code
 
@@ -88,11 +84,11 @@ If my own instincts have blind spots, it follows that any single model does too.
 
 I use Claude Opus and OpenAI's Codex on the same codebase and have them review each other. The natural checkpoint is the git commit: whenever changes are coherent enough to commit, I run the other model over the diff.
 
-Cross-model review catches real problems. In a side project, I removed a Rails credentials file and Claude helpfully cleaned up the corresponding .gitignore entry. Codex flagged that change: if someone on the team later used Rails credentials without realizing the ignore rule was gone, they could accidentally commit secrets to the repo. It was the kind of thing a second pair of eyes catches — not because one model is smarter, but because they have slightly different perspectives, like engineers with different backgrounds on the same team.
+Cross-model review catches real problems. In a side project, I removed a Rails credentials file and Claude helpfully cleaned up the corresponding .gitignore entry. Codex flagged that change: if someone on the team later used Rails credentials without realizing the ignore rule was gone, they could accidentally commit secrets to the repo. It was the kind of thing a second pair of eyes catches, not because one model is smarter, but because they have slightly different perspectives, like engineers with different backgrounds on the same team.
 
 Different models also have different architectural tendencies. One will over-split code into too many small abstractions. Another will over-engineer the overall structure. These tendencies shift with each model upgrade, which means the specific blind spots I'm compensating for keep changing too.
 
-After months of doing this, I have a sense of what cross-model review is good at: factual errors, knowledge gaps, inconsistencies. It's less useful when two models genuinely disagree on an architectural question. That usually means I haven't given them enough shared context to converge; the divergence is a signal about the context, not about which model is right. And when one model gets stuck on a problem — can't fix a failing test no matter how many attempts — switching to the other often breaks through.
+After months of doing this, I have a sense of what cross-model review is good at: factual errors, knowledge gaps, inconsistencies. It's less useful when two models genuinely disagree on an architectural question. That usually means I haven't given them enough shared context to converge; the divergence is a signal about the context, not about which model is right. And when one model gets stuck on a problem, can't fix a failing test no matter how many attempts, switching to the other often breaks through.
 
 There's a deeper limitation. AI models are too easy to convince. If I explain my reasoning with any confidence, both models will agree. This means cross-review catches what I don't know, but it probably won't push back on what I'm wrong about. For that, you need a human colleague, or at minimum the discipline to ask AI to argue against your position before you ask it to confirm.
 
@@ -102,6 +98,6 @@ None of this has made engineering easier. It's made it different.
 
 The developers I know who get good results are doing the opposite of vibing. They're controlling: reviewing plans, enforcing constraints, catching the things AI misses. The engineering skill hasn't disappeared. It's been redirected, from writing code to evaluating code, from implementing designs to judging designs, from solving problems to framing problems correctly. When AI handles execution, I have time to engage with context I never had bandwidth for before: why did the customer raise this issue, how did the PM arrive at this solution, is there a simpler framing everyone missed.
 
-I've gone back and forth on how much to invest in specific AI workflows. Most of what I learned six months ago is already outdated. But the time I spent making our codebase more legible, better typed, better documented — that compounds regardless of which model I use next. The specific tools don't matter. What matters is whether you can look at a problem, break it into pieces that a machine can handle, and tell whether the output is actually correct.
+I've gone back and forth on how much to invest in specific AI workflows. Most of what I learned six months ago is already outdated. But the time I spent making our codebase more legible, better typed, better documented? That compounds regardless of which model I use next. The specific tools don't matter. What matters is whether you can look at a problem, break it into pieces that a machine can handle, and tell whether the output is actually correct.
 
 That skill isn't going anywhere. Everything else is moving fast enough that I'm staying in the overuse cycle. Push, break, learn, push again.
