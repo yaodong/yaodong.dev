@@ -20,6 +20,7 @@
   },
   "scripts": {
     "build:css": "postcss _assets/stylesheets/application.css -o ./assets/stylesheets/application.css",
+    "test:js": "node --test tests/post-toc.test.mjs",
     "generate:og": "bun run scripts/generate-og-image.ts",
     "generate:og:all": "for post in _posts/*.md; do bun run scripts/generate-og-image.ts \"$post\"; done"
   }
