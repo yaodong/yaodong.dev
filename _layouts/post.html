@@ -14,11 +14,28 @@ layout: default
     </a>
     
     <h1 class="mb-4">{{ page.title }}</h1>
-    
+
+    {% assign author_name = site.author.name %}
+    {% assign author_url = site.author.url %}
+    {% if page.author %}
+    {% assign author_name = page.author.name | default: page.author %}
+    {% assign author_url = page.author.url %}
+    {% endif %}
+
     <div class="meta flex flex-wrap items-center gap-3">
       <time datetime="{{ page.created_date | date: '%Y-%m-%d' }}">
         {{ page.created_date | date: "%b %d, %Y" }}
       </time>
+      {% if author_name %}
+      <span class="text-[var(--color-border)]">·</span>
+      {% if author_url %}
+      <a href="{{ author_url }}" class="hover:text-[var(--color-accent)]">
+        By {{ author_name }}
+      </a>
+      {% else %}
+      <span>By {{ author_name }}</span>
+      {% endif %}
+      {% endif %}
       {% if page.updated_date %}
       <span class="text-[var(--color-border)]">·</span>
       <time datetime="{{ page.updated_date | date: '%Y-%m-%d' }}">
