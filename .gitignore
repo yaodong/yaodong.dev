@@ -1,13 +1,12 @@
-.jekyll-cache
 .DS_Store
 .idea
 .claude/settings.local.json
 
 node_modules
 
-_site
+# build output
+dist/
+.astro/
+
 .superpowers
 .worktrees
-
-assets/stylesheets/*
-!assets/stylesheets/.keep

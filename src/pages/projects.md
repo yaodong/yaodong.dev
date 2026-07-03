@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: ../layouts/MarkdownPage.astro
 title: Projects
 description: "Open source projects by Yaodong Zhao."
 ---

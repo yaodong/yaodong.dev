@@ -20,6 +20,25 @@
   }
 }
 
+/*
+  Visually-hidden helper. Astro's GFM footnotes emit
+  <h2 class="sr-only" id="footnote-label">Footnotes</h2>, but Tailwind only
+  generates the `sr-only` utility from classes found in source templates — not
+  in rendered Markdown — so we define it here to keep the footnote label hidden
+  (the old Jekyll/kramdown output had no visible label).
+*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* Factory-inspired Design System */
 :root {
   /* Fonts */

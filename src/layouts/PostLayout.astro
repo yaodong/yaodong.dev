@@ -1,0 +1,148 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { SITE } from '../lib/site';
+import { formatDate, isoDate } from '../lib/date';
+
+interface RelatedPost {
+  slug: string;
+  title: string;
+  created_date: Date;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  created_date: Date;
+  updated_date?: Date;
+  image?: string;
+  publishedTime: string;
+  canonicalPath: string;
+  author?: string | { name: string; url?: string };
+  tags?: string[];
+  related: RelatedPost[];
+}
+
+const {
+  title,
+  description,
+  created_date,
+  updated_date,
+  image,
+  publishedTime,
+  canonicalPath,
+  author,
+  tags,
+  related,
+} = Astro.props;
+
+// Mirror post.html's author resolution: page.author overrides the site author.
+let authorName: string | undefined = SITE.author.name;
+let authorUrl: string | undefined = SITE.author.url;
+if (author) {
+  if (typeof author === 'string') {
+    authorName = author;
+    authorUrl = undefined;
+  } else {
+    authorName = author.name;
+    authorUrl = author.url;
+  }
+}
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogType="article"
+  jsonLd="BlogPosting"
+  image={image}
+  publishedTime={publishedTime}
+  canonicalPath={canonicalPath}
+>
+  <article class="content-card">
+    <header class="mb-8">
+      <a href="/" class="back-link mb-6 inline-block">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5"></path>
+          <path d="M12 19l-7-7 7-7"></path>
+        </svg>
+        <span>Back</span>
+      </a>
+
+      <h1 class="mb-4">{title}</h1>
+
+      <div class="meta flex flex-wrap items-center gap-3">
+        <time datetime={isoDate(created_date)}>
+          {formatDate(created_date)}
+        </time>
+        {
+          authorName && (
+            <>
+              <span class="text-[var(--color-border)]">·</span>
+              {authorUrl ? (
+                <a href={authorUrl} class="hover:text-[var(--color-accent)]">
+                  By {authorName}
+                </a>
+              ) : (
+                <span>By {authorName}</span>
+              )}
+            </>
+          )
+        }
+        {
+          updated_date && (
+            <>
+              <span class="text-[var(--color-border)]">·</span>
+              <time datetime={isoDate(updated_date)}>
+                Updated {formatDate(updated_date)}
+              </time>
+            </>
+          )
+        }
+      </div>
+    </header>
+
+    {
+      tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-8">
+          {tags.map((tag) => (
+            <a href={`/tags/${tag}/`} class="tag">
+              {tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="prose prose-lg max-w-none">
+      <slot />
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="mt-8 content-card">
+        <h3 class="text-lg mb-6">Related Posts</h3>
+        <ul class="space-y-1">
+          {related.map((rp) => (
+            <li class="post-item">
+              <a href={`/${rp.slug}/`}>{rp.title}</a>
+              <time datetime={isoDate(rp.created_date)}>
+                {formatDate(rp.created_date)}
+              </time>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>

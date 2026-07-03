@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../layouts/PostLayout.astro';
+import { postSlug, postDatePrefix } from '../lib/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog')).sort(
+    (a, b) => b.data.created_date.valueOf() - a.data.created_date.valueOf()
+  );
+
+  return posts.map((post) => {
+    // Jekyll's related_posts (no LSI) = the most-recent posts, excluding self;
+    // post.html then limits to 4.
+    const related = posts
+      .filter((p) => p.id !== post.id)
+      .slice(0, 4)
+      .map((p) => ({
+        slug: postSlug(p.id),
+        title: p.data.title,
+        created_date: p.data.created_date,
+      }));
+
+    return {
+      params: { slug: postSlug(post.id) },
+      props: { post, related },
+    };
+  });
+}
+
+const { post, related } = Astro.props;
+const { Content } = await render(post);
+
+const slug = postSlug(post.id);
+// article:published_time uses the filename date at midnight UTC (matches jekyll-seo-tag's page.date).
+const publishedTime = `${postDatePrefix(post.id)}T00:00:00+00:00`;
+---
+
+<PostLayout
+  title={post.data.title}
+  description={post.data.excerpt ?? ''}
+  created_date={post.data.created_date}
+  updated_date={post.data.updated_date}
+  image={post.data.image}
+  publishedTime={publishedTime}
+  canonicalPath={`/${slug}/`}
+  author={post.data.author}
+  tags={post.data.tags}
+  related={related}
+>
+  <Content />
+</PostLayout>

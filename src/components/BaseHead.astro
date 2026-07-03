@@ -1,0 +1,148 @@
+---
+import { SITE } from '../lib/site';
+import '../styles/application.css';
+
+interface Props {
+  /** Page title without the " | yaodong.dev" suffix. */
+  title: string;
+  description: string;
+  /** 'about' emits the About page's bespoke meta set; 'default' mirrors jekyll-seo-tag. */
+  variant?: 'default' | 'about';
+  ogType?: 'website' | 'article' | 'profile';
+  jsonLd?: 'WebSite' | 'WebPage' | 'BlogPosting' | 'none';
+  /** Root-relative OG image path, e.g. /assets/images/og/foo.png (posts only). */
+  image?: string;
+  /** ISO string for article:published_time / datePublished / dateModified. */
+  publishedTime?: string;
+  /** Override canonical path; defaults to the current URL pathname. */
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description,
+  variant = 'default',
+  ogType = 'website',
+  jsonLd = 'WebPage',
+  image,
+  publishedTime,
+  canonicalPath,
+} = Astro.props;
+
+const pageTitle = `${title} | ${SITE.title}`;
+const canonical = new URL(canonicalPath ?? Astro.url.pathname, SITE.url);
+const canonicalHref = canonical.href;
+const imageAbs = image ? new URL(image, SITE.url).href : undefined;
+const twitterHandle = `@${SITE.author.twitter}`;
+const person = { '@type': 'Person', name: SITE.author.name, url: SITE.author.url };
+
+let jsonLdData: Record<string, unknown> | null = null;
+if (variant === 'default' && jsonLd !== 'none') {
+  if (jsonLd === 'WebSite') {
+    jsonLdData = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      author: person,
+      description,
+      headline: title,
+      name: title,
+      sameAs: SITE.social,
+      url: canonicalHref,
+    };
+  } else if (jsonLd === 'BlogPosting') {
+    jsonLdData = {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      author: person,
+      dateModified: publishedTime,
+      datePublished: publishedTime,
+      description,
+      headline: title,
+      image: imageAbs,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalHref },
+      url: canonicalHref,
+    };
+  } else {
+    jsonLdData = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      author: person,
+      description,
+      headline: title,
+      url: canonicalHref,
+    };
+  }
+}
+---
+
+<meta charset="utf-8" />
+<script is:inline>
+  // Prevent FOUC by applying theme immediately
+  (function () {
+    var theme = localStorage.getItem('theme');
+    if (theme) {
+      document.documentElement.classList.add(theme);
+    }
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{pageTitle}</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+  rel="stylesheet"
+/>
+
+{
+  variant === 'about' ? (
+    <>
+      <meta name="description" content={description} />
+      <meta name="author" content={SITE.author.name} />
+      <link rel="canonical" href={canonicalHref} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={canonicalHref} />
+      <meta property="og:site_name" content={SITE.title} />
+      <meta property="og:type" content="profile" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:site" content={twitterHandle} />
+      <meta name="twitter:creator" content={twitterHandle} />
+    </>
+  ) : (
+    <>
+      <meta property="og:title" content={title} />
+      <meta name="author" content={SITE.author.name} />
+      <meta property="og:locale" content="en_US" />
+      <meta name="description" content={description} />
+      <meta property="og:description" content={description} />
+      <link rel="canonical" href={canonicalHref} />
+      <meta property="og:url" content={canonicalHref} />
+      <meta property="og:site_name" content={SITE.title} />
+      {imageAbs && <meta property="og:image" content={imageAbs} />}
+      <meta property="og:type" content={ogType} />
+      {publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      <meta
+        name="twitter:card"
+        content={imageAbs ? 'summary_large_image' : 'summary'}
+      />
+      {imageAbs && <meta property="twitter:image" content={imageAbs} />}
+      <meta property="twitter:title" content={title} />
+      <meta name="twitter:site" content={twitterHandle} />
+      <meta name="twitter:creator" content={twitterHandle} />
+      {jsonLdData && (
+        <script type="application/ld+json" set:html={JSON.stringify(jsonLdData)} />
+      )}
+    </>
+  )
+}

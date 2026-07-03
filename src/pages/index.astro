@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDate, isoDate } from '../lib/date';
+import { postSlug } from '../lib/site';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.created_date.valueOf() - a.data.created_date.valueOf()
+);
+const recent = posts.slice(0, 10);
+
+const description =
+  'Technical articles on Ruby, Rails, AI coding tools, and software engineering by Yaodong Zhao.';
+---
+
+<BaseLayout
+  title="Yaodong Zhao"
+  description={description}
+  jsonLd="WebSite"
+  ogType="website"
+>
+  <section class="content-card">
+    <header class="mb-6">
+      <h2>Recent Posts</h2>
+    </header>
+
+    {
+      recent.length > 0 ? (
+        <div class="post-list">
+          {recent.map((post) => (
+            <article class="post-card">
+              <header class="post-card-header">
+                <a href={`/${postSlug(post.id)}/`} class="post-card-title">
+                  {post.data.title}
+                </a>
+                <time datetime={isoDate(post.data.created_date)}>
+                  {formatDate(post.data.created_date)}
+                </time>
+              </header>
+              <p class="post-card-excerpt">{post.data.excerpt}</p>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p class="meta">No posts found.</p>
+      )
+    }
+  </section>
+</BaseLayout>

@@ -10,7 +10,7 @@ Follow these steps in order. Stop and report if any step fails.
 
 ### Step 1 — Find new posts
 
-Run `git status` to find newly added or modified files in `_posts/`. Only process posts that are untracked or have uncommitted changes. If there are no new posts, tell the user and stop.
+Run `git status` to find newly added or modified files in `src/content/blog/`. Only process posts that are untracked or have uncommitted changes. If there are no new posts, tell the user and stop.
 
 ### Step 2 — Generate excerpts
 

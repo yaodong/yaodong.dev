@@ -277,7 +277,7 @@ async function generateOgImage(postPath: string) {
 
   // Determine output path (keep same filename as post)
   const filename = basename(postPath, ".md");
-  const outputDir = join(process.cwd(), "assets/images/og");
+  const outputDir = join(process.cwd(), "public/assets/images/og");
   const outputPath = join(outputDir, `${filename}.png`);
   const imageUrl = `/assets/images/og/${filename}.png`;
 

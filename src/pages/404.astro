@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const description =
+  'The page you’re looking for doesn’t exist. Return to yaodong.dev to explore technical articles on Ruby, Rails, and software engineering.';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description={description}
+  jsonLd="WebPage"
+  ogType="website"
+  canonicalPath="/404.html"
+>
+  <div class="flex justify-center p-10">
+    <img src="/assets/images/404.svg" alt="Page Not Found" class="h-96" />
+  </div>
+</BaseLayout>

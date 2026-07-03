@@ -1,0 +1,167 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  variant?: 'default' | 'about';
+  ogType?: 'website' | 'article' | 'profile';
+  jsonLd?: 'WebSite' | 'WebPage' | 'BlogPosting' | 'none';
+  image?: string;
+  publishedTime?: string;
+  canonicalPath?: string;
+}
+
+const props = Astro.props;
+const currentPath = Astro.url.pathname;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={SITE.lang} class="scroll-smooth">
+  <head>
+    <BaseHead {...props} />
+  </head>
+  <body class="min-h-screen antialiased">
+    <header
+      class="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-6 sm:px-6 sm:py-10"
+    >
+      <a href="/" class="logo-text text-lg hover:text-[var(--color-accent)]">
+        {SITE.title}
+      </a>
+      <nav class="flex items-center gap-4 sm:gap-6">
+        {
+          SITE.navigation.map((item) => (
+            <a
+              href={item.url}
+              class:list={['nav-link', { 'nav-link-active': currentPath === item.url }]}
+            >
+              {item.title}
+            </a>
+          ))
+        }
+        <button
+          type="button"
+          class="theme-toggle"
+          aria-label="Toggle dark mode"
+          title="Toggle dark mode"
+        >
+          <svg
+            class="icon-sun"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg
+            class="icon-moon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </nav>
+    </header>
+
+    <main class="mx-auto w-full max-w-4xl px-0 pb-12 sm:px-6 sm:pb-16">
+      <slot />
+    </main>
+
+    <footer
+      class="site-footer mx-auto w-full max-w-4xl px-4 pb-10 text-center sm:px-6 sm:pb-12"
+    >
+      <div class="divider mb-8"></div>
+      <p>&copy; {year} {SITE.title}</p>
+    </footer>
+
+    <script is:inline>
+      // Theme toggle functionality
+      (function () {
+        const root = document.documentElement;
+        const toggle = document.querySelector('.theme-toggle');
+        const STORAGE_KEY = 'theme';
+
+        // Get stored theme or null for system default
+        function getStoredTheme() {
+          return localStorage.getItem(STORAGE_KEY);
+        }
+
+        // Apply theme to document
+        function applyTheme(theme) {
+          root.classList.remove('light', 'dark');
+          if (theme) {
+            root.classList.add(theme);
+          }
+        }
+
+        // Get current effective theme
+        function getCurrentTheme() {
+          const stored = getStoredTheme();
+          if (stored) return stored;
+          return window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+          const current = getCurrentTheme();
+          const next = current === 'dark' ? 'light' : 'dark';
+          localStorage.setItem(STORAGE_KEY, next);
+          applyTheme(next);
+        }
+
+        // Initialize
+        applyTheme(getStoredTheme());
+
+        // Bind click handler
+        if (toggle) {
+          toggle.addEventListener('click', toggleTheme);
+        }
+
+        // Listen for system theme changes
+        window
+          .matchMedia('(prefers-color-scheme: dark)')
+          .addEventListener('change', function (e) {
+            if (!getStoredTheme()) {
+              // Only react if user hasn't manually set a preference
+              applyTheme(null);
+            }
+          });
+      })();
+    </script>
+
+    <script
+      is:inline
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-E8XC309H1N"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-E8XC309H1N');
+    </script>
+  </body>
+</html>

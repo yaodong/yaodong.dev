@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { formatDateShort, isoDate } from '../lib/date';
+import { postSlug } from '../lib/site';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.created_date.valueOf() - a.data.created_date.valueOf()
+);
+
+// Group by year (UTC), preserving the descending order of the sorted list.
+const byYear: { year: string; items: CollectionEntry<'blog'>[] }[] = [];
+for (const post of posts) {
+  const year = String(post.data.created_date.getUTCFullYear());
+  let group = byYear.find((g) => g.year === year);
+  if (!group) {
+    group = { year, items: [] };
+    byYear.push(group);
+  }
+  group.items.push(post);
+}
+
+const description =
+  'Complete archive of all blog posts by Yaodong Zhao, organized by year.';
+---
+
+<BaseLayout
+  title="Archive"
+  description={description}
+  jsonLd="WebPage"
+  ogType="website"
+>
+  <section class="content-card">
+    <header class="mb-8">
+      <h1>Archive</h1>
+      <p class="meta mt-2">{posts.length} posts</p>
+    </header>
+
+    {
+      posts.length > 0 ? (
+        byYear.map((group) => (
+          <>
+            <h2 class="archive-year">{group.year}</h2>
+            <ul>
+              {group.items.map((post) => (
+                <li class="post-item">
+                  <a href={`/${postSlug(post.id)}/`}>{post.data.title}</a>
+                  <time datetime={isoDate(post.data.created_date)}>
+                    {formatDateShort(post.data.created_date)}
+                  </time>
+                </li>
+              ))}
+            </ul>
+          </>
+        ))
+      ) : (
+        <p class="meta">No posts published yet.</p>
+      )
+    }
+  </section>
+</BaseLayout>

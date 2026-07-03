@@ -1,0 +1,40 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  variant?: 'default' | 'about';
+  jsonLd?: 'WebSite' | 'WebPage' | 'BlogPosting' | 'none';
+  ogType?: 'website' | 'article' | 'profile';
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description,
+  variant = 'default',
+  jsonLd = 'WebPage',
+  ogType = 'website',
+  canonicalPath,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  variant={variant}
+  jsonLd={jsonLd}
+  ogType={ogType}
+  canonicalPath={canonicalPath}
+>
+  <article class="content-card">
+    <header class="mb-8">
+      <h1>{title}</h1>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

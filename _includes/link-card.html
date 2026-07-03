@@ -1,5 +1,0 @@
-<a href="{{ include.url }}" target="_blank" rel="noopener noreferrer" class="link-card not-prose">
-<span class="link-card-title">{{ include.title }}</span>
-{%- if include.description %}<span class="link-card-description">{{ include.description }}</span>{% endif %}
-<span class="link-card-url">{{ include.url | remove: 'https://' | remove: 'http://' | split: '/' | first }}</span>
-</a>

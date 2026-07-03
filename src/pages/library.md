@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: ../layouts/MarkdownPage.astro
 title: Library
-description: "A collection of tools and resources I've found useful."
+description: "A collection of tools and resources I’ve found useful."
 ---
 
 A collection of resources I've found useful.

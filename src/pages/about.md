@@ -1,7 +1,8 @@
 ---
-layout: page
+layout: ../layouts/MarkdownPage.astro
 title: About
 description: "Yaodong Zhao is a software engineer who writes about Ruby, Rails, AI coding tools, and the questions that surface while building web applications."
+seoVariant: about
 ---
 
 I'm Yaodong Zhao, a software engineer.
@@ -18,9 +19,9 @@ So this space is part technical blog, part thinking-out-loud. Software, design d
 {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": {{ site.author.name | jsonify }},
-  "description": {{ page.description | jsonify }},
-  "url": {{ page.url | absolute_url | jsonify }},
-  "sameAs": {{ site.social.links | jsonify }}
+  "name": "Yaodong Zhao",
+  "description": "Yaodong Zhao is a software engineer who writes about Ruby, Rails, AI coding tools, and the questions that surface while building web applications.",
+  "url": "https://yaodong.dev/about/",
+  "sameAs": ["https://www.linkedin.com/in/yaodong/","https://github.com/yaodong","https://x.com/YaodongDev"]
 }
 </script>

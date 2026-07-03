@@ -17,7 +17,11 @@ What if AI works exactly as the optimists hope, and that's what breaks the econo
 
 That's the scenario laid out by macro researcher Citrini and investor Alap Shah in a recent collaboration. It's written as a memo from June 2028, looking back at how a financial crisis unfolded. Not a story about AI going wrong. A story about AI going *right*, and the economic system not being built to handle it.
 
-{% include link-card.html url="https://www.citriniresearch.com/p/2028gic" title="The Global Intelligence Crisis" description="A scenario analysis written as a memo from June 2028, looking back at how AI-driven prosperity triggered a financial crisis." %}
+<a href="https://www.citriniresearch.com/p/2028gic" target="_blank" rel="noopener noreferrer" class="link-card not-prose">
+<span class="link-card-title">The Global Intelligence Crisis</span>
+<span class="link-card-description">A scenario analysis written as a memo from June 2028, looking back at how AI-driven prosperity triggered a financial crisis.</span>
+<span class="link-card-url">www.citriniresearch.com</span>
+</a>
 
 This isn't a prediction. Neither Citrini nor Shah is claiming this is the base case. It's a stress test of the left tail: the scenario that's possible but underexplored. The mechanisms it describes are already visible, the exposure is real, and the cost of being unprepared is asymmetric.
 

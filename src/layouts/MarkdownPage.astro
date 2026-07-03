@@ -1,0 +1,17 @@
+---
+// Adapter layout for Markdown pages in src/pages/*.md — maps their frontmatter
+// onto PageLayout's props so prose pages stay authorable as Markdown.
+import PageLayout from './PageLayout.astro';
+
+const { frontmatter } = Astro.props;
+const isAbout = frontmatter.seoVariant === 'about';
+---
+
+<PageLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  variant={isAbout ? 'about' : 'default'}
+  jsonLd={isAbout ? 'none' : 'WebPage'}
+>
+  <slot />
+</PageLayout>
