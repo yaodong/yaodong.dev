@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import CopyPage from '../components/CopyPage.astro';
 import { SITE } from '../lib/site';
 import { formatDate, isoDate } from '../lib/date';
 
@@ -11,6 +12,7 @@ interface RelatedPost {
 
 interface Props {
   title: string;
+  body: string;
   description: string;
   created_date: Date;
   updated_date?: Date;
@@ -24,6 +26,7 @@ interface Props {
 
 const {
   title,
+  body,
   description,
   created_date,
   updated_date,
@@ -47,6 +50,10 @@ if (author) {
     authorUrl = author.url;
   }
 }
+
+// canonicalPath is `/<slug>/`; the Markdown twin lives at `/<slug>.md`.
+const slug = canonicalPath.replace(/^\/|\/$/g, '');
+const mdUrl = `${SITE.url}/${slug}.md`;
 ---
 
 <BaseLayout
@@ -60,23 +67,26 @@ if (author) {
 >
   <article class="content-card">
     <header class="mb-8">
-      <a href="/" class="back-link mb-6 inline-block">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path d="M19 12H5"></path>
-          <path d="M12 19l-7-7 7-7"></path>
-        </svg>
-        <span>Back</span>
-      </a>
+      <div class="mb-6 flex items-center justify-between gap-4">
+        <a href="/" class="back-link">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          <span>Back</span>
+        </a>
+        <CopyPage title={title} body={body} mdUrl={mdUrl} />
+      </div>
 
       <h1 class="mb-4">{title}</h1>
 

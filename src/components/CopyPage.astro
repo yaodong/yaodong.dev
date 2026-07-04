@@ -1,0 +1,176 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  mdUrl: string; // absolute, e.g. https://yaodong.dev/<slug>.md
+}
+
+const { title, body, mdUrl } = Astro.props;
+
+// The clipboard content and the /<slug>.md file content are identical.
+const markdown = `# ${title}\n\n${body}`;
+
+const prompt = `Read from ${mdUrl} so I can ask questions about it.`;
+const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
+const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
+---
+
+<div class="copy-page" data-copy-page>
+  <div class="copy-page__split">
+    <button
+      type="button"
+      class="copy-page__main"
+      data-copy-action
+      aria-label="Copy page as Markdown"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <span class="copy-page__label" data-copy-label>Copy page</span>
+    </button>
+    <button
+      type="button"
+      class="copy-page__caret"
+      data-copy-toggle
+      aria-haspopup="true"
+      aria-expanded="false"
+      aria-label="Open copy options"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 9l6 6 6-6"></path>
+      </svg>
+    </button>
+  </div>
+
+  <ul class="copy-page__menu" data-copy-menu role="menu" hidden>
+    <li role="none">
+      <button type="button" class="copy-page__item" role="menuitem" data-copy-action>
+        Copy page
+      </button>
+    </li>
+    <li role="none">
+      <a class="copy-page__item" role="menuitem" href={mdUrl}>View as Markdown</a>
+    </li>
+    <li role="none">
+      <a
+        class="copy-page__item"
+        role="menuitem"
+        href={claudeUrl}
+        target="_blank"
+        rel="noopener"
+      >
+        Open in Claude
+      </a>
+    </li>
+    <li role="none">
+      <a
+        class="copy-page__item"
+        role="menuitem"
+        href={chatgptUrl}
+        target="_blank"
+        rel="noopener"
+      >
+        Open in ChatGPT
+      </a>
+    </li>
+  </ul>
+
+  <!-- Inline Markdown source for an instant, network-free clipboard write.
+       Astro escapes this text expression, so textContent decodes it back to
+       the exact Markdown even if the body contains </script> or & or <. -->
+  <div class="copy-page__source" data-copy-source hidden>{markdown}</div>
+</div>
+
+<script>
+  const root = document.querySelector('[data-copy-page]');
+  if (root) {
+    const toggle = root.querySelector<HTMLElement>('[data-copy-toggle]');
+    const menu = root.querySelector<HTMLElement>('[data-copy-menu]');
+    const label = root.querySelector<HTMLElement>('[data-copy-label]');
+    const source = root.querySelector<HTMLElement>('[data-copy-source]');
+    const actions = root.querySelectorAll('[data-copy-action]');
+    const defaultLabel = label ? label.textContent : 'Copy page';
+    let resetTimer: ReturnType<typeof setTimeout>;
+
+    function openMenu() {
+      if (!menu || !toggle) return;
+      menu.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMenu() {
+      if (!menu || !toggle) return;
+      menu.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function isOpen() {
+      return menu ? !menu.hidden : false;
+    }
+
+    async function copy() {
+      const text = source ? source.textContent || '' : '';
+      try {
+        if (!navigator.clipboard) throw new Error('no clipboard');
+        await navigator.clipboard.writeText(text);
+        if (label) {
+          label.textContent = 'Copied!';
+          clearTimeout(resetTimer);
+          resetTimer = setTimeout(() => {
+            label.textContent = defaultLabel;
+          }, 2000);
+        }
+      } catch {
+        // Fail gracefully: the raw Markdown stays reachable via "View as Markdown".
+      }
+      closeMenu();
+    }
+
+    toggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isOpen() ? closeMenu() : openMenu();
+    });
+
+    actions.forEach((btn) =>
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        copy();
+      })
+    );
+
+    // Selecting a link item closes the menu (links navigate on their own).
+    menu?.querySelectorAll('a[role="menuitem"]').forEach((link) =>
+      link.addEventListener('click', () => closeMenu())
+    );
+
+    document.addEventListener('click', (e) => {
+      if (isOpen() && !root.contains(e.target as Node)) closeMenu();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        closeMenu();
+        toggle?.focus();
+      }
+    });
+  }
+</script>

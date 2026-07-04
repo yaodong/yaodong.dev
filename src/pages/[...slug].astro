@@ -38,6 +38,7 @@ const publishedTime = `${postDatePrefix(post.id)}T00:00:00+00:00`;
 <PostLayout
   title={post.data.title}
   description={post.data.excerpt ?? ''}
+  body={post.body ?? ''}
   created_date={post.data.created_date}
   updated_date={post.data.updated_date}
   image={post.data.image}
