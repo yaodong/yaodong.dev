@@ -54,6 +54,7 @@ if (author) {
 // canonicalPath is `/<slug>/`; the Markdown twin lives at `/<slug>.md`.
 const slug = canonicalPath.replace(/^\/|\/$/g, '');
 const mdUrl = `${SITE.url}/${slug}.md`;
+const pageUrl = `${SITE.url}${canonicalPath}`;
 ---
 
 <BaseLayout
@@ -85,7 +86,7 @@ const mdUrl = `${SITE.url}/${slug}.md`;
           </svg>
           <span>Back</span>
         </a>
-        <CopyPage title={title} body={body} mdUrl={mdUrl} />
+        <CopyPage title={title} body={body} mdUrl={mdUrl} pageUrl={pageUrl} />
       </div>
 
       <h1 class="mb-4">{title}</h1>

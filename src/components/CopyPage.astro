@@ -3,12 +3,14 @@ interface Props {
   title: string;
   body: string;
   mdUrl: string; // absolute, e.g. https://yaodong.dev/<slug>.md
+  pageUrl: string; // absolute canonical URL, e.g. https://yaodong.dev/<slug>/
 }
 
-const { title, body, mdUrl } = Astro.props;
+const { title, body, mdUrl, pageUrl } = Astro.props;
 
 // The clipboard content and the /<slug>.md file content are identical.
 const markdown = `# ${title}\n\n${body}`;
+const mdLink = `[${title}](${pageUrl})`;
 
 const prompt = `Read from ${mdUrl} so I can ask questions about it.`;
 const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
@@ -20,7 +22,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     <button
       type="button"
       class="copy-page__main"
-      data-copy-action
+      data-copy-action="markdown"
       aria-label="Copy page as Markdown"
     >
       <svg
@@ -63,8 +65,18 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
 
   <ul class="copy-page__menu" data-copy-menu role="menu" hidden>
     <li role="none">
-      <button type="button" class="copy-page__item" role="menuitem" data-copy-action>
+      <button type="button" class="copy-page__item" role="menuitem" data-copy-action="markdown">
         Copy page
+      </button>
+    </li>
+    <li role="none">
+      <button type="button" class="copy-page__item" role="menuitem" data-copy-action="link">
+        Copy link
+      </button>
+    </li>
+    <li role="none">
+      <button type="button" class="copy-page__item" role="menuitem" data-copy-action="mdlink">
+        Copy Markdown link
       </button>
     </li>
     <li role="none">
@@ -94,10 +106,13 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     </li>
   </ul>
 
-  <!-- Inline Markdown source for an instant, network-free clipboard write.
-       Astro escapes this text expression, so textContent decodes it back to
-       the exact Markdown even if the body contains </script> or & or <. -->
-  <div class="copy-page__source" data-copy-source hidden>{markdown}</div>
+  <!-- Inline copy sources for an instant, network-free clipboard write, keyed
+       by the data-copy-action value that should copy each one. Astro escapes
+       these text expressions, so textContent decodes back to the exact text
+       even if the body contains </script> or & or <. -->
+  <div class="copy-page__source" data-copy-value="markdown" hidden>{markdown}</div>
+  <div class="copy-page__source" data-copy-value="link" hidden>{pageUrl}</div>
+  <div class="copy-page__source" data-copy-value="mdlink" hidden>{mdLink}</div>
 </div>
 
 <script>
@@ -106,8 +121,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     const toggle = root.querySelector<HTMLElement>('[data-copy-toggle]');
     const menu = root.querySelector<HTMLElement>('[data-copy-menu]');
     const label = root.querySelector<HTMLElement>('[data-copy-label]');
-    const source = root.querySelector<HTMLElement>('[data-copy-source]');
-    const actions = root.querySelectorAll('[data-copy-action]');
+    const actions = root.querySelectorAll<HTMLElement>('[data-copy-action]');
     const defaultLabel = label ? label.textContent : 'Copy page';
     let resetTimer: ReturnType<typeof setTimeout>;
 
@@ -127,7 +141,8 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       return menu ? !menu.hidden : false;
     }
 
-    async function copy() {
+    const copy = async (kind: string) => {
+      const source = root.querySelector<HTMLElement>(`[data-copy-value="${kind}"]`);
       const text = source ? source.textContent || '' : '';
       try {
         if (!navigator.clipboard) throw new Error('no clipboard');
@@ -143,7 +158,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
         // Fail gracefully: the raw Markdown stays reachable via "View as Markdown".
       }
       closeMenu();
-    }
+    };
 
     toggle?.addEventListener('click', (e) => {
       e.stopPropagation();
@@ -153,7 +168,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     actions.forEach((btn) =>
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        copy();
+        copy(btn.dataset.copyAction || 'markdown');
       })
     );
 
