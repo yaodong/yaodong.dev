@@ -45,6 +45,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       class="copy-page__caret"
       data-copy-toggle
       aria-haspopup="true"
+      aria-controls="copy-page-menu"
       aria-expanded="false"
       aria-label="Open copy options"
     >
@@ -63,44 +64,32 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     </button>
   </div>
 
-  <ul class="copy-page__menu" data-copy-menu role="menu" hidden>
-    <li role="none">
-      <button type="button" class="copy-page__item" role="menuitem" data-copy-action="markdown">
+  <ul class="copy-page__menu" data-copy-menu id="copy-page-menu" hidden>
+    <li>
+      <button type="button" class="copy-page__item" data-copy-action="markdown">
         Copy page
       </button>
     </li>
-    <li role="none">
-      <button type="button" class="copy-page__item" role="menuitem" data-copy-action="link">
+    <li>
+      <button type="button" class="copy-page__item" data-copy-action="link">
         Copy link
       </button>
     </li>
-    <li role="none">
-      <button type="button" class="copy-page__item" role="menuitem" data-copy-action="mdlink">
+    <li>
+      <button type="button" class="copy-page__item" data-copy-action="mdlink">
         Copy Markdown link
       </button>
     </li>
-    <li role="none">
-      <a class="copy-page__item" role="menuitem" href={mdUrl}>View as Markdown</a>
+    <li>
+      <a class="copy-page__item" href={mdUrl}>View as Markdown</a>
     </li>
-    <li role="none">
-      <a
-        class="copy-page__item"
-        role="menuitem"
-        href={claudeUrl}
-        target="_blank"
-        rel="noopener"
-      >
+    <li>
+      <a class="copy-page__item" href={claudeUrl} target="_blank" rel="noopener">
         Open in Claude
       </a>
     </li>
-    <li role="none">
-      <a
-        class="copy-page__item"
-        role="menuitem"
-        href={chatgptUrl}
-        target="_blank"
-        rel="noopener"
-      >
+    <li>
+      <a class="copy-page__item" href={chatgptUrl} target="_blank" rel="noopener">
         Open in ChatGPT
       </a>
     </li>
@@ -152,7 +141,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
           clearTimeout(resetTimer);
           resetTimer = setTimeout(() => {
             label.textContent = defaultLabel;
-          }, 2000);
+          }, 1500);
         }
       } catch {
         // Fail gracefully: the raw Markdown stays reachable via "View as Markdown".
@@ -173,7 +162,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     );
 
     // Selecting a link item closes the menu (links navigate on their own).
-    menu?.querySelectorAll('a[role="menuitem"]').forEach((link) =>
+    menu?.querySelectorAll('a.copy-page__item').forEach((link) =>
       link.addEventListener('click', () => closeMenu())
     );
 

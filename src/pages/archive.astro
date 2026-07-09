@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { formatDateShort, isoDate } from '../lib/date';
+import { isoDate, monthDay } from '../lib/date';
 import { postSlug } from '../lib/site';
 
 const posts = (await getCollection('blog')).sort(
@@ -31,32 +31,33 @@ const description =
   jsonLd="WebPage"
   ogType="website"
 >
-  <section class="content-card">
-    <header class="mb-8">
-      <h1>Archive</h1>
-      <p class="meta mt-2">{posts.length} posts</p>
-    </header>
+  <main id="main-content" tabindex="-1" class="page-main page-main--archive">
+    <h1 class="page-title">Archive</h1>
 
     {
       posts.length > 0 ? (
         byYear.map((group) => (
-          <>
+          <div class="archive-group">
             <h2 class="archive-year">{group.year}</h2>
-            <ul>
+            <div class="archive-list">
               {group.items.map((post) => (
-                <li class="post-item">
-                  <a href={`/${postSlug(post.id)}/`}>{post.data.title}</a>
-                  <time datetime={isoDate(post.data.created_date)}>
-                    {formatDateShort(post.data.created_date)}
+                <div class="archive-row">
+                  <h3 class="archive-row__heading">
+                    <a href={`/${postSlug(post.id)}/`} class="archive-row__title">
+                      {post.data.title}
+                    </a>
+                  </h3>
+                  <time class="archive-row__date" datetime={isoDate(post.data.created_date)}>
+                    {monthDay(post.data.created_date)}
                   </time>
-                </li>
+                </div>
               ))}
-            </ul>
-          </>
+            </div>
+          </div>
         ))
       ) : (
-        <p class="meta">No posts published yet.</p>
+        <p class="post-row__excerpt">No posts published yet.</p>
       )
     }
-  </section>
+  </main>
 </BaseLayout>

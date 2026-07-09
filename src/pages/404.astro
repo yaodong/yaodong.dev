@@ -12,7 +12,18 @@ const description =
   ogType="website"
   canonicalPath="/404.html"
 >
-  <div class="flex justify-center p-10">
-    <img src="/assets/images/404.svg" alt="Page Not Found" class="h-96" />
-  </div>
+  <main id="main-content" tabindex="-1" class="page-main page-main--page">
+    <h1 class="page-title">Page not found</h1>
+    <p class="notfound__text">
+      The page you’re looking for doesn’t exist or has moved. The link that
+      brought you here may be out of date.
+    </p>
+    <div class="notfound__actions">
+      <a href="/" class="arrow-link">back home →</a>
+      <a href="/archive/" class="arrow-link">browse the archive →</a>
+    </div>
+    <div class="notfound__art">
+      <img src="/assets/images/404.svg" alt="" class="h-96 max-w-full" decoding="async" />
+    </div>
+  </main>
 </BaseLayout>

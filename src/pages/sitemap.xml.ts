@@ -18,7 +18,7 @@ export const GET: APIRoute = async () => {
     `${SITE.url}/about/`,
     `${SITE.url}/archive/`,
     `${SITE.url}/`,
-    `${SITE.url}/library/`,
+    `${SITE.url}/useful-links/`,
     `${SITE.url}/projects/`,
   ].map((loc) => ({ loc, lastmod: null as string | null }));
 

@@ -5,15 +5,15 @@ description: "Yaodong Zhao is a software engineer who writes about Ruby, Rails, 
 seoVariant: about
 ---
 
-I'm Yaodong Zhao, a software engineer.
+I'm Yaodong Zhao, a software engineer. I build web applications.
 
-I build web applications. But what keeps me interested isn't the building itself. It's the questions that surface along the way. Why did the designers make this trade-off? What gets lost when we optimize for convenience? When a constraint feels limiting, is it a flaw, or is it the point?
+What keeps me interested isn't the building itself. It's the questions that surface along the way. Why the designers made a trade-off. What gets lost when we optimize for convenience. Whether a constraint that feels limiting is a flaw or the point.
 
-These days, I've been exploring AI coding tools, trying to understand what changes when the tool starts thinking alongside you. It's a strange shift: watching something else write code while you guide it, wondering where your judgment ends and its suggestions begin.
+These days I work with AI coding tools. Something else writes the code while I guide it. I'm trying to understand what that changes. I can't always tell where my judgment ends and its suggestions begin.
 
-That's part of why I write here. AI can summarize solutions, but it can't capture what it felt like to find them. The dead ends, the debugging at midnight, the trade-offs made under constraints nobody else will see. I want to hold onto those details, even the ordinary ones. They're what actually happened.
+That's part of why I write here. AI can summarize solutions. It can't capture what it felt like to find them: the dead ends, the debugging at midnight, the trade-offs made under constraints nobody else will see. I try to keep those details, even the ordinary ones. They're what actually happened.
 
-So this space is part technical blog, part thinking-out-loud. Software, design decisions, and sometimes a connection to something further afield. If you want to talk, find me on [LinkedIn](https://www.linkedin.com/in/yaodong/), [GitHub](https://github.com/yaodong), or [X](https://x.com/YaodongDev).
+This blog is about software, design decisions, and sometimes a connection to something further afield. Some posts are just thinking out loud. I'm reachable on [LinkedIn](https://www.linkedin.com/in/yaodong/), [GitHub](https://github.com/yaodong), and [X](https://x.com/YaodongDev).
 
 <script type="application/ld+json">
 {

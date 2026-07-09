@@ -1,13 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { formatDate, isoDate } from '../lib/date';
+import { isoDate } from '../lib/date';
 import { postSlug } from '../lib/site';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.created_date.valueOf() - a.data.created_date.valueOf()
 );
-const recent = posts.slice(0, 10);
+const featured = posts[0];
+const rest = posts.slice(1, 10);
 
 const description =
   'Technical articles on Ruby, Rails, AI coding tools, and software engineering by Yaodong Zhao.';
@@ -19,31 +20,60 @@ const description =
   jsonLd="WebSite"
   ogType="website"
 >
-  <section class="content-card">
-    <header class="mb-6">
-      <h2>Recent Posts</h2>
-    </header>
+  <h1 class="sr-only">Writing by Yaodong Zhao</h1>
+  {
+    featured && (
+      <div class="featured">
+        <div class="container featured__inner">
+          <div class="featured__label">LATEST · {isoDate(featured.data.created_date)}</div>
+          <h2 class="featured__heading">
+            <a href={`/${postSlug(featured.id)}/`} class="featured__title">
+              {featured.data.title}
+            </a>
+          </h2>
+          {featured.data.excerpt && (
+            <p class="featured__excerpt">{featured.data.excerpt}</p>
+          )}
+          <a href={`/${postSlug(featured.id)}/`} class="arrow-link" style="margin-top: 18px;">
+            read →
+          </a>
+        </div>
+      </div>
+    )
+  }
 
+  <main id="main-content" tabindex="-1" class="page-main page-main--home">
     {
-      recent.length > 0 ? (
+      rest.length > 0 ? (
         <div class="post-list">
-          {recent.map((post) => (
-            <article class="post-card">
-              <header class="post-card-header">
-                <a href={`/${postSlug(post.id)}/`} class="post-card-title">
-                  {post.data.title}
-                </a>
-                <time datetime={isoDate(post.data.created_date)}>
-                  {formatDate(post.data.created_date)}
+          {rest.map((post) => (
+            <article class="post-row">
+              <div class="post-row__head">
+                <h2 class="post-row__heading">
+                  <a href={`/${postSlug(post.id)}/`} class="post-row__title">
+                    {post.data.title}
+                  </a>
+                </h2>
+                <time class="post-row__date" datetime={isoDate(post.data.created_date)}>
+                  {isoDate(post.data.created_date)}
                 </time>
-              </header>
-              <p class="post-card-excerpt">{post.data.excerpt}</p>
+              </div>
+              {post.data.excerpt && (
+                <p class="post-row__excerpt">{post.data.excerpt}</p>
+              )}
             </article>
           ))}
         </div>
       ) : (
-        <p class="meta">No posts found.</p>
+        <p class="post-row__excerpt">No posts found.</p>
       )
     }
-  </section>
+    {
+      rest.length > 0 && (
+        <a href="/archive/" class="arrow-link" style="margin-top: 24px;">
+          all posts →
+        </a>
+      )
+    }
+  </main>
 </BaseLayout>

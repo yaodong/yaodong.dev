@@ -21,7 +21,7 @@ While all of that was happening, I'd noticed something interesting about the pro
 
 Both were happening at the same time. I wasn't waiting for either.
 
-![Two Discord threads running simultaneously, Builder writing code on the left, Explorer developing an idea on the right](/assets/images/2026-02-21/parallel-work.png)
+<img src="/assets/images/2026-02-21/parallel-work.png" alt="Two Discord threads running simultaneously, Builder writing code on the left, Explorer developing an idea on the right" width="1800" height="1214" loading="lazy" decoding="async">
 
 That's the system in motion. Here's what's behind it: three agents, two Docker containers, one Discord server.
 
@@ -41,7 +41,7 @@ That trade-off didn't work for me. Builder needs a rich development environment 
 
 There's another dimension to this isolation that I didn't anticipate when I started: version independence. OpenClaw moves fast. Breaking changes happen, and I've had agents fail to start after an upgrade more than once. Because each container manages its own OpenClaw installation, I can upgrade one agent without touching the others. If Builder breaks after an update, Helm is still running on a stable version. More importantly, I can ask Helm to go fix Builder: shell into the container, diagnose the issue, and restore her. That's only possible because they don't share a runtime.
 
-![System architecture: three agents connected through Discord, with Builder and Explorer in Docker containers and Helm on the host](/assets/images/2026-02-21/architecture.png)
+<img src="/assets/images/2026-02-21/architecture.png" alt="System architecture: three agents connected through Discord, with Builder and Explorer in Docker containers and Helm on the host" width="1800" height="816" loading="lazy" decoding="async">
 
 The agents are the moving parts. The Discord server is what makes them usable.
 
@@ -51,7 +51,7 @@ When a conversation starts to go deep, I open a thread. This turned out to be th
 
 In practice, three kinds of channels emerged. Brainstorming channels are where unstructured ideas land. I open a thread for each new topic to keep conversations isolated. Project channels are for long-running work: when something from a brainstorming thread grows into a real project, it gets its own channel where Helm can push it forward. Automated channels handle recurring tasks, like a `#digest` channel where content summaries arrive daily, or a `#heartbeat` channel for monitoring.
 
-![Discord server layout: channels organized by domain with the channel topic acting as an agent prompt](/assets/images/2026-02-21/discord-channels.png)
+<img src="/assets/images/2026-02-21/discord-channels.png" alt="Discord server layout: channels organized by domain with the channel topic acting as an agent prompt" width="1800" height="730" loading="lazy" decoding="async">
 
 One detail that required some thought: `requireMention` is configured per channel, not globally. Helm passively monitors everything by default. But in project channels, Builder is the default observer. She sees everything in her own space, while other agents, including Helm, only engage when explicitly called. I had to list each channel explicitly in the config (it's a whitelist), but Helm manages that since she has visibility across the whole server.
 

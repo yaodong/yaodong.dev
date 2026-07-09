@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/MarkdownPage.astro
-title: Library
+title: Useful Links
 description: "A collection of tools and resources I’ve found useful."
 ---
 

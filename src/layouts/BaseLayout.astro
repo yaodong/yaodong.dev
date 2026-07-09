@@ -23,30 +23,29 @@ const year = new Date().getFullYear();
   <head>
     <BaseHead {...props} />
   </head>
-  <body class="min-h-screen antialiased">
-    <header
-      class="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-6 sm:px-6 sm:py-10"
-    >
-      <a href="/" class="logo-text text-lg hover:text-[var(--color-accent)]">
-        {SITE.title}
-      </a>
-      <nav class="flex items-center gap-4 sm:gap-6">
-        {
-          SITE.navigation.map((item) => (
-            <a
-              href={item.url}
-              class:list={['nav-link', { 'nav-link-active': currentPath === item.url }]}
-            >
-              {item.title}
-            </a>
-          ))
-        }
-        <button
-          type="button"
-          class="theme-toggle"
-          aria-label="Toggle dark mode"
-          title="Toggle dark mode"
-        >
+  <body class="flex min-h-screen flex-col antialiased">
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a href="/" class="logo"><span class="logo-tilde">~</span>/yaodong.dev</a>
+        <nav class="site-nav">
+          {
+            SITE.navigation.map((item) => (
+              <a
+                href={item.url}
+                class:list={['nav-link', { 'nav-link-active': currentPath === item.url }]}
+              >
+                {item.title}
+              </a>
+            ))
+          }
+          <button
+            type="button"
+            class="theme-toggle"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+            title="Switch to dark mode"
+          >
           <svg
             class="icon-sun"
             xmlns="http://www.w3.org/2000/svg"
@@ -80,18 +79,26 @@ const year = new Date().getFullYear();
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
-      </nav>
+        </nav>
+      </div>
     </header>
 
-    <main class="mx-auto w-full max-w-4xl px-0 pb-12 sm:px-6 sm:pb-16">
-      <slot />
-    </main>
+    <slot />
 
-    <footer
-      class="site-footer mx-auto w-full max-w-4xl px-4 pb-10 text-center sm:px-6 sm:pb-12"
-    >
-      <div class="divider mb-8"></div>
-      <p>&copy; {year} {SITE.title}</p>
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <span class="site-footer__copy">&copy; {year} {SITE.title}</span>
+        <nav class="site-footer__links">
+          {
+            SITE.footerLinks.map((item, i) => (
+              <>
+                {i > 0 && <span class="site-footer__dot">&middot;</span>}
+                <a href={item.url}>{item.title}</a>
+              </>
+            ))
+          }
+        </nav>
+      </div>
     </footer>
 
     <script is:inline>
@@ -112,6 +119,7 @@ const year = new Date().getFullYear();
           if (theme) {
             root.classList.add(theme);
           }
+          syncToggle();
         }
 
         // Get current effective theme
@@ -121,6 +129,17 @@ const year = new Date().getFullYear();
           return window.matchMedia('(prefers-color-scheme: dark)').matches
             ? 'dark'
             : 'light';
+        }
+
+        // Reflect the effective theme on the toggle for assistive tech:
+        // aria-pressed = "is dark active", label/title = the action it performs.
+        function syncToggle() {
+          if (!toggle) return;
+          const isDark = getCurrentTheme() === 'dark';
+          const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+          toggle.setAttribute('aria-pressed', String(isDark));
+          toggle.setAttribute('aria-label', label);
+          toggle.setAttribute('title', label);
         }
 
         // Toggle theme

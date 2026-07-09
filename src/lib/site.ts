@@ -15,12 +15,19 @@ export const SITE = {
     'https://github.com/yaodong',
     'https://x.com/YaodongDev',
   ],
+  // Home is the logo; nav shows lowercase path-style links only.
   navigation: [
-    { title: 'Home', url: '/' },
-    { title: 'Archive', url: '/archive/' },
-    { title: 'Projects', url: '/projects/' },
-    { title: 'Library', url: '/library/' },
-    { title: 'About', url: '/about/' },
+    { title: '/archive', url: '/archive/' },
+    { title: '/about', url: '/about/' },
+  ],
+  // Compact footer link row: `useful links · github · x · linkedin · rss`.
+  footerLinks: [
+    { title: 'WHIR', url: 'https://whir.org/' },
+    { title: 'useful links', url: '/useful-links/' },
+    { title: 'github', url: 'https://github.com/yaodong' },
+    { title: 'x', url: 'https://x.com/YaodongDev' },
+    { title: 'linkedin', url: 'https://www.linkedin.com/in/yaodong/' },
+    { title: 'rss', url: '/feed.xml' },
   ],
   googleAnalyticsId: 'G-E8XC309H1N',
 } as const;

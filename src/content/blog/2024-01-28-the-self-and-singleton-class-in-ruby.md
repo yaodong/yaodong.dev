@@ -9,7 +9,7 @@ excerpt: "In Ruby, class methods don't actually exist. They're instance methods 
 
 In Ruby, everything is an object, and every object has an anonymous class, which defines the methods the object can respond to. This anonymous class is called the _singleton class_.
 
-![ruby singleton class inheritance](/assets/images/2024-01-ruby-singleton-class-inheritance.png)
+<img src="/assets/images/2024-01-ruby-singleton-class-inheritance.png" alt="ruby singleton class inheritance" width="3002" height="900" loading="lazy" decoding="async">
 
 When calling a method on an object, Ruby will perform the method lookup by first checking on the object’s _singleton class_, before traversing the rest of the method chain.
 

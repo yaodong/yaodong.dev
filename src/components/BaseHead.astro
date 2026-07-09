@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../lib/site';
+import '../styles/fonts.css';
 import '../styles/application.css';
 
 interface Props {
@@ -91,13 +92,21 @@ if (variant === 'default' && jsonLd !== 'none') {
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<meta name="theme-color" content="#FBFBFA" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#151514" media="(prefers-color-scheme: dark)" />
 <link
-  href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
-  rel="stylesheet"
+  rel="preload"
+  href="/fonts/fira-sans-400-latin.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/jetbrains-mono-400-latin.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
 />
 
 {
