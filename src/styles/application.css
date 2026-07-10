@@ -766,11 +766,37 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   404 — error state: say what happened, offer a way forward.
+   404 — error state: the number is the art. Say what happened, offer a way
+   forward, and fill the viewport so the "404" sits centered between chrome.
    -------------------------------------------------------------------------- */
+.page-main--notfound {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 24px 56px;
+}
+
+.notfound__status {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin: 0 0 24px;
+}
+
+.notfound__code {
+  font-family: var(--font-mono);
+  font-size: clamp(4.5rem, 22vw, 10.5rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  margin: 0 0 32px -0.5rem;
+}
+
 .notfound__text {
   max-width: 60ch;
-  margin: 0 0 24px;
+  margin: 0 0 28px;
   font-size: 1rem;
   line-height: 1.7;
   color: var(--color-text-secondary);
@@ -780,12 +806,6 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  margin-bottom: 48px;
-}
-
-.notfound__art {
-  display: flex;
-  justify-content: center;
 }
 
 /* --------------------------------------------------------------------------
