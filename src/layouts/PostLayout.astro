@@ -80,7 +80,7 @@ const pageUrl = `${SITE.url}${canonicalPath}`;
               <span class="post-author">
                 by{' '}
                 {authorUrl ? (
-                  <a href={authorUrl}>{authorName}</a>
+                  <a href={authorUrl} rel="author">{authorName}</a>
                 ) : (
                   <span>{authorName}</span>
                 )}

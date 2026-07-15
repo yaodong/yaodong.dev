@@ -19,6 +19,7 @@ This blog is about software, design decisions, and sometimes a connection to som
 {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": "https://yaodong.dev/about/#person",
   "name": "Yaodong Zhao",
   "description": "Yaodong Zhao is a software engineer who writes about Ruby, Rails, AI coding tools, and the questions that surface while building web applications.",
   "url": "https://yaodong.dev/about/",

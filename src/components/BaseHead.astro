@@ -35,7 +35,13 @@ const canonical = new URL(canonicalPath ?? Astro.url.pathname, SITE.url);
 const canonicalHref = canonical.href;
 const imageAbs = image ? new URL(image, SITE.url).href : undefined;
 const twitterHandle = `@${SITE.author.twitter}`;
-const person = { '@type': 'Person', name: SITE.author.name, url: SITE.author.url };
+const person = {
+  '@type': 'Person',
+  '@id': `${SITE.url}/about/#person`,
+  name: SITE.author.name,
+  url: SITE.author.url,
+  sameAs: SITE.social,
+};
 
 let jsonLdData: Record<string, unknown> | null = null;
 if (variant === 'default' && jsonLd !== 'none') {
@@ -47,7 +53,6 @@ if (variant === 'default' && jsonLd !== 'none') {
       description,
       headline: title,
       name: title,
-      sameAs: SITE.social,
       url: canonicalHref,
     };
   } else if (jsonLd === 'BlogPosting') {
@@ -108,6 +113,7 @@ if (variant === 'default' && jsonLd !== 'none') {
   type="font/woff2"
   crossorigin
 />
+{SITE.social.map((url) => <link rel="me" href={url} />)}
 
 {
   variant === 'about' ? (
