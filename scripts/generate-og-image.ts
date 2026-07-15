@@ -8,16 +8,16 @@ import matter from "gray-matter";
 const WIDTH = 1200;
 const HEIGHT = 630;
 
-// OG image colors (light theme like wisp.blog)
+// Monochrome dark poster — matches the site's dark theme tokens
+// (see src/styles/application.css). One huge title + the ~/yaodong.dev
+// mark with reading time. Nothing else: OG cards render at ~480px in
+// feeds, so small metadata is illegible noise.
 const COLORS = {
-  accent: "#E67B31",
-  text: "#1a1a1a",
-  textSecondary: "#525252",
-  bg: "#f5f5f0",
-  bgContent: "#f5f5f0",
+  bg: "#151514",
+  text: "#E2E2DD",
+  muted: "#82827B",
 };
 
-// Get the directory of this script
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -26,76 +26,105 @@ async function loadLocalFont(filename: string): Promise<Buffer> {
   return readFile(fontPath);
 }
 
-// Strip markdown syntax from text
-function stripMarkdown(text: string): string {
-  return text
-    // Remove links: [text](url) -> text
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    // Remove images: ![alt](url)
-    .replace(/!\[([^\]]*)\]\([^)]+\)/g, "")
-    // Remove bold: **text** or __text__
-    .replace(/(\*\*|__)(.*?)\1/g, "$2")
-    // Remove italic: *text* or _text_
-    .replace(/(\*|_)(.*?)\1/g, "$2")
-    // Remove inline code: `code`
-    .replace(/`([^`]+)`/g, "$1")
-    // Remove headers: # text
-    .replace(/^#{1,6}\s+/gm, "")
-    // Remove blockquotes: > text
-    .replace(/^>\s+/gm, "")
-    // Remove horizontal rules
-    .replace(/^[-*_]{3,}\s*$/gm, "")
-    // Clean up extra whitespace
-    .replace(/\s+/g, " ")
-    .trim();
+// Layout budget for auto-fitting the title. The title sits at the top and the
+// mark is pinned to the bottom (justify: space-between); we size the title so
+// its wrapped height never eats into the mark's row — long titles shrink to
+// stay on the card instead of overrunning it or colliding with the mark.
+const PADDING = 64;
+const MARK_FONT_SIZE = 34;
+const INNER_WIDTH = WIDTH - PADDING * 2;
+const INNER_HEIGHT = HEIGHT - PADDING * 2;
+const TITLE_MAX_WIDTH = Math.round(INNER_WIDTH * 0.96);
+// Reserve the mark's line box (~1.3× its size) plus a 32px minimum gap.
+const TITLE_MAX_HEIGHT = INNER_HEIGHT - Math.ceil(MARK_FONT_SIZE * 1.3) - 32;
+const TITLE_FONT_MAX = 122;
+const TITLE_FONT_MIN = 44;
+
+type Fonts = Parameters<typeof satori>[1]["fonts"];
+
+function titleStyle(fontSize: number) {
+  return {
+    fontFamily: "Fira Sans",
+    fontSize,
+    fontWeight: 600,
+    color: COLORS.text,
+    letterSpacing: "-0.045em",
+    lineHeight: 0.98,
+    margin: 0,
+  };
+}
+
+// Measure the rendered height of the title at a given size: satori returns an
+// SVG sized to its content when we omit the height, so we read it back.
+async function measureTitleHeight(
+  title: string,
+  fontSize: number,
+  fonts: Fonts,
+): Promise<number> {
+  const svg = await satori(
+    {
+      type: "div",
+      props: {
+        style: { display: "flex", width: TITLE_MAX_WIDTH },
+        children: {
+          type: "h1",
+          props: {
+            style: { ...titleStyle(fontSize), width: "100%" },
+            children: title,
+          },
+        },
+      },
+    },
+    { width: TITLE_MAX_WIDTH, fonts },
+  );
+  const match = svg.match(/<svg[^>]*\bheight="([\d.]+)"/);
+  return match ? parseFloat(match[1]) : Number.POSITIVE_INFINITY;
+}
+
+// Largest font size within [MIN, MAX] whose wrapped title fits the height
+// budget. Binary search — wrapped height is monotonic in font size.
+async function fitTitleFontSize(title: string, fonts: Fonts): Promise<number> {
+  let lo = TITLE_FONT_MIN;
+  let hi = TITLE_FONT_MAX;
+  let best = TITLE_FONT_MIN;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    const height = await measureTitleHeight(title, mid, fonts);
+    if (height <= TITLE_MAX_HEIGHT) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
+  }
+  return best;
 }
 
 async function generateOgImage(postPath: string) {
-  // Read post frontmatter and content
   const fileContent = await readFile(postPath, "utf-8");
   const { data, content } = matter(fileContent);
   const title = data.title || "Untitled Post";
 
-  // Calculate reading time (roughly 200 words per minute)
+  // Reading time (~200 wpm)
   const wordCount = content.trim().split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
-  // Extract description from post content
-  // Remove code blocks first, then get paragraphs
-  const contentWithoutCode = content
-    .replace(/```[\s\S]*?```/g, "") // Remove fenced code blocks
-    .replace(/`[^`]+`/g, ""); // Remove inline code
-  
-  let description = data.excerpt || data.custom_excerpt || data.description || "";
-  if (!description) {
-    const paragraphs = contentWithoutCode
-      .split(/\n\n+/)
-      .filter((p) => p.trim() && !p.startsWith("#") && !p.startsWith("```"));
-    if (paragraphs.length > 0) {
-      // Join multiple paragraphs to get more content
-      description = paragraphs.slice(0, 3).join(" ").replace(/\n/g, " ").trim();
-    }
-  }
-  // Strip markdown syntax - use plenty of text, overflow will be hidden with fade effect
-  description = stripMarkdown(description);
-  // Keep up to 600 chars - the container will clip overflow and gradient will fade it out
-  if (description.length > 600) {
-    description = description.substring(0, 600);
-  }
-
-  // Load Fira Sans font from local files
-  const [fontRegular, fontMedium] = await Promise.all([
-    loadLocalFont("FiraSans-Regular.ttf"),
-    loadLocalFont("FiraSans-Medium.ttf"),
+  // Fonts: Fira Sans SemiBold for the title, JetBrains Mono SemiBold
+  // for the mark — both weight 600, mirroring the site's heading/logo.
+  const [firaSemiBold, monoSemiBold] = await Promise.all([
+    loadLocalFont("FiraSans-SemiBold.ttf"),
+    loadLocalFont("JetBrainsMono-SemiBold.ttf"),
   ]);
+  const fonts: Fonts = [
+    { name: "Fira Sans", data: firaSemiBold, weight: 600, style: "normal" },
+    { name: "JetBrains Mono", data: monoSemiBold, weight: 600, style: "normal" },
+  ];
 
-  // Determine font size based on title length
-  // Only hide description for very long titles (>100 chars)
-  const isVeryLongTitle = title.length > 100;
-  const titleFontSize = title.length > 100 ? "42px" : title.length > 70 ? "52px" : title.length > 50 ? "60px" : "72px";
-  const showDescription = !isVeryLongTitle && description;
+  // Poster-scale title, auto-fit to the card: measure the wrapped title and
+  // pick the largest size that fits, so long titles shrink instead of
+  // overflowing. Char-count heuristics can't see wrapping; measuring can.
+  const titleFontSize = await fitTitleFontSize(title, fonts);
 
-  // Generate SVG with Satori
   const svg = await satori(
     {
       type: "div",
@@ -107,139 +136,45 @@ async function generateOgImage(postPath: string) {
           flexDirection: "column",
           justifyContent: "space-between",
           backgroundColor: COLORS.bg,
-          padding: "60px",
+          padding: PADDING,
         },
         children: [
-          // Top section
+          // Title — top, dominates the card
+          {
+            type: "h1",
+            props: {
+              style: { ...titleStyle(titleFontSize), maxWidth: "96%" },
+              children: title,
+            },
+          },
+          // Mark — bottom-left: ~/yaodong.dev · N min
           {
             type: "div",
             props: {
               style: {
                 display: "flex",
-                flexDirection: "column",
-                gap: "40px",
+                alignItems: "baseline",
+                fontFamily: "JetBrains Mono",
+                fontSize: MARK_FONT_SIZE,
+                fontWeight: 600,
               },
               children: [
-                // Reading time tag (top left)
                 {
-                  type: "div",
-                  props: {
-                    style: {
-                      display: "flex",
-                    },
-                    children: {
-                      type: "span",
-                      props: {
-                        style: {
-                          fontSize: "28px",
-                          fontWeight: 500,
-                          color: "#ffffff",
-                          backgroundColor: COLORS.text,
-                          padding: "8px 16px",
-                          borderRadius: "4px",
-                        },
-                        children: `${readingTime} min read`,
-                      },
-                    },
-                  },
+                  type: "span",
+                  props: { style: { color: COLORS.muted }, children: "~/" },
                 },
-                // Title and description
                 {
-                  type: "div",
+                  type: "span",
+                  props: { style: { color: COLORS.text }, children: "yaodong.dev" },
+                },
+                {
+                  type: "span",
                   props: {
-                    style: {
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "20px",
-                    },
-                    children: [
-                      // Title (large, medium weight, left-aligned)
-                      {
-                        type: "h1",
-                        props: {
-                          style: {
-                            fontSize: titleFontSize,
-                            fontWeight: 500,
-                            color: COLORS.text,
-                            letterSpacing: "-0.03em",
-                            lineHeight: 1.1,
-                            margin: 0,
-                            maxWidth: "95%",
-                          },
-                          children: title,
-                        },
-                      },
-                      // Description with fade effect (hidden for long titles)
-                      showDescription
-                        ? {
-                            type: "div",
-                            props: {
-                              style: {
-                                display: "flex",
-                                flexDirection: "column",
-                                position: "relative",
-                                maxWidth: "90%",
-                                maxHeight: "200px",
-                                overflow: "hidden",
-                              },
-                              children: [
-                                // Text content
-                                {
-                                  type: "p",
-                                  props: {
-                                    style: {
-                                      fontSize: "28px",
-                                      fontWeight: 400,
-                                      color: COLORS.textSecondary,
-                                      lineHeight: 1.5,
-                                      margin: 0,
-                                    },
-                                    children: description,
-                                  },
-                                },
-                                // Gradient fade overlay - from transparent to background
-                                {
-                                  type: "div",
-                                  props: {
-                                    style: {
-                                      position: "absolute",
-                                      bottom: 0,
-                                      left: 0,
-                                      right: 0,
-                                      height: "60px",
-                                      background: `linear-gradient(180deg, rgba(245,245,240,0) 0%, rgba(245,245,240,1) 100%)`,
-                                    },
-                                  },
-                                },
-                              ],
-                            },
-                          }
-                        : null,
-                    ].filter(Boolean),
+                    style: { color: COLORS.muted },
+                    children: ` · ${readingTime} min`,
                   },
                 },
               ],
-            },
-          },
-          // Bottom right: Domain name (same color as title)
-          {
-            type: "div",
-            props: {
-              style: {
-                display: "flex",
-                justifyContent: "flex-end",
-              },
-              children: {
-                type: "span",
-                props: {
-                  style: {
-                    fontSize: "28px",
-                    fontWeight: 400,
-                    color: COLORS.text,
-                  },
-                  children: "yaodong.dev",
-                },
-              },
             },
           },
         ],
@@ -248,47 +183,22 @@ async function generateOgImage(postPath: string) {
     {
       width: WIDTH,
       height: HEIGHT,
-      fonts: [
-        {
-          name: "Fira Sans",
-          data: fontRegular,
-          weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Fira Sans",
-          data: fontMedium,
-          weight: 500,
-          style: "normal",
-        },
-      ],
+      fonts,
     }
   );
 
-  // Convert SVG to PNG
-  const resvg = new Resvg(svg, {
-    fitTo: {
-      mode: "width",
-      value: WIDTH,
-    },
-  });
-  const pngData = resvg.render();
-  const pngBuffer = pngData.asPng();
+  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: WIDTH } });
+  const pngBuffer = resvg.render().asPng();
 
-  // Determine output path (keep same filename as post)
   const filename = basename(postPath, ".md");
   const outputDir = join(process.cwd(), "public/assets/images/og");
   const outputPath = join(outputDir, `${filename}.png`);
   const imageUrl = `/assets/images/og/${filename}.png`;
 
-  // Ensure output directory exists
   await mkdir(outputDir, { recursive: true });
-
-  // Write PNG file
   await writeFile(outputPath, pngBuffer);
   console.log(`✓ Generated: ${outputPath}`);
 
-  // Update frontmatter with image path if needed
   if (data.image !== imageUrl) {
     data.image = imageUrl;
     const updatedContent = matter.stringify(content, data);
@@ -311,4 +221,3 @@ generateOgImage(args[0]).catch((err) => {
   console.error("Error generating OG image:", err);
   process.exit(1);
 });
-
