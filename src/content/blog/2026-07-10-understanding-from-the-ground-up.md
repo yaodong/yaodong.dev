@@ -56,9 +56,9 @@ Part of that happens inside the work I already do. When AI creates a pull reques
 
 Reviewing what the AI built runs the same way. Every model carries its own biases, so I don't let one check its own work. I hand the design to a second model, or at least a fresh conversation that hasn't inherited the build's assumptions, and ask where it's weakest, what it leaves out, and where it breaks first if it fails. Which gaps matter, and why, is still mine to work out.
 
-The rest runs on curiosity. I pick a few topics and read around them, the books and the articles and the code, whether or not they relate to my work. Lately I've been reading about how different web frameworks handle per-request context, or how SQLite can use S3 as its storage.
+The rest runs on curiosity. I pick a few topics and read around them, the books and the articles and the code, whether or not they relate to my work. Lately I've been reading about how different web frameworks handle per-request context, or how SQLite can use S3 as its storage. Here too I lean on AI, as a teacher. I have it explain the topic, then push back on its answers and follow the threads that still don't make sense.
 
-Here too I lean on AI, as a teacher. I have it explain the topic, then push back on its answers and follow the threads that still don't make sense. But I don't stop there. I make myself write a few paragraphs or some code and see if it stands. Writing is slow, so I often talk it through and let the machine transcribe, then have it read back what I made and find the holes. Whether I can put the idea in my own words turns out to be a decent test; when I can't, I've usually skipped a step.
+Then I make myself write a few paragraphs or some code and see if it stands. Writing is slow, so I often talk it through and let the machine transcribe, then have it read back what I made and find the holes. Whether I can put the idea in my own words turns out to be a decent test; when I can't, I've usually skipped a step.
 
 Almost all of this goes through AI, and I let it. But I still work a problem before I ask, and sit with things the machine could have closed in seconds, because the parts I struggle through are the parts I end up understanding.
 
