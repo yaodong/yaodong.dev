@@ -3,7 +3,7 @@ layout: post
 title: Understanding Bridge Component Messaging in Hotwire Native
 created_date: 2025-05-12T00:00:00.000Z
 image: /assets/images/og/2025-05-12-hotwire-native-bridge-component-messaging.png
-excerpt: "Bridge components in Hotwire Native intentionally hide navigation from native code. This felt limiting at first. Then I understood: by restricting native-side navigation, Hotwire ensures web and native stay synchronized through URLs. The constraint is the feature."
+excerpt: "Bridge components in Hotwire Native offer no direct access to navigation, which felt inconvenient when I first built one. It turned out to be intentional. Restricting native-side navigation is how Hotwire Native keeps web and native synchronized through URLs."
 ---
 
 In Hotwire Native, a Bridge Component simultaneously exists in JavaScript and native code. The interaction begins from JavaScript by calling `send(event, data, callback)`. The native side receives a structured `Message` object, processes it, and replies by calling `reply(...)`.

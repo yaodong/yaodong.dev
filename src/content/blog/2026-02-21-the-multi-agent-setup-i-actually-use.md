@@ -4,7 +4,7 @@ category: journal
 title: The Multi-Agent Setup I Actually Use
 created_date: 2026-02-21T00:00:00.000Z
 image: /assets/images/og/2026-02-21-the-multi-agent-setup-i-actually-use.png
-excerpt: "One agent stretched across everything kept bleeding context between tasks. So I split it into three: an orchestrator, a coder, and a thinker, each in its own container, coordinated through Discord. Parallel work became possible for the first time."
+excerpt: "One agent stretched across everything kept bleeding context between tasks. So I split it into three, an orchestrator, a coder, and a thinker, each in its own container, coordinated through Discord. Parallel work became possible for the first time."
 ---
 
 I kept running into the same problem. I'd be deep in a coding conversation, then need to switch to writing, and the agent would carry forward context that didn't belong. Or I'd want two things happening at once and couldn't, because everything ran through the same thread.

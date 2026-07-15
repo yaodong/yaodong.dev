@@ -3,7 +3,7 @@ layout: post
 title: What Context Windows Can't Solve
 created_date: 2025-12-23T00:00:00.000Z
 image: /assets/images/og/2025-12-23-what-context-windows-cant-solve.png
-excerpt: "A patient named Elliot lost the ability to make decisions after brain surgery. Not because he couldn't think, but because he analyzed too well. Without emotions to filter options, all choices seemed equally important. Damasio's insight applies to AI: constraints aren't obstacles to decision-making; they're prerequisites for it."
+excerpt: "A patient named Elliot lost the ability to make decisions after brain surgery, even though every cognitive test came back normal. Without emotions to help filter, all options looked equally important to him. Damasio's account changed how I think about the role constraints play in AI decision-making."
 ---
 
 In the 1990s, neuroscientist Antonio Damasio encountered a strange patient. His name was Elliot, and he'd had surgery to remove a brain tumor, which also damaged a small region of his prefrontal cortex. After the surgery, his IQ tested normal. Logical reasoning, normal. Memory, normal. Every cognitive measure came back fine. But he could no longer function in daily life.

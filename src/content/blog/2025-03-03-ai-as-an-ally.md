@@ -3,7 +3,7 @@ layout: post
 title: AI as an Ally
 created_date: 2025-03-03T00:00:00.000Z
 image: /assets/images/og/2025-03-03-ai-as-an-ally.png
-excerpt: "AI coding assistants handle repetitive tasks effortlessly, but they still struggle with complex reasoning and edge cases. Human expertise remains essential. The real question isn't whether AI will replace us, but how we continue growing alongside it."
+excerpt: "AI coding assistants handle repetitive tasks well but still struggle with complex reasoning and edge cases. Based on my experience with Cursor, Claude Code, and Copilot, I'm skeptical of the replacement talk, and more interested in how we keep growing while working with these tools."
 ---
 
 From [The End of Programming as We Know It](https://www.oreilly.com/radar/the-end-of-programming-as-we-know-it/):

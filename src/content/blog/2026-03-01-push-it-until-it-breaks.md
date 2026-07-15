@@ -2,7 +2,7 @@
 layout: post
 title: Push It Until It Breaks
 created_date: 2026-03-01T00:00:00.000Z
-excerpt: "You can't find the boundary of a tool without crossing it. Push too far, watch it fail, recalibrate. The models keep changing. The tools keep changing. So I keep pushing."
+excerpt: "I find the boundaries of AI tools by deliberately overusing them, pushing past what I think they can handle, watching where they fail, and recalibrating. Models and tools keep changing, so the cycle starts over often. This post is about running that cycle on production systems."
 image: /assets/images/og/2026-03-01-push-it-until-it-breaks.png
 ---
 

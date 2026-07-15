@@ -3,7 +3,7 @@ layout: post
 category: journal
 title: The Bottleneck Is the Process
 created_date: 2026-03-29T14:40:29.000Z
-excerpt: "AI made every step faster but left the connections between them untouched. You cannot simply strip the process away, because it carries real weight. The harness has not disappeared. It moved inward to individuals, and across to whoever picks up the new capability."
+excerpt: "AI made every step in the software pipeline faster, but the pipeline itself didn't speed up. The process between steps carries real weight and doesn't just go away when AI arrives. Instead it moves inward to individuals, and across to whoever picks up the new capability."
 image: /assets/images/og/2026-03-29-the-bottleneck-is-the-process.png
 ---
 

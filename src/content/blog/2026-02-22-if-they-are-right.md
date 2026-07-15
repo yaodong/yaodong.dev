@@ -4,9 +4,9 @@ category: journal
 title: 'If They''re Right: Preparing for the AI Economic Shock'
 created_date: 2026-02-22T00:00:00.000Z
 excerpt: >-
-  What if AI works exactly as promised, and that's what breaks the economy? A
-  scenario analysis explores how AI-driven productivity could hollow out the
-  consumer economy, trigger a credit crisis, and reshape who benefits from
+  Suppose AI works exactly as promised, and that is what breaks the economy.
+  This scenario analysis explores how AI-driven productivity could hollow out
+  the consumer economy, trigger a credit crisis, and reshape who benefits from
   growth.
 image: /assets/images/og/2026-02-22-if-they-are-right.png
 ---
