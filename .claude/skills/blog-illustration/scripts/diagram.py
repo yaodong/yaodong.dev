@@ -88,7 +88,9 @@ class Diagram:
             )
             tsize = FONT_TITLE
         cx = x + w / 2
-        self.text(cx, y + 24, title, tsize, T, weight=700)
+        # a title with nothing under it sits in the middle of the box
+        ty = y + 24 if (lines or result) else y + h / 2 + tsize * 0.35
+        self.text(cx, ty, title, tsize, T, weight=700)
         self._check(title, tsize, w)
         for i, line in enumerate(lines):
             if bullets:  # bullets read better left-aligned under a centered title
