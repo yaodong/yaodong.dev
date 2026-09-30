@@ -21,18 +21,20 @@ If `pitches/<post-filename>.md` already exists, say so and show it before writin
 
 Read the three or four most recent files in `pitches/` (by the date prefix in the filename). Use them for register only: first person, plain, understated, an engineer talking to other engineers. Don't copy their phrases, openings, or closing lines. Older pitches (2024 and 2025) use emoji lists, em-dashes, and sign-offs like "Happy debugging!"; the author has moved away from those.
 
-## Step 3: Write two drafts
+## Step 3: Write at least three drafts
 
 First, find the post's thesis: the one claim the post argues. Every draft keeps it as the spine, even when it opens on a side story. If the post makes a decision or a trade-off (what was chosen, why, and what it costs), that belongs to the spine too; a pitch that leaves it out has dropped the argument.
 
-Then find the most concrete, surprising material in the post: an incident, a number, a result that goes against expectation. Strong pitches open on that. Write two complete drafts, each opening a different way:
+Then list the angles the post supports. An angle is which part of the argument leads the pitch and what the reader is asked to care about: for a post on automating E2E testing, one angle is why E2E tests were rare (the cost was human time), another is building the automation around the author's own review, another is deciding which generated tests to keep. Pick at least three distinct angles and write one complete draft for each. Drafts that share a body and differ only in the first paragraph count as one angle. Each draft still carries the thesis; the angle decides what it leads with and what it leaves to the post.
+
+Find the most concrete, surprising material in the post: an incident, a number, a result that goes against expectation. Strong pitches open on that. Vary the openings across the drafts:
 
 - **A story**: a specific episode from the post, told with its details (a patient who spent thirty minutes choosing where to eat lunch; three failed attempts at an incremental refactor before trying what the AI suggested).
 - **A finding**: a number or result that surprises (developers who were slower with AI but believed it had sped them up).
 - **A problem**: the concrete requirement or failure the post starts from, stated with tension (every chunk has to arrive, in order, even when the connection drops).
 - **A stance or habit**: a view or practice of the author's, when the post is built around one.
 
-Avoid openings that are a preamble, a truism, or background ("The software development process evolved over decades", "An AI agent's context window has a limit", "In mid-2025 I tried…", "I've been doing X and it changed more than I expected"). If the post's most memorable material is a story, don't hold it back for the end of the pitch; either open on it or give it to the other draft.
+Avoid openings that are a preamble, a truism, or background ("The software development process evolved over decades", "An AI agent's context window has a limit", "In mid-2025 I tried…", "I've been doing X and it changed more than I expected"). If the post's most memorable material is a story, don't hold it back for the end of the pitch; either open on it or give it to another draft.
 
 Each draft:
 
@@ -52,7 +54,7 @@ Each draft:
 
 Before showing the drafts, check each one against the post, sentence by sentence: every claim, number, and name is there, and nothing is overstated. Keep the post's qualifiers ("in my experience", "on complex tasks", "one way to picture it"); a framing or model the post offers tentatively stays tentative, and a line the post uses about one thing isn't moved onto another. Fix what doesn't match.
 
-Show both drafts with their word counts and name the opening each one uses. Let the author pick one, combine them, or ask for changes.
+Show all drafts, each headed with its angle in one line, the opening it uses, and its word count. Let the author pick one, combine them, or ask for changes.
 
 ## Step 4: Save
 
