@@ -1,6 +1,7 @@
 ---
 description: Create a new blog post
 argument-hint: <title>
+disable-model-invocation: true
 ---
 
 Create a new blog post with the title: $ARGUMENTS

@@ -1,5 +1,6 @@
 ---
 description: Publish new blog posts (generate excerpts, OG images, review staged files, commit and push)
+disable-model-invocation: true
 ---
 
 Publish all newly added blog posts.

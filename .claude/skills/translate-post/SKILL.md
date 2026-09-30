@@ -1,6 +1,7 @@
 ---
 description: Translate a blog post to English
 argument-hint: <file-path>
+disable-model-invocation: true
 ---
 
 Translate the blog post at: $ARGUMENTS
