@@ -105,8 +105,10 @@ async function generateOgImage(postPath: string) {
   const { data, content } = matter(fileContent);
   const title = data.title || "Untitled Post";
 
-  // Reading time (~200 wpm)
-  const wordCount = content.trim().split(/\s+/).length;
+  // Reading time (~200 wpm). Drop inline SVG figures so diagram markup
+  // doesn't count as prose.
+  const prose = content.replace(/<svg[\s\S]*?<\/svg>/g, " ");
+  const wordCount = prose.trim().split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(wordCount / 200));
 
   // Fonts: Fira Sans SemiBold for the title, JetBrains Mono SemiBold
