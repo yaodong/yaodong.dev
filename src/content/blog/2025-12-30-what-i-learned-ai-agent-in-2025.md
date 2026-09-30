@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: What I Learned Building AI Agents in 2025
 created_date: 2025-12-30T00:00:00.000Z
 image: /assets/images/og/2025-12-30-what-i-learned-ai-agent-in-2025.png

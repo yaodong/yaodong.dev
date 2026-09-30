@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: The Multi-Agent Setup I Actually Use
 created_date: 2026-02-21T00:00:00.000Z
 image: /assets/images/og/2026-02-21-the-multi-agent-setup-i-actually-use.png

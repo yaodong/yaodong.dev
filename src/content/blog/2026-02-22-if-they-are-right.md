@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: 'If They''re Right: Preparing for the AI Economic Shock'
 created_date: 2026-02-22T00:00:00.000Z
 excerpt: >-

@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: Building Understanding From the Ground Up
 created_date: 2026-07-10T00:00:00.000Z
 excerpt: >-

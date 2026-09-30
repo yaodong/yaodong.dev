@@ -1,6 +1,5 @@
 ---
 layout: post
-category: journal
 title: Rethinking E2E Testing With Agents
 created_date: 2026-09-29T00:00:00.000Z
 excerpt: "With AI writing most of my code, the slow part became checking that it does what I meant. I've spent the past few months automating my E2E testing, and building it around my own review turned out to be what let me automate more of it."

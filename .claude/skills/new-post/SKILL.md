@@ -19,7 +19,6 @@ Use this frontmatter format:
 ```yaml
 ---
 layout: post
-category: journal
 title: <Title>
 created_date: YYYY-MM-DD
 ---
