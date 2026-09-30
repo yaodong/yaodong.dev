@@ -9,5 +9,6 @@ dist/
 .astro/
 
 .superpowers
+docs/
 .worktrees
 scripts/figures/out/
