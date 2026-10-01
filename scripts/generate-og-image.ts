@@ -8,14 +8,15 @@ import matter from "gray-matter";
 const WIDTH = 1200;
 const HEIGHT = 630;
 
-// Monochrome dark poster — matches the site's dark theme tokens
-// (see src/styles/application.css). One huge title + the ~/yaodong.dev
-// mark with reading time. Nothing else: OG cards render at ~480px in
-// feeds, so small metadata is illegible noise.
+// "Paper" card — the site's light theme tokens (see
+// src/styles/application.css). A masthead row (~/yaodong.dev on the left,
+// date · reading time on the right) over a heavy rule, and the title
+// anchored to the bottom. OG cards render at ~480px in feeds, so the title
+// does the work and the masthead stays short.
 const COLORS = {
-  bg: "#151514",
-  text: "#E2E2DD",
-  muted: "#82827B",
+  bg: "#FBFBFA",
+  text: "#111111",
+  muted: "#6E6E68",
 };
 
 const __filename = fileURLToPath(import.meta.url);
@@ -26,19 +27,24 @@ async function loadLocalFont(filename: string): Promise<Buffer> {
   return readFile(fontPath);
 }
 
-// Layout budget for auto-fitting the title. The title sits at the top and the
-// mark is pinned to the bottom (justify: space-between); we size the title so
-// its wrapped height never eats into the mark's row — long titles shrink to
-// stay on the card instead of overrunning it or colliding with the mark.
-const PADDING = 64;
-const MARK_FONT_SIZE = 34;
+// Layout budget for auto-fitting the title. The masthead is pinned to the top
+// and the title to the bottom (justify: space-between); we size the title so
+// its wrapped height never reaches the masthead — short titles grow to poster
+// scale, long titles shrink to stay on the card.
+const PADDING = 72;
+const MARK_FONT_SIZE = 30;
+const META_FONT_SIZE = 26;
+const RULE_WIDTH = 3;
+const MASTHEAD_GAP = 22; // between the masthead text and its rule
 const INNER_WIDTH = WIDTH - PADDING * 2;
 const INNER_HEIGHT = HEIGHT - PADDING * 2;
-const TITLE_MAX_WIDTH = Math.round(INNER_WIDTH * 0.96);
-// Reserve the mark's line box (~1.3× its size) plus a 32px minimum gap.
-const TITLE_MAX_HEIGHT = INNER_HEIGHT - Math.ceil(MARK_FONT_SIZE * 1.3) - 32;
-const TITLE_FONT_MAX = 122;
-const TITLE_FONT_MIN = 44;
+const TITLE_MAX_WIDTH = INNER_WIDTH;
+const MASTHEAD_HEIGHT = Math.ceil(MARK_FONT_SIZE * 1.3) + MASTHEAD_GAP + RULE_WIDTH;
+// Reserve the masthead plus a 48px minimum gap above the title.
+const TITLE_MAX_HEIGHT = INNER_HEIGHT - MASTHEAD_HEIGHT - 48;
+const TITLE_FONT_MAX = 132;
+const TITLE_FONT_MIN = 48;
+const TITLE_LINE_HEIGHT = 1.0;
 
 type Fonts = Parameters<typeof satori>[1]["fonts"];
 
@@ -48,8 +54,8 @@ function titleStyle(fontSize: number) {
     fontSize,
     fontWeight: 600,
     color: COLORS.text,
-    letterSpacing: "-0.045em",
-    lineHeight: 0.98,
+    letterSpacing: "-0.04em",
+    lineHeight: TITLE_LINE_HEIGHT,
     margin: 0,
   };
 }
@@ -60,6 +66,7 @@ async function measureTitleHeight(
   title: string,
   fontSize: number,
   fonts: Fonts,
+  wordBreak: "normal" | "break-all" = "normal",
 ): Promise<number> {
   const svg = await satori(
     {
@@ -69,7 +76,7 @@ async function measureTitleHeight(
         children: {
           type: "h1",
           props: {
-            style: { ...titleStyle(fontSize), width: "100%" },
+            style: { ...titleStyle(fontSize), width: "100%", wordBreak },
             children: title,
           },
         },
@@ -81,16 +88,38 @@ async function measureTitleHeight(
   return match ? parseFloat(match[1]) : Number.POSITIVE_INFINITY;
 }
 
+// A word can't wrap, so a long one overflows the card sideways without adding
+// height. Render each of the longest words alone with break-all: if it stays
+// on one line, it fits the width.
+async function longWordsFit(
+  words: string[],
+  fontSize: number,
+  fonts: Fonts,
+): Promise<boolean> {
+  const oneLine = fontSize * TITLE_LINE_HEIGHT * 1.5;
+  for (const word of words) {
+    if ((await measureTitleHeight(word, fontSize, fonts, "break-all")) > oneLine) {
+      return false;
+    }
+  }
+  return true;
+}
+
 // Largest font size within [MIN, MAX] whose wrapped title fits the height
-// budget. Binary search — wrapped height is monotonic in font size.
+// budget and whose longest words fit the width. Binary search — both are
+// monotonic in font size.
 async function fitTitleFontSize(title: string, fonts: Fonts): Promise<number> {
+  const longestWords = title
+    .split(/\s+/)
+    .sort((a, b) => b.length - a.length)
+    .slice(0, 3);
   let lo = TITLE_FONT_MIN;
   let hi = TITLE_FONT_MAX;
   let best = TITLE_FONT_MIN;
   while (lo <= hi) {
     const mid = Math.floor((lo + hi) / 2);
     const height = await measureTitleHeight(title, mid, fonts);
-    if (height <= TITLE_MAX_HEIGHT) {
+    if (height <= TITLE_MAX_HEIGHT && (await longWordsFit(longestWords, mid, fonts))) {
       best = mid;
       lo = mid + 1;
     } else {
@@ -122,10 +151,26 @@ async function generateOgImage(postPath: string) {
     { name: "JetBrains Mono", data: monoSemiBold, weight: 600, style: "normal" },
   ];
 
+  // Masthead date, from created_date (posts sort and display by it).
+  const date = data.created_date
+    ? new Date(data.created_date).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+      })
+    : null;
+  const meta = date ? `${date} · ${readingTime} min` : `${readingTime} min`;
+
   // Poster-scale title, auto-fit to the card: measure the wrapped title and
   // pick the largest size that fits, so long titles shrink instead of
   // overflowing. Char-count heuristics can't see wrapping; measuring can.
+  // A title too long even at the minimum size is clamped with an ellipsis
+  // rather than allowed to run into the masthead.
   const titleFontSize = await fitTitleFontSize(title, fonts);
+  const maxTitleLines = Math.floor(
+    TITLE_MAX_HEIGHT / (titleFontSize * TITLE_LINE_HEIGHT),
+  );
 
   const svg = await satori(
     {
@@ -141,42 +186,60 @@ async function generateOgImage(postPath: string) {
           padding: PADDING,
         },
         children: [
-          // Title — top, dominates the card
-          {
-            type: "h1",
-            props: {
-              style: { ...titleStyle(titleFontSize), maxWidth: "96%" },
-              children: title,
-            },
-          },
-          // Mark — bottom-left: ~/yaodong.dev · N min
+          // Masthead — ~/yaodong.dev left, date · N min right, heavy rule below
           {
             type: "div",
             props: {
               style: {
                 display: "flex",
+                justifyContent: "space-between",
                 alignItems: "baseline",
+                paddingBottom: MASTHEAD_GAP,
+                borderBottom: `${RULE_WIDTH}px solid ${COLORS.text}`,
                 fontFamily: "JetBrains Mono",
-                fontSize: MARK_FONT_SIZE,
                 fontWeight: 600,
               },
               children: [
                 {
-                  type: "span",
-                  props: { style: { color: COLORS.muted }, children: "~/" },
-                },
-                {
-                  type: "span",
-                  props: { style: { color: COLORS.text }, children: "yaodong.dev" },
-                },
-                {
-                  type: "span",
+                  type: "div",
                   props: {
-                    style: { color: COLORS.muted },
-                    children: ` · ${readingTime} min`,
+                    style: { display: "flex", fontSize: MARK_FONT_SIZE },
+                    children: [
+                      {
+                        type: "span",
+                        props: { style: { color: COLORS.muted }, children: "~/" },
+                      },
+                      {
+                        type: "span",
+                        props: { style: { color: COLORS.text }, children: "yaodong.dev" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  type: "div",
+                  props: {
+                    style: { display: "flex", fontSize: META_FONT_SIZE, color: COLORS.muted },
+                    children: meta,
                   },
                 },
               ],
+            },
+          },
+          // Title — anchored to the bottom, dominates the card
+          {
+            type: "h1",
+            props: {
+              style: {
+                ...titleStyle(titleFontSize),
+                maxWidth: TITLE_MAX_WIDTH,
+                display: "block",
+                // Last resorts for titles that don't fit even at the minimum
+                // size: break an oversized word, clamp extra lines.
+                wordBreak: "break-word",
+                lineClamp: maxTitleLines,
+              },
+              children: title,
             },
           },
         ],
