@@ -23,9 +23,9 @@ Read the three or four most recent files in `pitches/` (by the date prefix in th
 
 ## Step 3: Write at least three drafts
 
-First, find the post's thesis: the one claim the post argues. Every draft keeps it as the spine, even when it opens on a side story. If the post makes a decision or a trade-off (what was chosen, why, and what it costs), that belongs to the spine too; a pitch that leaves it out has dropped the argument.
+First, find the post's thesis: the one claim the post argues. Keep it in view, but a pitch doesn't restate the whole post; each draft makes the thesis visible through its own angle. If the post makes a decision or a trade-off (what was chosen, why, and what it costs) and a draft's angle touches it, state it plainly instead of skipping it.
 
-Then list the angles the post supports. An angle is which part of the argument leads the pitch and what the reader is asked to care about: for a post on automating E2E testing, one angle is why E2E tests were rare (the cost was human time), another is building the automation around the author's own review, another is deciding which generated tests to keep. Pick at least three distinct angles and write one complete draft for each. Drafts that share a body and differ only in the first paragraph count as one angle. Each draft still carries the thesis; the angle decides what it leads with and what it leaves to the post.
+Then list the angles the post supports. An angle is which part of the argument leads the pitch and what the reader is asked to care about: for a post on automating E2E testing, one angle is why E2E tests were rare (the cost was human time), another is building the automation around the author's own review, another is deciding which generated tests to keep. Pick at least three distinct angles and write one complete draft for each. Drafts that share a body and differ only in the first paragraph count as one angle. Each draft goes deep on its angle and leaves the other angles to the post. It doesn't try to mention every point the post makes: a pitch that touches every section reads like a summary, and leaves nothing to click for. If a paragraph belongs to a different angle, cut it.
 
 Find the most concrete, surprising material in the post: an incident, a number, a result that goes against expectation. Strong pitches open on that. Vary the openings across the drafts:
 
@@ -40,7 +40,7 @@ Each draft:
 
 - Is usually 130 to 270 words, in 3 to 7 short paragraphs. Use the length the argument needs; never pad. Scale to the post: a short post gets a short pitch, since retelling most of it leaves nothing to click for.
 - Gets to the point quickly. An opening story is told in a paragraph, not two, before the pitch says why it matters.
-- Gives the post's actual argument, compressed. A reader who never clicks should still come away with the idea; the post adds the depth, evidence, and details.
+- Makes one idea from the post fully. A reader who never clicks should come away with that idea; the post has the rest.
 - Follows one line of argument. Pick the points that carry the thesis and leave the rest to the post; don't end with a paragraph that lists the remaining lessons.
 - Makes one point per paragraph. A paragraph that summarizes several sections of the post, or strings together a list of options or practices, is a table of contents; cut it down to the one item that carries the argument.
 - Is written fresh for the pitch, not stitched from the post's sentences. Borrow at most one memorable line from the post, and only if it earns its place.
