@@ -3,12 +3,12 @@ import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
 from diagram import Diagram
 
-W, H = 800, 322
-bw, gap, x0 = 200, 56, 44
+W, H = 880, 326
+bw, gap, x0 = 226, 56, 45
 xs = [x0 + i * (bw + gap) for i in range(3)]
 cx = [x + bw / 2 for x in xs]
 ay, ah = 70, 58
-my, mh = 206, 92
+my, mh = 206, 96
 
 d = Diagram(W, H, id_prefix="ms", label=(
     "Before automation, every change was tested by hand three times: on the feature branch server, "

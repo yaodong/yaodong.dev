@@ -1,13 +1,13 @@
 # Figure for "How I automated my E2E testing" in 2026-09-29-rethinking-e2e-testing-with-agents.md
 import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
-from diagram import Diagram
+from diagram import Diagram, FONT_LABEL
 
-W, H = 840, 520
-bw, bh, gap, x0 = 176, 76, 24, 44
+W, H = 880, 552
+bw, bh, gap, x0 = 188, 94, 24, 36
 xs = [x0 + i * (bw + gap) for i in range(4)]
 cx = [x + bw / 2 for x in xs]
-ay, ry, my = 70, 210, 360
+ay, ry, my = 70, 228, 378
 rh = 60
 
 d = Diagram(W, H, id_prefix="wf", label=(
@@ -33,7 +33,7 @@ d.arrow(cx[0], ay + bh + 4, cx[0], ry - 4)
 d.arrow(cx[1], ay + bh + 4, cx[1], ry - 4)
 # run log leaves the run box to the right, then drops into the cross-check
 d.path(f"M{xs[2] + bw + 3},{ay + bh / 2} H{cx[3]} V{ry - 4}", dashed=False)
-d.text((xs[2] + bw + cx[3]) / 2, ay + bh / 2 - 8, "run log", 11.5, "var(--color-text-muted)")
+d.text((xs[2] + bw + cx[3]) / 2, ay + bh / 2 - 8, "run log", FONT_LABEL, "var(--color-text-muted)")
 
 for i, (t, s) in {0: ("review the plan", ["before any code", "happy + error paths"]),
                   2: ("help when stuck", ["agent asks", "instead of workarounds"]),

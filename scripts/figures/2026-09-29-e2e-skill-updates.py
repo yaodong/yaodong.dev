@@ -1,11 +1,11 @@
 # Figure for "How the skills keep improving" in 2026-09-29-rethinking-e2e-testing-with-agents.md
 import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
-from diagram import Diagram
+from diagram import Diagram, FONT_LABEL
 
 W, H = 840, 380
-bw = 180
-xd, xa, xs = 44, 334, 624          # codebase docs, agents / me, skill
+bw = 190
+xd, xa, xs = 30, 330, 640          # codebase docs, agents / me, skill
 ay, ah = 60, 76                    # agents row
 my, mh = 220, 110                  # me
 ry, rh = 220, 60                   # reference documents
@@ -34,5 +34,5 @@ d.arrow(xa + bw + 3, iy + ih / 2, xs - 3, iy + ih / 2, label="short rule")
 # the skill feeds the next ticket
 cx = xs + bw / 2
 d.path(f"M{cx},{ry - 4} V{ay + ah / 2} H{xa + bw + 3}")
-d.text((xa + bw + cx) / 2 + 20, ay + ah / 2 - 8, "next ticket reads", 11.5, M)
+d.text((xa + bw + cx) / 2 + 20, ay + ah / 2 - 8, "next ticket reads", FONT_LABEL, M)
 d.save("scripts/figures/out/2026-09-29-e2e-skill-updates")

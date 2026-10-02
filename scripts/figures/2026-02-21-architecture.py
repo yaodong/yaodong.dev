@@ -1,7 +1,7 @@
 # Figure for the architecture section in 2026-02-21-the-multi-agent-setup-i-actually-use.md
 import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
-from diagram import Diagram
+from diagram import Diagram, FONT_LABEL
 
 W, H = 800, 424
 bw, bh, gap, x0 = 200, 76, 56, 44
@@ -18,9 +18,9 @@ d.box(cx[1] - 90, dy, 180, 44, "discord")
 for c in (cx[0], cx[2]):  # curve over, then drop straight down so the labels sit clear of it
     d.path(f"M{cx[1]},{dy + 48} C{cx[1]},{dy + 82} {c},{dy + 68} {c},{dy + 96} L{c},{ay - 4}", dashed=False)
 d.arrow(cx[1], dy + 48, cx[1], ay - 4)
-d.text(cx[0] + 8, ay - 14, "@mention", 11.5, "var(--color-text-muted)", "start")
-d.text(cx[1] + 8, ay - 14, "every message", 11.5, "var(--color-text-muted)", "start")
-d.text(cx[2] - 8, ay - 14, "@mention", 11.5, "var(--color-text-muted)", "end")
+d.text(cx[0] + 8, ay - 14, "@mention", FONT_LABEL, "var(--color-text-muted)", "start")
+d.text(cx[1] + 8, ay - 14, "every message", FONT_LABEL, "var(--color-text-muted)", "start")
+d.text(cx[2] - 8, ay - 14, "@mention", FONT_LABEL, "var(--color-text-muted)", "end")
 
 for x, (t, s) in zip(xs, [("builder", ["coding agent", "requireMention: true"]),
                           ("helm", ["orchestrator", "requireMention: false"]),

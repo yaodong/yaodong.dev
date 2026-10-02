@@ -36,7 +36,9 @@ Keep every label factual and taken from the post. Don't invent steps, numbers, o
 - **Feedback loops**: route a dashed path around the boxes, never through them, with a muted note underneath.
 - **Fan-out**: one box feeding several with smooth cubic curves (`d.path("M... C...", dashed=False)`) from a single point on its bottom edge.
 - **Color**: monochrome from the site tokens only (`--color-text`, `--color-text-body`, `--color-text-muted`, `--color-bg-subtle`, `--color-bg`). No accent colors, no shadows, no gradients, no icons or emoji.
-- **Size**: `viewBox` about 800 wide, height to fit (roughly 370–400 for two rows). It scales to the article column with `width:100%`.
+- **Size**: `viewBox` 800–880 wide, never wider (the helper warns), height to fit (roughly 370–400 for two rows). On desktop a figure renders at up to 880px, wider than the 640px text column. On phones it keeps a 760px minimum width and scrolls sideways inside its own box, so the text stays readable instead of shrinking to fit the screen.
+- **Text sizes are fixed by the helper**: 12.5 for subtitles, bullets, connector labels and notes, 12.5 bold for lane labels, 14–15 bold for titles. Don't pass smaller sizes to `d.text()`. Use `FONT_LABEL` (importable from `diagram`) for free-standing labels. The helper warns when the smallest text would render under 10.5px on a phone.
+- **Bold is weight 600**: the site self-hosts JetBrains Mono up to 600, so 700 only fakes it.
 - **Writing on the figure** follows the post's voice rules: plain words, no slogans, no punchlines.
 
 ## How to make one
@@ -60,7 +62,7 @@ Keep every label factual and taken from the post. Don't invent steps, numbers, o
 
    Use a unique `id_prefix` per figure: two figures on one page must not share marker ids.
 
-2. Run it from the repo root: `python3 scripts/figures/<script>.py`. It writes the inline SVG and light/dark PNG previews (colors read from `application.css`) to `scripts/figures/out/`, and prints warnings for text that overflows a box or boxes too short for their lines. Fix every warning.
+2. Run it from the repo root: `python3 scripts/figures/<script>.py`. It writes the inline SVG and light/dark PNG previews (colors read from `application.css`) to `scripts/figures/out/`, and prints warnings for text that overflows a box, boxes too short for their lines, a viewBox wider than 880, or text too small on phones. Fix every warning. Long subtitle and bullet lines wrap automatically (bullets with a hanging indent), so a wrapped line needs a taller box. Widen the box, or accept the wrap and raise the box height.
 
 3. **Look at both previews** (`-light.png` and `-dark.png`) before inserting. Check for overlapping text, labels touching boxes, arrows crossing boxes, and uneven spacing.
 
@@ -81,6 +83,7 @@ Keep every label factual and taken from the post. Don't invent steps, numbers, o
 ## Layout tips
 
 - Space columns evenly: `xs = [x0 + i * (bw + gap) for i in range(n)]`. Start with `x0 = 44`, and leave `gap` at 24 or more, or 56 or more when a connector carries a label.
-- Budget text width at `0.6 × font size` per character (monospace). The helper checks this.
+- Budget text width at `0.6 × font size` per character (monospace), about 7.5px per character at 12.5. A bullet line needs `box width ≥ 22 + 7.5 × (characters + 2)`. The helper checks this.
+- Keep connector labels shorter than the gap they sit in: a 56px gap fits about 7 characters.
 - Keep a clear left margin (about 16px) for loop paths that return to the start of a row.
 - Place boxes in the second row under the column they relate to, and leave a column empty rather than invent a box to fill it.

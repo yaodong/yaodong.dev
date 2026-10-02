@@ -23,6 +23,7 @@ export const SITE = {
   // Compact footer link row: `useful links · github · x · linkedin · rss`.
   footerLinks: [
     { title: 'WHIR', url: 'https://whir.org/' },
+    { title: 'projects', url: '/projects/' },
     { title: 'useful links', url: '/useful-links/' },
     { title: 'github', url: 'https://github.com/yaodong' },
     { title: 'x', url: 'https://x.com/YaodongDev' },

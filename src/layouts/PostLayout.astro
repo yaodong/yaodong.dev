@@ -52,6 +52,16 @@ if (author) {
 const slug = canonicalPath.replace(/^\/|\/$/g, '');
 const mdUrl = `${SITE.url}/${slug}.md`;
 const pageUrl = `${SITE.url}${canonicalPath}`;
+
+// Rough reading time from the Markdown source: drop code, HTML tags and link
+// targets, then count words at ~230 wpm.
+const words = body
+  .replace(/```[\s\S]*?```/g, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/\]\([^)]*\)/g, ']')
+  .split(/\s+/)
+  .filter((w) => /\w/.test(w)).length;
+const readingMinutes = Math.max(1, Math.round(words / 230));
 ---
 
 <BaseLayout
@@ -77,16 +87,21 @@ const pageUrl = `${SITE.url}${canonicalPath}`;
           <time datetime={isoDate(created_date)}>{isoDate(created_date)}</time>
           {
             authorName && (
-              <span class="post-author">
-                by{' '}
-                {authorUrl ? (
-                  <a href={authorUrl} rel="author">{authorName}</a>
-                ) : (
-                  <span>{authorName}</span>
-                )}
-              </span>
+              <>
+                <span class="post-meta__dot" aria-hidden="true">&middot;</span>
+                <span>
+                  by{' '}
+                  {authorUrl ? (
+                    <a href={authorUrl} rel="author">{authorName}</a>
+                  ) : (
+                    <span>{authorName}</span>
+                  )}
+                </span>
+              </>
             )
           }
+          <span class="post-meta__dot" aria-hidden="true">&middot;</span>
+          <span>{readingMinutes} min read</span>
         </div>
       </header>
 
@@ -95,10 +110,27 @@ const pageUrl = `${SITE.url}${canonicalPath}`;
       </div>
     </article>
 
+    <aside class="signoff" aria-label="About the author">
+      <p class="signoff__text">
+        I'm <a href="/about/">Yaodong Zhao</a>, a software engineer. I build web
+        applications, though these days I mostly supervise something else
+        building them.
+      </p>
+      <p class="signoff__links">
+        <a href="/feed.xml">rss</a>
+        <span class="signoff__dot" aria-hidden="true">&middot;</span>
+        <a href="https://x.com/YaodongDev">x</a>
+        <span class="signoff__dot" aria-hidden="true">&middot;</span>
+        <a href="https://www.linkedin.com/in/yaodong/">linkedin</a>
+        <span class="signoff__dot" aria-hidden="true">&middot;</span>
+        <a href="https://github.com/yaodong">github</a>
+      </p>
+    </aside>
+
     {
       related.length > 0 && (
         <section class="related">
-          <h2 class="related__label">RELATED</h2>
+          <h2 class="related__label">More writing</h2>
           <div class="related__list">
             {related.map((rp) => (
               <div class="related__row">

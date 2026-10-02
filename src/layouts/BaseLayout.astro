@@ -28,7 +28,7 @@ const year = new Date().getFullYear();
     <header class="site-header">
       <div class="container site-header__inner">
         <a href="/" class="logo"><span class="logo-tilde">~</span>/yaodong.dev</a>
-        <nav class="site-nav">
+        <nav class="site-nav" aria-label="Primary">
           {
             SITE.navigation.map((item) => (
               <a
@@ -42,9 +42,9 @@ const year = new Date().getFullYear();
           <button
             type="button"
             class="theme-toggle"
-            aria-label="Switch to dark mode"
+            aria-label="Dark mode"
             aria-pressed="false"
-            title="Switch to dark mode"
+            title="Dark mode"
           >
           <svg
             class="icon-sun"
@@ -88,7 +88,7 @@ const year = new Date().getFullYear();
     <footer class="site-footer">
       <div class="container site-footer__inner">
         <span class="site-footer__copy">&copy; {year} {SITE.title}</span>
-        <nav class="site-footer__links">
+        <nav class="site-footer__links" aria-label="Elsewhere">
           {
             SITE.footerLinks.map((item, i) => (
               <>
@@ -102,85 +102,88 @@ const year = new Date().getFullYear();
     </footer>
 
     <script is:inline>
-      // Theme toggle functionality
+      // Theme toggle: an explicit choice is stored; otherwise follow the system.
       (function () {
-        const root = document.documentElement;
-        const toggle = document.querySelector('.theme-toggle');
-        const STORAGE_KEY = 'theme';
+        var root = document.documentElement;
+        var toggle = document.querySelector('.theme-toggle');
+        var STORAGE_KEY = 'theme';
+        var media = window.matchMedia('(prefers-color-scheme: dark)');
+        var metas = document.querySelectorAll('meta[data-theme-color]');
+        var metaColors = { light: '#FBFBFA', dark: '#151514' };
 
-        // Get stored theme or null for system default
+        // Storage can throw (blocked cookies, sandboxed webviews); fall back to
+        // the system preference instead of breaking the toggle.
         function getStoredTheme() {
-          return localStorage.getItem(STORAGE_KEY);
+          try {
+            var value = localStorage.getItem(STORAGE_KEY);
+            return value === 'light' || value === 'dark' ? value : null;
+          } catch (e) {
+            return null;
+          }
         }
 
-        // Apply theme to document
+        function storeTheme(theme) {
+          try {
+            localStorage.setItem(STORAGE_KEY, theme);
+          } catch (e) {}
+        }
+
+        function getCurrentTheme() {
+          return getStoredTheme() || (media.matches ? 'dark' : 'light');
+        }
+
+        // Keep the browser chrome in step with a forced theme.
+        function syncThemeColor(theme) {
+          metas.forEach(function (meta) {
+            var own = meta.getAttribute('data-theme-color');
+            meta.setAttribute('content', metaColors[theme || own]);
+          });
+        }
+
+        // The button's name stays "Dark mode"; aria-pressed carries the state.
+        function syncToggle() {
+          if (!toggle) return;
+          toggle.setAttribute('aria-pressed', String(getCurrentTheme() === 'dark'));
+        }
+
         function applyTheme(theme) {
           root.classList.remove('light', 'dark');
-          if (theme) {
-            root.classList.add(theme);
-          }
+          if (theme) root.classList.add(theme);
+          syncThemeColor(theme);
           syncToggle();
         }
 
-        // Get current effective theme
-        function getCurrentTheme() {
-          const stored = getStoredTheme();
-          if (stored) return stored;
-          return window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light';
-        }
-
-        // Reflect the effective theme on the toggle for assistive tech:
-        // aria-pressed = "is dark active", label/title = the action it performs.
-        function syncToggle() {
-          if (!toggle) return;
-          const isDark = getCurrentTheme() === 'dark';
-          const label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
-          toggle.setAttribute('aria-pressed', String(isDark));
-          toggle.setAttribute('aria-label', label);
-          toggle.setAttribute('title', label);
-        }
-
-        // Toggle theme
-        function toggleTheme() {
-          const current = getCurrentTheme();
-          const next = current === 'dark' ? 'light' : 'dark';
-          localStorage.setItem(STORAGE_KEY, next);
-          applyTheme(next);
-        }
-
-        // Initialize
         applyTheme(getStoredTheme());
 
-        // Bind click handler
         if (toggle) {
-          toggle.addEventListener('click', toggleTheme);
+          toggle.addEventListener('click', function () {
+            var next = getCurrentTheme() === 'dark' ? 'light' : 'dark';
+            storeTheme(next);
+            applyTheme(next);
+          });
         }
 
-        // Listen for system theme changes
-        window
-          .matchMedia('(prefers-color-scheme: dark)')
-          .addEventListener('change', function (e) {
-            if (!getStoredTheme()) {
-              // Only react if user hasn't manually set a preference
-              applyTheme(null);
-            }
-          });
+        media.addEventListener('change', function () {
+          if (!getStoredTheme()) applyTheme(null);
+        });
       })();
     </script>
 
-    <script
-      is:inline
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-E8XC309H1N"></script>
     <script is:inline>
+      // Analytics loads after the page has finished loading, so it never
+      // competes with the essay for bandwidth or the main thread.
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag('js', new Date());
       gtag('config', 'G-E8XC309H1N');
+      window.addEventListener('load', function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-E8XC309H1N';
+        document.body.appendChild(s);
+      });
     </script>
   </body>
 </html>

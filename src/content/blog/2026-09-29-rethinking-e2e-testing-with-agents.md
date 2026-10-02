@@ -23,39 +23,39 @@ Our team's process has every feature or bug fix tested on a feature branch serve
 The process doesn't stop at the branch server. After merging, I test again on the shared integration branch, where everyone's changes come together, then again on the release-candidate server. The database on the release-candidate server is read-only, so any state change there has to go through the API as a simulated user action, which adds steps even to setup. Turning all of that into automated tests often took longer than the testing itself, so few of these checks ever became E2E tests.
 
 <figure>
-<svg viewBox="0 0 800 322" role="img" aria-label="Before automation, every change was tested by hand three times: on the feature branch server, again on the integration branch after merging, and again on the release-candidate server, with data set up and results checked at each stage." style="width:100%;height:auto;font-family:var(--font-mono)">
+<svg viewBox="0 0 880 326" role="img" aria-label="Before automation, every change was tested by hand three times: on the feature branch server, again on the integration branch after merging, and again on the release-candidate server, with data set up and results checked at each stage." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="ms-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<text x="44" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">ENVIRONMENTS</text>
-<text x="44" y="188" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">ME</text>
-<rect x="44" y="70" width="200" height="58" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">feature branch</text>
-<text x="144" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">one server per ticket</text>
-<rect x="300" y="70" width="200" height="58" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">integration branch</text>
-<text x="400" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">everyone's changes</text>
-<rect x="556" y="70" width="200" height="58" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">release candidate</text>
-<text x="656" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">read-only database</text>
-<line x1="247" y1="99" x2="297" y2="99" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
-<text x="272" y="91" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">merge</text>
-<line x1="503" y1="99" x2="553" y2="99" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
-<text x="528" y="91" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">release</text>
-<rect x="44" y="206" width="200" height="92" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="144" y="230" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">prepare and test</text>
-<text x="58" y="251" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• work out what to test</text>
-<text x="58" y="267" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• build fixtures, seed data</text>
-<text x="58" y="283" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• run the steps, check</text>
-<line x1="144" y1="132" x2="144" y2="202" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
-<rect x="300" y="206" width="200" height="92" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="400" y="230" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">test again</text>
-<text x="314" y="251" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• set up the data again</text>
-<text x="314" y="267" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• run the steps, check</text>
-<line x1="400" y1="132" x2="400" y2="202" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
-<rect x="556" y="206" width="200" height="92" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="656" y="230" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">test again</text>
-<text x="570" y="251" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• set up state via the API</text>
-<text x="570" y="267" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• run the steps, check</text>
-<line x1="656" y1="132" x2="656" y2="202" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
+<text x="45" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">ENVIRONMENTS</text>
+<text x="45" y="188" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">ME</text>
+<rect x="45" y="70" width="226" height="58" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="158" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">feature branch</text>
+<text x="158" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">one server per ticket</text>
+<rect x="327" y="70" width="226" height="58" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="440" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">integration branch</text>
+<text x="440" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">everyone's changes</text>
+<rect x="609" y="70" width="226" height="58" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="722" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">release candidate</text>
+<text x="722" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">read-only database</text>
+<line x1="274" y1="99" x2="324" y2="99" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
+<text x="299" y="91" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">merge</text>
+<line x1="556" y1="99" x2="606" y2="99" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
+<text x="581" y="91" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">release</text>
+<rect x="45" y="206" width="226" height="96" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="158" y="230" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">prepare and test</text>
+<text x="59" y="252" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• work out what to test</text>
+<text x="59" y="270" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• build fixtures, seed data</text>
+<text x="59" y="288" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• run the steps, check</text>
+<line x1="158" y1="132" x2="158" y2="202" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
+<rect x="327" y="206" width="226" height="96" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="440" y="230" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">test again</text>
+<text x="341" y="252" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• set up the data again</text>
+<text x="341" y="270" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• run the steps, check</text>
+<line x1="440" y1="132" x2="440" y2="202" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
+<rect x="609" y="206" width="226" height="96" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="722" y="230" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">test again</text>
+<text x="623" y="252" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• set up state via the API</text>
+<text x="623" y="270" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• run the steps, check</text>
+<line x1="722" y1="132" x2="722" y2="202" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ms-a)"/>
 </svg>
 </figure>
 
@@ -68,58 +68,63 @@ As I read them, both arguments come down mostly to cost. In my case, most of tha
 When it comes to delivering software, I really like Simon Willison's post [Your job is to deliver code you have proven to work](https://simonwillison.net/2025/Dec/18/code-proven-to-work/). Its argument is that delivering code means delivering proof that it works. I wanted the same from the agents. A final message saying everything passed wasn't enough. I needed evidence I could check myself. So I built the automation in a way that shows, at every step, what it was trying to do and what happened, which also lets me step in at any point. And since the point of automating was to save my time, checking had to be fast too.
 
 <figure>
-<svg viewBox="0 0 840 520" role="img" aria-label="How my automated E2E testing works: agents write a plan, implement the tests, and run them; a subagent reviews the plan and the tests, and agents on other LLMs cross-check the run log; I review the plan, help when a step is stuck, and read the final log, and my corrections go back into the skills." style="width:100%;height:auto;font-family:var(--font-mono)">
+<svg viewBox="0 0 880 552" role="img" aria-label="How my automated E2E testing works: agents write a plan, implement the tests, and run them; a subagent reviews the plan and the tests, and agents on other LLMs cross-check the run log; I review the plan, help when a step is stuck, and read the final log, and my corrections go back into the skills." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="wf-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<text x="44" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">AGENTS</text>
-<text x="44" y="192" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">REVIEW</text>
-<text x="44" y="342" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">ME</text>
-<rect x="44" y="70" width="176" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="132" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">plan</text>
-<text x="58" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• scenario, data state</text>
-<text x="58" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• what counts as success</text>
-<rect x="244" y="70" width="176" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="332" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">implement</text>
-<text x="258" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• test cases</text>
-<text x="258" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• reused on each server</text>
-<rect x="444" y="70" width="176" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="532" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">run</text>
-<text x="458" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• reviewer splits steps</text>
-<text x="458" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• tester runs them</text>
-<line x1="223" y1="108" x2="241" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
-<line x1="423" y1="108" x2="441" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
-<rect x="44" y="210" width="176" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="132" y="234" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">subagent</text>
-<text x="132" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">reviews the plan</text>
-<rect x="244" y="210" width="176" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="332" y="234" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">subagent</text>
-<text x="332" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">reviews the tests</text>
-<rect x="644" y="210" width="176" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="732" y="234" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">cross-check</text>
-<text x="732" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">other LLMs</text>
-<line x1="132" y1="150" x2="132" y2="206" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
-<line x1="332" y1="150" x2="332" y2="206" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
-<path d="M623,108.0 H732.0 V206" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
-<text x="676" y="100" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">run log</text>
-<rect x="44" y="360" width="176" height="76" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="132" y="384" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">review the plan</text>
-<text x="58" y="405" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• before any code</text>
-<text x="58" y="421" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• happy + error paths</text>
-<rect x="444" y="360" width="176" height="76" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="532" y="384" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">help when stuck</text>
-<text x="458" y="405" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• agent asks</text>
-<text x="458" y="421" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• instead of workarounds</text>
-<rect x="644" y="360" width="176" height="76" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="732" y="384" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">read the final log</text>
-<text x="658" y="405" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• requests, responses</text>
-<text x="658" y="421" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• a colleague explaining</text>
-<line x1="132" y1="274" x2="132" y2="356" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-start="url(#wf-a)" marker-end="url(#wf-a)"/>
-<text x="140" y="319" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">plan file</text>
-<line x1="532" y1="150" x2="532" y2="356" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#wf-a)" marker-end="url(#wf-a)"/>
-<text x="540" y="257" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">asks</text>
-<line x1="732" y1="274" x2="732" y2="356" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
-<text x="740" y="319" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">flagged log</text>
-<path d="M732.0,440 V480 H16 V108.0 H41" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#wf-a)"/>
-<text x="432" y="500" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12px;font-weight:400">corrections go back into the skills and their references</text>
+<text x="36" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">AGENTS</text>
+<text x="36" y="210" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">REVIEW</text>
+<text x="36" y="360" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">ME</text>
+<rect x="36" y="70" width="188" height="94" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="130" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">plan</text>
+<text x="50" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• scenario, data state</text>
+<text x="50" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• what counts as</text>
+<text x="65" y="152" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">success</text>
+<rect x="248" y="70" width="188" height="94" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="342" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">implement</text>
+<text x="262" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• test cases</text>
+<text x="262" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• reused on each</text>
+<text x="277" y="152" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">server</text>
+<rect x="460" y="70" width="188" height="94" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="554" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">run</text>
+<text x="474" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• reviewer splits</text>
+<text x="489" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">steps</text>
+<text x="474" y="152" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• tester runs them</text>
+<line x1="227" y1="117" x2="245" y2="117" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
+<line x1="439" y1="117" x2="457" y2="117" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
+<rect x="36" y="228" width="188" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="130" y="252" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">subagent</text>
+<text x="130" y="273" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">reviews the plan</text>
+<rect x="248" y="228" width="188" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="342" y="252" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">subagent</text>
+<text x="342" y="273" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">reviews the tests</text>
+<rect x="672" y="228" width="188" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="766" y="252" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">cross-check</text>
+<text x="766" y="273" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">other LLMs</text>
+<line x1="130" y1="168" x2="130" y2="224" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
+<line x1="342" y1="168" x2="342" y2="224" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
+<path d="M651,117.0 H766.0 V224" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
+<text x="707" y="109" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">run log</text>
+<rect x="36" y="378" width="188" height="94" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="130" y="402" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">review the plan</text>
+<text x="50" y="424" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• before any code</text>
+<text x="50" y="442" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• happy + error paths</text>
+<rect x="460" y="378" width="188" height="94" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="554" y="402" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">help when stuck</text>
+<text x="474" y="424" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• agent asks</text>
+<text x="474" y="442" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• instead of</text>
+<text x="489" y="460" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">workarounds</text>
+<rect x="672" y="378" width="188" height="94" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="766" y="402" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">read the final log</text>
+<text x="686" y="424" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requests, responses</text>
+<text x="686" y="442" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• a colleague</text>
+<text x="701" y="460" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">explaining</text>
+<line x1="130" y1="292" x2="130" y2="374" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-start="url(#wf-a)" marker-end="url(#wf-a)"/>
+<text x="138" y="337" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">plan file</text>
+<line x1="554" y1="168" x2="554" y2="374" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#wf-a)" marker-end="url(#wf-a)"/>
+<text x="562" y="275" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">asks</text>
+<line x1="766" y1="292" x2="766" y2="374" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#wf-a)"/>
+<text x="774" y="337" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">flagged log</text>
+<path d="M766.0,476 V516 H16 V117.0 H33" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#wf-a)"/>
+<text x="448" y="536" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">corrections go back into the skills and their references</text>
 </svg>
 </figure>
 
@@ -144,32 +149,32 @@ The rest comes from stepping in. When an agent is missing something I know, or g
 <figure>
 <svg viewBox="0 0 840 380" role="img" aria-label="How the documents improve as the agents and I work together: agents read the codebase documentation and fill in what's missing; when they get stuck or get something wrong, I step in, and the correction goes into the skill, as reference documents for missing context or multi-step fixes, or as instructions for short rules on how to test; the next ticket reads them." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="sk-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="44" y="60" width="180" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="134" y="84" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">codebase docs</text>
-<text x="134" y="103" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">organized by feature</text>
-<rect x="334" y="60" width="180" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="424" y="84" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">agents</text>
-<text x="424" y="103" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">working on a ticket</text>
-<line x1="227" y1="98" x2="331" y2="98" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-start="url(#sk-a)" marker-end="url(#sk-a)"/>
-<text x="279" y="90" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">read, update</text>
-<rect x="334" y="220" width="180" height="110" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="424" y="244" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">me, stepping in</text>
-<text x="348" y="265" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• knowledge they lack</text>
-<text x="348" y="281" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• judgment corrections</text>
-<line x1="424" y1="140" x2="424" y2="216" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#sk-a)" marker-end="url(#sk-a)"/>
-<text x="432" y="182" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">stuck or wrong</text>
-<text x="624" y="202" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">SKILL</text>
-<rect x="624" y="220" width="180" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="714" y="244" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">reference docs</text>
-<text x="714" y="263" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">read only when needed</text>
-<rect x="624" y="292" width="180" height="44" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="714" y="319.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">instructions</text>
-<line x1="517" y1="250" x2="621" y2="250" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#sk-a)"/>
-<text x="569" y="242" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">context, steps</text>
-<line x1="517" y1="314" x2="621" y2="314" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#sk-a)"/>
-<text x="569" y="306" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">short rule</text>
-<path d="M714.0,216 V98.0 H517" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#sk-a)"/>
-<text x="634" y="90" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">next ticket reads</text>
+<rect x="30" y="60" width="190" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="125" y="84" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">codebase docs</text>
+<text x="125" y="105" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">organized by feature</text>
+<rect x="330" y="60" width="190" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="425" y="84" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">agents</text>
+<text x="425" y="105" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">working on a ticket</text>
+<line x1="223" y1="98" x2="327" y2="98" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-start="url(#sk-a)" marker-end="url(#sk-a)"/>
+<text x="275" y="90" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">read, update</text>
+<rect x="330" y="220" width="190" height="110" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="425" y="244" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">me, stepping in</text>
+<text x="344" y="266" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• knowledge they lack</text>
+<text x="344" y="284" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• judgment corrections</text>
+<line x1="425" y1="140" x2="425" y2="216" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#sk-a)" marker-end="url(#sk-a)"/>
+<text x="433" y="182" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">stuck or wrong</text>
+<text x="640" y="202" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">SKILL</text>
+<rect x="640" y="220" width="190" height="60" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="735" y="244" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">reference docs</text>
+<text x="735" y="265" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">read only when needed</text>
+<rect x="640" y="292" width="190" height="44" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="735" y="319.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">instructions</text>
+<line x1="523" y1="250" x2="637" y2="250" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#sk-a)"/>
+<text x="580" y="242" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">context, steps</text>
+<line x1="523" y1="314" x2="637" y2="314" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#sk-a)"/>
+<text x="580" y="306" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">short rule</text>
+<path d="M735.0,216 V98.0 H523" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#sk-a)"/>
+<text x="647.5" y="90" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">next ticket reads</text>
 </svg>
 </figure>
 
@@ -180,35 +185,35 @@ The half day of preparation I described earlier, repeated on three servers, now 
 Reading the log of the final run only helps if a pass in it means something. For a bug fix, each E2E test case states both what should happen with the fix and how it should fail without it. The test has to fail that way on the integration branch and pass on the fix branch, since a pass alone doesn't show it could see the bug. We used to skip this because it meant preparing everything twice, but now the same test cases carry over.
 
 <figure>
-<svg viewBox="0 0 920 236" role="img" aria-label="The order of runs for one bug-fix test case: the case states how it should fail without the fix and what should happen with it; it fails as expected on the integration branch before the fix, passes on the fix branch, passes again on the integration branch after merging, and passes on the release candidate." style="width:100%;height:auto;font-family:var(--font-mono)">
+<svg viewBox="0 0 880 236" role="img" aria-label="The order of runs for one bug-fix test case: the case states how it should fail without the fix and what should happen with it; it fails as expected on the integration branch before the fix, passes on the fix branch, passes again on the integration branch after merging, and passes on the release candidate." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="rg-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="44" y="24" width="388" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="238" y="48" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">the test case</text>
-<text x="238" y="67" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">how it fails without the fix</text>
-<text x="238" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">what happens with the fix</text>
-<line x1="127" y1="104" x2="127" y2="136" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
-<rect x="44" y="140" width="166" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="127" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">integration</text>
-<text x="127" y="183" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">before the fix</text>
-<text x="127" y="203" text-anchor="middle" style="fill:var(--color-text);font-size:11.0px;font-weight:700">fails as expected</text>
-<rect x="266" y="140" width="166" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="349" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">fix branch</text>
-<text x="349" y="183" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">with the fix</text>
-<text x="349" y="203" text-anchor="middle" style="fill:var(--color-text);font-size:11.0px;font-weight:700">passes</text>
-<rect x="488" y="140" width="166" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="571" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">integration</text>
-<text x="571" y="183" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">after merging</text>
-<text x="571" y="203" text-anchor="middle" style="fill:var(--color-text);font-size:11.0px;font-weight:700">passes</text>
-<rect x="710" y="140" width="166" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="793" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">release candidate</text>
-<text x="793" y="183" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">everything merged</text>
-<text x="793" y="203" text-anchor="middle" style="fill:var(--color-text);font-size:11.0px;font-weight:700">passes</text>
-<line x1="213" y1="180" x2="263" y2="180" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
-<text x="238" y="172" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">then</text>
-<line x1="435" y1="180" x2="485" y2="180" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
-<text x="460" y="172" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">merge</text>
-<line x1="657" y1="180" x2="707" y2="180" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
-<text x="682" y="172" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">release</text>
+<rect x="20" y="24" width="392" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="216" y="48" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">the test case</text>
+<text x="216" y="69" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">how it fails without the fix</text>
+<text x="216" y="87" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">what happens with the fix</text>
+<line x1="104" y1="104" x2="104" y2="136" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
+<rect x="20" y="140" width="168" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="104" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">integration</text>
+<text x="104" y="185" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">before the fix</text>
+<text x="104" y="207" text-anchor="middle" style="fill:var(--color-text);font-size:13.0px;font-weight:600">fails as expected</text>
+<rect x="244" y="140" width="168" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="328" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">fix branch</text>
+<text x="328" y="185" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">with the fix</text>
+<text x="328" y="207" text-anchor="middle" style="fill:var(--color-text);font-size:13.0px;font-weight:600">passes</text>
+<rect x="468" y="140" width="168" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="552" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">integration</text>
+<text x="552" y="185" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">after merging</text>
+<text x="552" y="207" text-anchor="middle" style="fill:var(--color-text);font-size:13.0px;font-weight:600">passes</text>
+<rect x="692" y="140" width="168" height="80" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="776" y="164" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">release candidate</text>
+<text x="776" y="185" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">everything merged</text>
+<text x="776" y="207" text-anchor="middle" style="fill:var(--color-text);font-size:13.0px;font-weight:600">passes</text>
+<line x1="191" y1="180" x2="241" y2="180" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
+<text x="216" y="172" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">then</text>
+<line x1="415" y1="180" x2="465" y2="180" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
+<text x="440" y="172" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">merge</text>
+<line x1="639" y1="180" x2="689" y2="180" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rg-a)"/>
+<text x="664" y="172" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">release</text>
 </svg>
 </figure>
 

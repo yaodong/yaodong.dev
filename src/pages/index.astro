@@ -20,60 +20,70 @@ const description =
   jsonLd="WebSite"
   ogType="website"
 >
-  <h1 class="sr-only">Writing by Yaodong Zhao</h1>
-  {
-    featured && (
-      <div class="featured">
-        <div class="container featured__inner">
-          <div class="featured__label">LATEST · {isoDate(featured.data.created_date)}</div>
-          <h2 class="featured__heading">
-            <a href={`/${postSlug(featured.id)}/`} class="featured__title">
-              {featured.data.title}
+  <main id="main-content" tabindex="-1" class="page-main--home">
+    <h1 class="sr-only">Writing by Yaodong Zhao</h1>
+    {
+      featured && (
+        <section class="featured" aria-label="Latest post">
+          <div class="container featured__inner">
+            <h2 class="featured__heading">
+              <a href={`/${postSlug(featured.id)}/`} class="featured__title">
+                {featured.data.title}
+              </a>
+            </h2>
+            <p class="featured__meta">
+              <time datetime={isoDate(featured.data.created_date)}>
+                {isoDate(featured.data.created_date)}
+              </time>
+            </p>
+            {featured.data.excerpt && (
+              <p class="featured__excerpt">{featured.data.excerpt}</p>
+            )}
+            <a
+              href={`/${postSlug(featured.id)}/`}
+              class="arrow-link featured__read"
+              aria-label={`Read ${featured.data.title}`}
+            >
+              read →
             </a>
-          </h2>
-          {featured.data.excerpt && (
-            <p class="featured__excerpt">{featured.data.excerpt}</p>
-          )}
-          <a href={`/${postSlug(featured.id)}/`} class="arrow-link" style="margin-top: 18px;">
-            read →
-          </a>
-        </div>
-      </div>
-    )
-  }
+          </div>
+        </section>
+      )
+    }
 
-  <main id="main-content" tabindex="-1" class="page-main page-main--home">
-    {
-      rest.length > 0 ? (
-        <div class="post-list">
-          {rest.map((post) => (
-            <article class="post-row">
-              <div class="post-row__head">
-                <h2 class="post-row__heading">
-                  <a href={`/${postSlug(post.id)}/`} class="post-row__title">
-                    {post.data.title}
-                  </a>
-                </h2>
-                <time class="post-row__date" datetime={isoDate(post.data.created_date)}>
-                  {isoDate(post.data.created_date)}
-                </time>
-              </div>
-              {post.data.excerpt && (
-                <p class="post-row__excerpt">{post.data.excerpt}</p>
-              )}
-            </article>
-          ))}
-        </div>
-      ) : (
-        <p class="post-row__excerpt">No posts found.</p>
-      )
-    }
-    {
-      rest.length > 0 && (
-        <a href="/archive/" class="arrow-link" style="margin-top: 24px;">
-          all posts →
-        </a>
-      )
-    }
+    <div class="page-main page-main--list">
+      {
+        rest.length > 0 ? (
+          <div class="post-list">
+            {rest.map((post) => (
+              <article class="post-row">
+                <div class="post-row__head">
+                  <h2 class="post-row__heading">
+                    <a href={`/${postSlug(post.id)}/`} class="post-row__title">
+                      {post.data.title}
+                    </a>
+                  </h2>
+                  <time class="post-row__date" datetime={isoDate(post.data.created_date)}>
+                    {isoDate(post.data.created_date)}
+                  </time>
+                </div>
+                {post.data.excerpt && (
+                  <p class="post-row__excerpt">{post.data.excerpt}</p>
+                )}
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p class="post-row__excerpt">No posts found.</p>
+        )
+      }
+      {
+        rest.length > 0 && (
+          <a href="/archive/" class="arrow-link post-list__more">
+            all posts →
+          </a>
+        )
+      }
+    </div>
   </main>
 </BaseLayout>

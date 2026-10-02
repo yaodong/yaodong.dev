@@ -3,10 +3,10 @@
 # pieces each option adds line up across the section.
 import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
-from diagram import Diagram
+from diagram import Diagram, FONT_LABEL
 
 W, H = 840, 128
-bw, bh, gap, x0, y = 120, 76, 52, 16, 20
+bw, bh, gap, x0, y = 132, 76, 40, 10, 20
 xs = [x0 + i * (bw + gap) for i in range(5)]
 mid = y + bh / 2
 
@@ -50,5 +50,5 @@ for name, (prefix, label, boxes, conn) in OPTIONS.items():
         x1, x2 = xs[a] + bw + 3, xs[b] - 3
         d.arrow(x1, mid, x2, mid)
         # labels sit under the row so long words don't collide with the boxes
-        d.text((xs[b] - gap / 2) if b - a == 1 else (x1 + x2) / 2, y + bh + 18, text, 11.5, "var(--color-text-muted)")
+        d.text((xs[b] - gap / 2) if b - a == 1 else (x1 + x2) / 2, y + bh + 18, text, FONT_LABEL, "var(--color-text-muted)")
     d.save(f"scripts/figures/out/2025-12-20-streaming-{name}")

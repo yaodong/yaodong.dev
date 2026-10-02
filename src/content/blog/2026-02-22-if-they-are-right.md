@@ -50,31 +50,31 @@ What makes this particularly dangerous is the absence of a natural brake. The fe
 <svg viewBox="0 0 800 290" role="img" aria-label="The displacement spiral as a closed loop: AI improves, companies need fewer workers, white-collar layoffs follow, displaced workers spend less, margin pressure pushes firms to invest the labor savings in AI, and AI improves again." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="ds-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
 <rect x="44" y="40" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">AI improves</text>
-<text x="144" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">capabilities grow</text>
+<text x="144" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">AI improves</text>
+<text x="144" y="85" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">capabilities grow</text>
 <rect x="300" y="40" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">fewer workers needed</text>
-<text x="400" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">same output</text>
+<text x="400" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">fewer workers needed</text>
+<text x="400" y="85" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">same output</text>
 <rect x="556" y="40" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">layoffs</text>
-<text x="656" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">white-collar roles</text>
+<text x="656" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">layoffs</text>
+<text x="656" y="85" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">white-collar roles</text>
 <rect x="556" y="196" width="200" height="64" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="656" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">spend less</text>
-<text x="656" y="239" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">displaced workers</text>
+<text x="656" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">spend less</text>
+<text x="656" y="241" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">displaced workers</text>
 <rect x="300" y="196" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">margin pressure</text>
-<text x="400" y="239" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">consumer demand falls</text>
+<text x="400" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">margin pressure</text>
+<text x="400" y="241" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">consumer demand falls</text>
 <rect x="44" y="196" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">invest more in AI</text>
-<text x="144" y="239" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">or fall behind rivals</text>
+<text x="144" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">invest more in AI</text>
+<text x="144" y="241" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">or fall behind rivals</text>
 <line x1="247" y1="72" x2="297" y2="72" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
 <line x1="503" y1="72" x2="553" y2="72" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
 <line x1="656" y1="108" x2="656" y2="192" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<text x="664" y="154" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">lost income</text>
+<text x="664" y="154" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">lost income</text>
 <line x1="553" y1="228" x2="503" y2="228" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
 <line x1="297" y1="228" x2="247" y2="228" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
 <line x1="144" y1="192" x2="144" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<text x="152" y="154" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">labor savings</text>
+<text x="152" y="154" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">labor savings</text>
 </svg>
 </figure>
 

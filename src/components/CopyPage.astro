@@ -23,7 +23,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       type="button"
       class="copy-page__main"
       data-copy-action="markdown"
-      aria-label="Copy page as Markdown"
+      title="Copy this page as Markdown"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +44,9 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       type="button"
       class="copy-page__caret"
       data-copy-toggle
-      aria-haspopup="true"
       aria-controls="copy-page-menu"
       aria-expanded="false"
-      aria-label="Open copy options"
+      aria-label="More copy options"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -66,11 +65,6 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
 
   <ul class="copy-page__menu" data-copy-menu id="copy-page-menu" hidden>
     <li>
-      <button type="button" class="copy-page__item" data-copy-action="markdown">
-        Copy page
-      </button>
-    </li>
-    <li>
       <button type="button" class="copy-page__item" data-copy-action="link">
         Copy link
       </button>
@@ -86,11 +80,39 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     <li>
       <a class="copy-page__item" href={claudeUrl} target="_blank" rel="noopener">
         Open in Claude
+        <svg
+          class="copy-page__ext"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M7 17L17 7M8 7h9v9"></path>
+        </svg>
+        <span class="sr-only">(opens in a new tab)</span>
       </a>
     </li>
     <li>
       <a class="copy-page__item" href={chatgptUrl} target="_blank" rel="noopener">
         Open in ChatGPT
+        <svg
+          class="copy-page__ext"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M7 17L17 7M8 7h9v9"></path>
+        </svg>
+        <span class="sr-only">(opens in a new tab)</span>
       </a>
     </li>
   </ul>
@@ -99,6 +121,8 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
        by the data-copy-action value that should copy each one. Astro escapes
        these text expressions, so textContent decodes back to the exact text
        even if the body contains </script> or & or <. -->
+  <span class="sr-only" role="status" aria-live="polite" data-copy-status></span>
+
   <div class="copy-page__source" data-copy-value="markdown" hidden>{markdown}</div>
   <div class="copy-page__source" data-copy-value="link" hidden>{pageUrl}</div>
   <div class="copy-page__source" data-copy-value="mdlink" hidden>{mdLink}</div>
@@ -110,6 +134,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     const toggle = root.querySelector<HTMLElement>('[data-copy-toggle]');
     const menu = root.querySelector<HTMLElement>('[data-copy-menu]');
     const label = root.querySelector<HTMLElement>('[data-copy-label]');
+    const status = root.querySelector<HTMLElement>('[data-copy-status]');
     const actions = root.querySelectorAll<HTMLElement>('[data-copy-action]');
     const defaultLabel = label ? label.textContent : 'Copy page';
     let resetTimer: ReturnType<typeof setTimeout>;
@@ -130,23 +155,37 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       return menu ? !menu.hidden : false;
     }
 
-    const copy = async (kind: string) => {
+    const announcements: Record<string, string> = {
+      markdown: 'Page copied as Markdown',
+      link: 'Link copied',
+      mdlink: 'Markdown link copied',
+    };
+
+    // Show the result on the button and say it to screen readers, then reset.
+    function report(visible: string, spoken: string) {
+      if (label) label.textContent = visible;
+      if (status) status.textContent = spoken;
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        if (label) label.textContent = defaultLabel;
+        if (status) status.textContent = '';
+      }, 2000);
+    }
+
+    const copy = async (kind: string, fromMenu: boolean) => {
       const source = root.querySelector<HTMLElement>(`[data-copy-value="${kind}"]`);
       const text = source ? source.textContent || '' : '';
       try {
         if (!navigator.clipboard) throw new Error('no clipboard');
         await navigator.clipboard.writeText(text);
-        if (label) {
-          label.textContent = 'Copied!';
-          clearTimeout(resetTimer);
-          resetTimer = setTimeout(() => {
-            label.textContent = defaultLabel;
-          }, 1500);
-        }
+        report('Copied!', announcements[kind] || 'Copied');
       } catch {
-        // Fail gracefully: the raw Markdown stays reachable via "View as Markdown".
+        // The raw Markdown stays reachable via "View as Markdown" in the menu.
+        report('Copy failed', 'Copy failed. Use View as Markdown in the copy options instead.');
       }
       closeMenu();
+      // The item that had focus is now hidden; hand focus back to the toggle.
+      if (fromMenu) toggle?.focus();
     };
 
     toggle?.addEventListener('click', (e) => {
@@ -157,7 +196,7 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     actions.forEach((btn) =>
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        copy(btn.dataset.copyAction || 'markdown');
+        copy(btn.dataset.copyAction || 'markdown', !!menu?.contains(btn));
       })
     );
 
@@ -165,6 +204,12 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     menu?.querySelectorAll('a.copy-page__item').forEach((link) =>
       link.addEventListener('click', () => closeMenu())
     );
+
+    // Close when keyboard focus leaves the control entirely.
+    root.addEventListener('focusout', (e) => {
+      const next = (e as FocusEvent).relatedTarget as Node | null;
+      if (isOpen() && next && !root.contains(next)) closeMenu();
+    });
 
     document.addEventListener('click', (e) => {
       if (isOpen() && !root.contains(e.target as Node)) closeMenu();

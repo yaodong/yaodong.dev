@@ -21,56 +21,56 @@ While all of that was happening, I'd noticed something interesting about the pro
 Both were happening at the same time. I wasn't waiting for either.
 
 <figure>
-<svg viewBox="0 0 854 430" role="img" aria-label="Two channels moving at the same time: in #project-hobby, Helm hands off to Builder, fixes the database when Builder gets stuck, then reviews and merges; in #write-room, Explorer pushes back, pulls in related pieces, and publishes a short piece, while I spend the whole time in #write-room." style="width:100%;height:auto;font-family:var(--font-mono)">
+<svg viewBox="0 0 880 430" role="img" aria-label="Two channels moving at the same time: in #project-hobby, Helm hands off to Builder, fixes the database when Builder gets stuck, then reviews and merges; in #write-room, Explorer pushes back, pulls in related pieces, and publishes a short piece, while I spend the whole time in #write-room." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="pw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<text x="44" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">#PROJECT-HOBBY</text>
-<rect x="44" y="70" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="111" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">helm</text>
-<text x="58" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• handoff doc</text>
-<text x="58" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• channel, repo</text>
-<rect x="202" y="70" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="269" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">builder</text>
-<text x="269" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">starts building</text>
-<rect x="360" y="70" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="427" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">helm</text>
-<text x="427" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">postgres container</text>
-<rect x="518" y="70" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="585" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">builder</text>
-<text x="585" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">first version</text>
-<rect x="676" y="70" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="743" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">helm</text>
-<text x="690" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• finds a bug</text>
-<text x="690" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• merges the PR</text>
-<text x="44" y="190" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">#WRITE-ROOM</text>
-<rect x="44" y="208" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="111" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">explorer</text>
-<text x="111" y="251" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">joins</text>
-<rect x="202" y="208" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="269" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">explorer</text>
-<text x="269" y="251" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">pushes back</text>
-<text x="269" y="267" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">new angle</text>
-<rect x="360" y="208" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="427" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">explorer</text>
-<text x="427" y="251" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">two related pieces</text>
-<rect x="518" y="208" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="585" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">explorer</text>
-<text x="585" y="251" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">shapes a piece</text>
-<rect x="676" y="208" width="134" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="743" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">explorer</text>
-<text x="743" y="251" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">publishes to</text>
-<text x="743" y="267" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">typefully</text>
-<line x1="181" y1="108" x2="199" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="339" y1="108" x2="357" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="497" y1="108" x2="515" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="655" y1="108" x2="673" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="181" y1="246" x2="199" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="339" y1="246" x2="357" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="497" y1="246" x2="515" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="655" y1="246" x2="673" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<text x="44" y="328" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">ME</text>
-<rect x="44" y="346" width="766" height="44" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="427" y="370" text-anchor="middle" style="fill:var(--color-text);font-size:13.5px;font-weight:700">thinking out loud with explorer in #write-room</text>
-<text x="427" y="416" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12px;font-weight:400">same stretch of time, left to right</text>
+<text x="20" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">#PROJECT-HOBBY</text>
+<rect x="20" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="96" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
+<text x="34" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• handoff doc</text>
+<text x="34" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• channel, repo</text>
+<rect x="192" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="268" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">builder</text>
+<text x="268" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">starts building</text>
+<rect x="364" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="440" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
+<text x="440" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">postgres container</text>
+<rect x="536" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="612" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">builder</text>
+<text x="612" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">first version</text>
+<rect x="708" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="784" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
+<text x="722" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• finds a bug</text>
+<text x="722" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• merges the PR</text>
+<text x="20" y="190" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">#WRITE-ROOM</text>
+<rect x="20" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="96" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
+<text x="96" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">joins</text>
+<rect x="192" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="268" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
+<text x="268" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">pushes back</text>
+<text x="268" y="271" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">new angle</text>
+<rect x="364" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="440" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
+<text x="440" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">two related pieces</text>
+<rect x="536" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="612" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
+<text x="612" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">shapes a piece</text>
+<rect x="708" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
+<text x="784" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
+<text x="784" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">publishes to</text>
+<text x="784" y="271" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">typefully</text>
+<line x1="175" y1="108" x2="189" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="347" y1="108" x2="361" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="519" y1="108" x2="533" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="691" y1="108" x2="705" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="175" y1="246" x2="189" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="347" y1="246" x2="361" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="519" y1="246" x2="533" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<line x1="691" y1="246" x2="705" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
+<text x="20" y="328" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">ME</text>
+<rect x="20" y="346" width="840" height="44" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
+<text x="440" y="372.9" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">thinking out loud with explorer in #write-room</text>
+<text x="440" y="416" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">same stretch of time, left to right</text>
 </svg>
 </figure>
 
@@ -96,44 +96,44 @@ There's another dimension to this isolation that I didn't anticipate when I star
 <svg viewBox="0 0 800 424" role="img" aria-label="Three agents behind one Discord server: Helm runs on the host and sees every message; Builder and Explorer each run in their own Docker container and respond only when mentioned. Agents can call each other directly, and Helm can fix Builder's container." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
 <rect x="310" y="36" width="180" height="44" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="60" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">discord</text>
+<text x="400" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">discord</text>
 <path d="M400.0,84 C400.0,118 144.0,104 144.0,132 L144.0,166" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
 <path d="M400.0,84 C400.0,118 656.0,104 656.0,132 L656.0,166" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
 <line x1="400" y1="84" x2="400" y2="166" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<text x="152" y="156" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">@mention</text>
-<text x="408" y="156" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">every message</text>
-<text x="648" y="156" text-anchor="end" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">@mention</text>
+<text x="152" y="156" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">@mention</text>
+<text x="408" y="156" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">every message</text>
+<text x="648" y="156" text-anchor="end" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">@mention</text>
 <rect x="44" y="170" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">builder</text>
-<text x="58" y="215" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• coding agent</text>
-<text x="58" y="231" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• requireMention: true</text>
+<text x="144" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">builder</text>
+<text x="58" y="216" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• coding agent</text>
+<text x="58" y="234" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requireMention: true</text>
 <rect x="300" y="170" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">helm</text>
-<text x="314" y="215" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• orchestrator</text>
-<text x="314" y="231" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• requireMention: false</text>
+<text x="400" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
+<text x="314" y="216" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• orchestrator</text>
+<text x="314" y="234" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requireMention: false</text>
 <rect x="556" y="170" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">explorer</text>
-<text x="570" y="215" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• goes deep on ideas</text>
-<text x="570" y="231" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• requireMention: true</text>
+<text x="656" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
+<text x="570" y="216" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• goes deep on ideas</text>
+<text x="570" y="234" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requireMention: true</text>
 <line x1="247" y1="208" x2="297" y2="208" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#ar-a)" marker-end="url(#ar-a)"/>
 <line x1="503" y1="208" x2="553" y2="208" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#ar-a)" marker-end="url(#ar-a)"/>
 <line x1="144" y1="250" x2="144" y2="292" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
 <rect x="44" y="296" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">docker container</text>
-<text x="58" y="341" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• own linux and tools</text>
-<text x="58" y="357" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• own openclaw</text>
+<text x="144" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">docker container</text>
+<text x="58" y="342" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own linux and tools</text>
+<text x="58" y="360" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own openclaw</text>
 <line x1="400" y1="250" x2="400" y2="292" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
 <rect x="300" y="296" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">host machine</text>
-<text x="400" y="339" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">own openclaw</text>
+<text x="400" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">host machine</text>
+<text x="400" y="341" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">own openclaw</text>
 <line x1="656" y1="250" x2="656" y2="292" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
 <rect x="556" y="296" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">docker container</text>
-<text x="570" y="341" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• own linux and tools</text>
-<text x="570" y="357" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• own openclaw</text>
+<text x="656" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">docker container</text>
+<text x="570" y="342" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own linux and tools</text>
+<text x="570" y="360" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own openclaw</text>
 <line x1="297" y1="334" x2="247" y2="334" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#ar-a)"/>
-<text x="272" y="326" text-anchor="middle" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">fixes</text>
-<text x="400" y="406" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12px;font-weight:400">dashed: agents reaching each other directly, outside discord</text>
+<text x="272" y="326" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">fixes</text>
+<text x="400" y="406" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">dashed: agents reaching each other directly, outside discord</text>
 </svg>
 </figure>
 
@@ -148,28 +148,28 @@ In practice, three kinds of channels emerged. Brainstorming channels are where u
 <figure>
 <svg viewBox="0 0 800 364" role="img" aria-label="How the Discord server is organized: brainstorming, project, and automated channels, each with a topic that works as its prompt. A thread is its own session and inherits the channel's settings, and a brainstorming thread can grow into its own project channel." style="width:100%;height:auto;font-family:var(--font-mono)">
 <defs><marker id="ch-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<text x="44" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">CHANNELS</text>
+<text x="44" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">CHANNELS</text>
 <rect x="44" y="70" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">#brainstorming</text>
-<text x="58" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• unstructured ideas</text>
-<text x="58" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• a thread per topic</text>
+<text x="144" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">#brainstorming</text>
+<text x="58" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• unstructured ideas</text>
+<text x="58" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• a thread per topic</text>
 <rect x="300" y="70" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">#project-hobby</text>
-<text x="314" y="115" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• one per project</text>
-<text x="314" y="131" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• builder follows</text>
+<text x="400" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">#project-hobby</text>
+<text x="314" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• one per project</text>
+<text x="314" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• builder follows</text>
 <rect x="556" y="70" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">#digest, #heartbeat</text>
-<text x="656" y="113" text-anchor="middle" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">recurring tasks</text>
-<text x="44" y="214" text-anchor="start" style="fill:var(--color-text-muted);font-size:11px;font-weight:700">THREADS</text>
+<text x="656" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">#digest, #heartbeat</text>
+<text x="656" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">recurring tasks</text>
+<text x="44" y="214" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">THREADS</text>
 <rect x="44" y="232" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="256" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:700">project idea</text>
-<text x="58" y="277" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• own session</text>
-<text x="58" y="293" text-anchor="start" style="fill:var(--color-text-muted);font-size:10.5px;font-weight:400">• inherits settings</text>
+<text x="144" y="256" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">project idea</text>
+<text x="58" y="278" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own session</text>
+<text x="58" y="296" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• inherits settings</text>
 <line x1="144" y1="150" x2="144" y2="228" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ch-a)"/>
-<text x="152" y="193" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">go deep</text>
+<text x="152" y="193" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">go deep</text>
 <path d="M248,270.0 C400.0,270.0 400.0,192 400.0,150" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#ch-a)"/>
-<text x="410" y="196" text-anchor="start" style="fill:var(--color-text-muted);font-size:11.5px;font-weight:400">grows into a project</text>
-<text x="400" y="346" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12px;font-weight:400">each channel's topic is read as its prompt</text>
+<text x="410" y="196" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">grows into a project</text>
+<text x="400" y="346" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">each channel's topic is read as its prompt</text>
 </svg>
 </figure>
 

@@ -4,11 +4,11 @@ import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
 from diagram import Diagram
 
-W, H = 920, 236
-bw, bh, gap, x0 = 166, 80, 56, 44
+W, H = 880, 236
+bw, bh, gap, x0 = 168, 80, 56, 20
 xs = [x0 + i * (bw + gap) for i in range(4)]
 cx = [x + bw / 2 for x in xs]
-tw, th, ty = 2 * 166 + 56, 76, 24
+tw, th, ty = 2 * bw + gap, 76, 24
 tx = x0
 ry = 140
 

@@ -1,7 +1,7 @@
 # Figure for the channels section in 2026-02-21-the-multi-agent-setup-i-actually-use.md
 import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
-from diagram import Diagram
+from diagram import Diagram, FONT_LABEL
 
 W, H = 800, 364
 bw, bh, gap, x0 = 200, 76, 56, 44
@@ -24,7 +24,7 @@ d.lane_label(x0, ty - 18, "threads")
 d.box(xs[0], ty, bw, bh, "project idea", ["own session", "inherits settings"])
 d.arrow(cx[0], cy + bh + 4, cx[0], ty - 4, label="go deep")
 d.path(f"M{xs[0] + bw + 4},{ty + bh / 2} C{cx[1]},{ty + bh / 2} {cx[1]},{ty - 40} {cx[1]},{cy + bh + 4}")
-d.text(cx[1] + 10, ty - 36, "grows into a project", 11.5, "var(--color-text-muted)", "start")
+d.text(cx[1] + 10, ty - 36, "grows into a project", FONT_LABEL, "var(--color-text-muted)", "start")
 
 d.note(W / 2, 346, "each channel's topic is read as its prompt")
 d.save("scripts/figures/out/2026-02-21-channels")

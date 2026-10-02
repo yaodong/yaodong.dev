@@ -3,10 +3,10 @@
 # the dashed loop is a reconnect with Last-Event-ID, which the job never sees.
 import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
-from diagram import Diagram
+from diagram import Diagram, FONT_LABEL
 
 W, H = 840, 330
-bw, bh, gap, x0 = 120, 76, 52, 16
+bw, bh, gap, x0 = 132, 76, 40, 10
 xs = [x0 + i * (bw + gap) for i in range(5)]
 cx = [x + bw / 2 for x in xs]
 ty, by = 20, 176
@@ -34,7 +34,7 @@ for i, (t, lines) in enumerate([("LLM API", []),
 mid = by + bh / 2
 for i, text in enumerate(["5 chunks", "5 XADD", "6 XREAD", "4 GET, 6 SSE"]):
     d.arrow(xs[i] + bw + 3, mid, xs[i + 1] - 3, mid, both=(i == 3))
-    d.text(xs[i + 1] - gap / 2, by + bh + 18, text, 11.5, M)
+    d.text(xs[i + 1] - gap / 2, by + bh + 18, text, FONT_LABEL, M)
 
 # reconnect: browser comes back to the streams controller only
 ly = by + bh + 52

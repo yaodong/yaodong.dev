@@ -27,12 +27,20 @@ REPO = Path(__file__).resolve().parents[4]
 CSS = REPO / "src/styles/application.css"
 
 # Style constants. Keep these stable so every figure looks like the same family.
+# Sizes are in viewBox units. On the site a figure renders at about its viewBox
+# width on desktop and scrolls sideways at PHONE_WIDTH px on narrow screens, so
+# the smallest text must stay readable at that width (see MIN_RENDERED_PX).
 FONT_TITLE = 15       # box title
-FONT_TITLE_HUMAN = 13.5
-FONT_SUB = 10.5       # box subtitle / bullet lines
-FONT_LABEL = 11.5     # labels on connectors
-FONT_LANE = 11        # uppercase lane labels
-FONT_NOTE = 12        # loop / footnote text
+FONT_TITLE_HUMAN = 14
+FONT_SUB = 12.5       # box subtitle / bullet lines
+FONT_LABEL = 12.5     # labels on connectors
+FONT_LANE = 12.5      # uppercase lane labels
+FONT_NOTE = 12.5      # loop / footnote text
+LINE = 18             # spacing between subtitle / bullet lines
+WEIGHT_BOLD = 600     # the site self-hosts JetBrains Mono up to 600
+MAX_WIDTH = 880       # matches --figure-width in application.css
+PHONE_WIDTH = 760     # min-width of a figure on phones (application.css)
+MIN_RENDERED_PX = 10.5
 RADIUS = 8
 STROKE = 1.4
 DASH = "4 5"
@@ -49,6 +57,19 @@ def text_width(s, size):
     return len(s) * size * MONO_CHAR
 
 
+def wrap(s, avail, size):
+    """Greedy word wrap for monospace text into lines no wider than `avail`."""
+    out, cur = [], ""
+    for word in s.split():
+        trial = f"{cur} {word}" if cur else word
+        if cur and text_width(trial, size) > avail:
+            out.append(cur)
+            cur = word
+        else:
+            cur = trial
+    return out + [cur] if cur else out
+
+
 class Diagram:
     def __init__(self, width, height, label, id_prefix="fig"):
         self.w, self.h, self.label, self.id = width, height, label, id_prefix
@@ -57,6 +78,7 @@ class Diagram:
 
     # --- primitives -------------------------------------------------------
     def text(self, x, y, s, size=FONT_SUB, color=B, anchor="middle", weight=400):
+        self.min_size = min(getattr(self, "min_size", size), size)
         self.parts.append(
             f'<text x="{x:g}" y="{y:g}" text-anchor="{anchor}" '
             f'style="fill:{color};font-size:{size}px;font-weight:{weight}">{escape(s)}</text>'
@@ -64,7 +86,7 @@ class Diagram:
 
     def lane_label(self, x, y, s):
         """Small uppercase label naming a row, e.g. AGENTS / ME / SYSTEM."""
-        self.text(x, y, s.upper(), FONT_LANE, M, "start", 700)
+        self.text(x, y, s.upper(), FONT_LANE, M, "start", WEIGHT_BOLD)
 
     def box(self, x, y, w, h, title, lines=(), kind="system", bullets=None, result=None):
         """kind="system": filled subtle box (agents, services, automation).
@@ -90,24 +112,32 @@ class Diagram:
         cx = x + w / 2
         # a title with nothing under it sits in the middle of the box
         ty = y + 24 if (lines or result) else y + h / 2 + tsize * 0.35
-        self.text(cx, ty, title, tsize, T, weight=700)
+        self.text(cx, ty, title, tsize, T, weight=WEIGHT_BOLD)
         self._check(title, tsize, w)
-        for i, line in enumerate(lines):
-            if bullets:  # bullets read better left-aligned under a centered title
-                s = f"• {line}"
-                self.text(x + 14, y + 45 + i * 16, s, FONT_SUB, M, "start")
-                self._check(s, FONT_SUB, w - 10)  # 14px left inset, ~8px right margin
+        # Lines too long for the box wrap; bullet lines get a hanging indent.
+        bullet = "• "
+        indent = text_width(bullet, FONT_SUB)
+        rows = []  # (text, x offset from the bullet column, is continuation)
+        for line in lines:
+            if bullets:
+                parts = wrap(line, w - 22 - indent, FONT_SUB)
+                rows += [(bullet + parts[0], 0)] + [(p, indent) for p in parts[1:]]
             else:
-                s = line
-                self.text(cx, y + 43 + i * 16, s, FONT_SUB, M)
+                rows += [(p, None) for p in wrap(line, w - 12, FONT_SUB)]
+        for i, (s, off) in enumerate(rows):
+            if bullets:  # bullets read better left-aligned under a centered title
+                self.text(x + 14 + off, y + 46 + i * LINE, s, FONT_SUB, M, "start")
+                self._check(s, FONT_SUB, w - 10 - off)  # 14px left inset, ~8px right margin
+            else:
+                self.text(cx, y + 45 + i * LINE, s, FONT_SUB, M)
                 self._check(s, FONT_SUB, w)
-        n = len(lines)
+        n = len(rows)
         if result:
-            ry = y + 43 + n * 16 + 4
-            self.text(cx, ry, result, FONT_SUB + 0.5, T, weight=700)
+            ry = y + 45 + n * LINE + 4
+            self.text(cx, ry, result, FONT_SUB + 0.5, T, weight=WEIGHT_BOLD)
             self._check(result, FONT_SUB + 0.5, w)
             n += 1
-        need = 45 + (n - 1) * 16 + 12 + (4 if result else 0) if n else 38
+        need = 46 + (n - 1) * LINE + 12 + (4 if result else 0) if n else 38
         if need > h:
             self.warnings.append(f"box '{title}' needs height >= {need}, got {h}")
 
@@ -151,6 +181,15 @@ class Diagram:
         if text_width(s, size) > box_w - 12:
             self.warnings.append(f"text '{s}' ({text_width(s, size):.0f}px) overflows box width {box_w}")
 
+    def _check_size(self):
+        if self.w > MAX_WIDTH:
+            self.warnings.append(f"viewBox width {self.w} is wider than {MAX_WIDTH}; the figure will be scaled down")
+        smallest = getattr(self, "min_size", FONT_SUB)
+        rendered = smallest * min(PHONE_WIDTH, MAX_WIDTH) / self.w
+        if rendered < MIN_RENDERED_PX:
+            self.warnings.append(
+                f"smallest text {smallest}px renders at {rendered:.1f}px on phones; keep it >= {MIN_RENDERED_PX}")
+
     def svg(self):
         head = (f'<svg viewBox="0 0 {self.w} {self.h}" role="img" aria-label="{escape(self.label)}" '
                 f'style="width:100%;height:auto;font-family:var(--font-mono)">')
@@ -160,6 +199,7 @@ class Diagram:
         """Writes <out_base>.inline.svg and <out_base>-light.png / -dark.png previews."""
         out = Path(out_base)
         out.parent.mkdir(parents=True, exist_ok=True)
+        self._check_size()
         svg = self.svg()
         out.with_suffix(".inline.svg").write_text(svg)
         for theme, tokens in read_tokens().items():

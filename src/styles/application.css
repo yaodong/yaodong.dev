@@ -56,8 +56,8 @@
   --color-bg: #FBFBFA;
   --color-text: #111111;
   --color-text-body: #2A2A26;
-  --color-text-secondary: #666660;
-  --color-text-muted: #6E6E68;
+  --color-text-secondary: #5A5A54;
+  --color-text-muted: #686862;
   --color-border: #E4E4E4;
   --color-dot: #CCCCC6;
   --color-bg-subtle: #EFEFEA;
@@ -68,6 +68,15 @@
 
   /* Elevation */
   --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+  /* Layout: one column for chrome and text (640px of text at 17px is ~70ch);
+     figures may widen past it to --figure-width on large screens. */
+  --column: 688px;
+  --gutter: 24px;
+  --figure-width: 880px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Dark theme — via system preference (unless manually forced light) */
@@ -76,8 +85,8 @@
     --color-bg: #151514;
     --color-text: #E2E2DD;
     --color-text-body: #C9C9C3;
-    --color-text-secondary: #8F8F88;
-    --color-text-muted: #82827B;
+    --color-text-secondary: #A2A29B;
+    --color-text-muted: #8F8F88;
     --color-border: #2A2A28;
     --color-dot: #3A3A36;
     --color-bg-subtle: #262624;
@@ -94,8 +103,8 @@
   --color-bg: #151514;
   --color-text: #E2E2DD;
   --color-text-body: #C9C9C3;
-  --color-text-secondary: #8F8F88;
-  --color-text-muted: #82827B;
+  --color-text-secondary: #A2A29B;
+  --color-text-muted: #8F8F88;
   --color-border: #2A2A28;
   --color-dot: #3A3A36;
   --color-bg-subtle: #262624;
@@ -106,13 +115,47 @@
   --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
+html {
+  color-scheme: light;
+  scrollbar-color: var(--color-dot) var(--color-bg);
+  accent-color: var(--color-text);
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.55;
+  caret-color: var(--color-text);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Selection inverts the palette, the same move light/dark makes. */
+::selection {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li {
+  text-wrap: pretty;
 }
 
 /* Links inherit text color; hover conventions are set per link type. */
@@ -121,11 +164,11 @@ a {
   text-decoration: none;
 }
 
-/* Shared inner column: 720px, centered, 24px side padding. */
+/* Shared inner column, centered; side padding comes from each block. */
 .container {
   margin: 0 auto;
   width: 100%;
-  max-width: 720px;
+  max-width: var(--column);
   box-sizing: border-box;
 }
 
@@ -188,12 +231,16 @@ a {
 
 .site-header__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 28px 24px;
+  column-gap: 16px;
+  row-gap: 4px;
+  padding: 28px var(--gutter);
 }
 
 .logo {
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 0.9375rem;
   font-weight: 600;
@@ -299,10 +346,12 @@ a {
 
 .site-footer__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 24px;
-  padding: 24px;
+  column-gap: 24px;
+  row-gap: 8px;
+  padding: 24px var(--gutter);
 }
 
 .site-footer__copy {
@@ -341,24 +390,41 @@ a {
 .page-main {
   margin: 0 auto;
   width: 100%;
-  max-width: 720px;
+  max-width: var(--column);
   box-sizing: border-box;
 }
 
 .page-main--home {
-  padding: 20px 24px 56px;
+  display: block;
+  width: 100%;
+}
+
+.page-main--home:focus {
+  outline: none;
+}
+
+.page-main--list {
+  padding: 20px var(--gutter) 56px;
+}
+
+.featured__read {
+  margin-top: 18px;
+}
+
+.post-list__more {
+  margin-top: 24px;
 }
 
 .page-main--post {
-  padding: 28px 24px 56px;
+  padding: 28px var(--gutter) 56px;
 }
 
 .page-main--archive {
-  padding: 48px 24px 56px;
+  padding: 48px var(--gutter) 56px;
 }
 
 .page-main--page {
-  padding: 48px 24px 56px;
+  padding: 48px var(--gutter) 56px;
 }
 
 /* --------------------------------------------------------------------------
@@ -369,24 +435,24 @@ a {
 }
 
 .featured__inner {
-  padding: 52px 24px;
-}
-
-.featured__label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--color-text-muted);
-  margin-bottom: 14px;
+  padding: 64px var(--gutter) 56px;
 }
 
 .featured__title {
-  display: inline-block;
+  display: inline;
   font-family: var(--font-heading);
-  font-size: 1.875rem;
+  font-size: clamp(1.875rem, 1.35rem + 1.9vw, 2.5rem);
   font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--color-text);
+}
+
+.featured__meta {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
 .featured__title:hover {
@@ -396,9 +462,9 @@ a {
 }
 
 .featured__excerpt {
-  margin: 14px 0 0;
-  max-width: 600px;
-  font-size: 0.96875rem;
+  margin: 18px 0 0;
+  max-width: 34em;
+  font-size: 1.0625rem;
   line-height: 1.65;
   color: var(--color-text-secondary);
 }
@@ -412,7 +478,7 @@ a {
 }
 
 .post-row {
-  padding: 22px 0;
+  padding: 24px 0;
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -429,7 +495,7 @@ a {
 
 .post-row__title {
   font-family: var(--font-heading);
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   font-weight: 500;
   line-height: 1.4;
   color: var(--color-text);
@@ -449,8 +515,9 @@ a {
 }
 
 .post-row__excerpt {
-  margin: 8px 0 0;
-  font-size: 0.90625rem;
+  max-width: 38em;
+  margin: 6px 0 0;
+  font-size: 0.9375rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
 }
@@ -459,7 +526,7 @@ a {
    Post page
    -------------------------------------------------------------------------- */
 .post-header {
-  margin-bottom: 40px;
+  margin-bottom: 48px;
 }
 
 .post-top {
@@ -483,27 +550,28 @@ a {
 .post-title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: 2.125rem;
+  font-size: clamp(1.875rem, 1.35rem + 1.9vw, 2.5rem);
   font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--color-text);
 }
 
-/* Date + author share one line below the title, both right-aligned. */
+/* Date, author and reading time share one line below the title. */
 .post-meta {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  justify-content: flex-end;
-  gap: 16px;
-  margin-top: 14px;
+  column-gap: 8px;
+  row-gap: 4px;
+  margin-top: 16px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text-muted);
 }
 
-.post-author {
-  flex-shrink: 0;
+.post-meta__dot {
+  color: var(--color-dot);
 }
 
 .post-meta a {
@@ -522,7 +590,7 @@ a {
    -------------------------------------------------------------------------- */
 .prose {
   max-width: none;
-  font-size: 1.03125rem;
+  font-size: 1.0625rem;
   line-height: 1.7;
   color: var(--color-text-body);
   --tw-prose-body: var(--color-text-body);
@@ -547,7 +615,7 @@ a {
 }
 
 .prose p {
-  margin: 0 0 20px;
+  margin: 0 0 1.25em;
 }
 
 .prose h2 {
@@ -556,7 +624,7 @@ a {
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.3;
-  margin: 36px 0 16px;
+  margin: 2.5em 0 0.75em;
   color: var(--color-text);
 }
 
@@ -570,22 +638,37 @@ a {
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.4;
-  margin: 32px 0 14px;
+  margin: 2em 0 0.6em;
   color: var(--color-text);
 }
 
 .prose a {
   color: var(--color-text);
+  font-weight: inherit;
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-color: var(--color-text-muted);
+  text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s ease;
 }
 
 .prose a:hover {
-  color: var(--color-text-secondary);
+  text-decoration-color: var(--color-text);
+  text-decoration-thickness: 2px;
+}
+
+.prose a:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.prose strong {
+  font-weight: 600;
 }
 
 .prose code {
+  font-variant-ligatures: none;
   font-family: var(--font-mono);
   font-size: 0.85em;
   background: var(--color-code-bg);
@@ -618,9 +701,120 @@ a {
   font-size: inherit;
 }
 
+/* Quotes: a hairline and an indent; the voice stays the author's. */
 .prose blockquote {
+  margin: 1.75em 0;
+  padding-left: 1.25em;
   font-style: normal;
-  border-left-width: 3px;
+  font-weight: inherit;
+  color: var(--color-text-secondary);
+  border-left: 1px solid var(--color-text);
+}
+
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
+}
+
+/* Section breaks (`---` in Markdown) set as a centered dinkus. */
+.prose hr {
+  margin: 2.75em 0;
+  border: 0;
+  height: auto;
+  text-align: center;
+  line-height: 1;
+}
+
+.prose hr::after {
+  content: '* * *';
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.5em;
+  color: var(--color-text-muted);
+}
+
+/* Figures widen past the text column when the viewport allows, so the 880-unit
+   SVG diagrams keep legible labels; on phones they match the column. */
+.prose figure {
+  width: min(var(--figure-width), 100vw - 2 * var(--gutter));
+  margin: 2.5em 0;
+  margin-left: calc(50% - min(var(--figure-width), 100vw - 2 * var(--gutter)) / 2);
+}
+
+/* Narrow screens: the diagram keeps a legible size and scrolls sideways
+   inside its own box. The hint stays pinned while the figure scrolls. */
+@media (max-width: 719px) {
+  .prose figure {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .prose figure > svg {
+    min-width: 760px;
+  }
+
+  .prose figure:has(> svg)::before {
+    content: 'scroll →';
+    position: sticky;
+    left: 0;
+    display: block;
+    width: max-content;
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+  }
+}
+
+.prose figcaption {
+  margin-top: 0.75em;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+/* Footnotes: quieter than the essay they support. */
+.prose .footnotes {
+  margin-top: 3.5em;
+  padding-top: 1.5em;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* A trailing `---` already separates the notes; don't draw a second rule. */
+.prose hr + .footnotes {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose .footnotes ol {
+  padding-left: 1.25em;
+}
+
+.prose .footnotes li {
+  margin: 0 0 0.75em;
+}
+
+.prose .footnotes li p {
+  margin: 0;
+}
+
+.prose sup a,
+.prose .data-footnote-backref {
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  padding: 0 0.1em;
+}
+
+.prose :target {
+  scroll-margin-top: 24px;
 }
 
 /* Wide tables scroll within their own box instead of forcing the page wide. */
@@ -654,10 +848,56 @@ a {
 /* --------------------------------------------------------------------------
    Post page — related
    -------------------------------------------------------------------------- */
-.related {
+/* Sign-off: the essay ends with the author, then the way onward. */
+.signoff {
   margin-top: 56px;
   padding-top: 28px;
   border-top: 1px solid var(--color-border);
+}
+
+.signoff__text {
+  margin: 0;
+  max-width: 34em;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.signoff__text a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-text-muted);
+  text-underline-offset: 0.2em;
+}
+
+.signoff__text a:hover {
+  text-decoration-color: var(--color-text);
+}
+
+.signoff__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 10px;
+  margin: 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.signoff__links a {
+  color: var(--color-text-secondary);
+}
+
+.signoff__links a:hover {
+  color: var(--color-text);
+}
+
+.signoff__dot {
+  color: var(--color-dot);
+}
+
+.related {
+  margin-top: 40px;
 }
 
 .related__label {
@@ -774,7 +1014,7 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 48px 24px 56px;
+  padding: 48px var(--gutter) 56px;
 }
 
 .notfound__status {
@@ -850,8 +1090,9 @@ a {
 
 .project-card {
   display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--color-border);
   margin-bottom: 1.5rem;
@@ -864,7 +1105,7 @@ a {
 }
 
 .project-card-screenshot {
-  flex: 0 0 45%;
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -872,7 +1113,6 @@ a {
 .project-card-screenshot img {
   width: 100%;
   display: block;
-  border-radius: 12px;
 }
 
 .project-card-info {
@@ -899,82 +1139,66 @@ a {
   line-height: 1.6;
 }
 
-@media (max-width: 639px) {
-  .project-card {
-    flex-direction: column;
-  }
-
-  .project-card-screenshot {
-    flex: none;
-    width: 100%;
-  }
-}
-
 /* --------------------------------------------------------------------------
-   Touch targets — on coarse pointers (phones/tablets) grow tap areas to a
-   comfortable ~44px without disturbing the desktop's compact density.
+   Transitions — color fades on links and controls only, plus one authored
+   moment: a short cross-document fade so navigating between notes feels like
+   turning a page instead of a flash. Header and footer stay put.
    -------------------------------------------------------------------------- */
-@media (pointer: coarse) {
-  .site-nav {
-    gap: 20px;
-  }
-
-  .nav-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
-
-  .theme-toggle {
-    width: 44px;
-    height: 44px;
-  }
-
-  .copy-page__main,
-  .copy-page__caret {
-    padding-top: 11px;
-    padding-bottom: 11px;
-  }
-
-  .site-footer__links a {
-    padding: 6px 0;
-  }
-
-  .back-link,
-  .arrow-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-  }
-}
-
-/* --------------------------------------------------------------------------
-   Global transitions (kept from prior design)
-   -------------------------------------------------------------------------- */
-* {
-  transition-property: color, background-color, border-color;
+a,
+button {
+  transition-property: color, background-color, border-color, text-decoration-color;
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
 
-input, textarea, button, select {
-  transition: none;
+@view-transition {
+  navigation: auto;
 }
 
-/* Honor the user's reduced-motion preference: no smooth scroll, near-instant
-   transitions/animations (the skip-link slide and 0.15s color fades included). */
+.site-header {
+  view-transition-name: site-header;
+}
+
+.site-footer {
+  view-transition-name: site-footer;
+}
+
+::view-transition-old(root) {
+  animation: 120ms ease-in both vt-fade-out;
+}
+
+::view-transition-new(root) {
+  animation: 280ms var(--ease-out) both vt-fade-in;
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* Honor the user's reduced-motion preference: no page-turn fade, no smooth
+   scroll, no sliding skip link. */
 @media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
   html {
     scroll-behavior: auto !important;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  /* No sliding: the skip link simply appears. Color fades stay — they carry
+     hover feedback without moving anything. */
+  .skip-link {
+    transition: none;
   }
 }
 
@@ -1059,6 +1283,19 @@ input, textarea, button, select {
   cursor: pointer;
 }
 
+.copy-page__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.copy-page__ext {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+
 .copy-page__item:hover {
   color: var(--color-text);
   background: var(--color-bg-subtle);
@@ -1086,8 +1323,93 @@ input, textarea, button, select {
 .post-row__title:focus-visible,
 .archive-row__title:focus-visible,
 .related__title:focus-visible,
-.site-footer__links a:focus-visible {
+.site-footer__links a:focus-visible,
+.signoff__links a:focus-visible,
+.signoff__text a:focus-visible {
   outline: 2px solid var(--color-text);
   outline-offset: 3px;
   border-radius: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Touch targets — on coarse pointers (phones/tablets) grow tap areas to a
+   comfortable ~44px without disturbing the desktop's compact density. Kept at
+   the end of the file so it outranks the component rules it adjusts.
+   -------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .site-nav {
+    gap: 20px;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .theme-toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .copy-page__main,
+  .copy-page__caret {
+    min-height: 44px;
+  }
+
+  .copy-page__caret {
+    min-width: 44px;
+    justify-content: center;
+  }
+
+  .copy-page__item {
+    min-height: 44px;
+  }
+
+  .site-footer__links a,
+  .signoff__links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 4px;
+  }
+
+  .post-meta a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+  }
+
+  .back-link,
+  .arrow-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small screens — titles get the full width with the date beneath, and the
+   header tightens so it never scrolls sideways at 320px.
+   -------------------------------------------------------------------------- */
+@media (max-width: 519px) {
+  .post-row__head,
+  .related__row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .post-row__head .post-row__date {
+    order: -1;
+  }
+}
+
+@media (max-width: 359px) {
+  :root {
+    --gutter: 16px;
+  }
+
+  .site-nav {
+    gap: 12px;
+  }
 }

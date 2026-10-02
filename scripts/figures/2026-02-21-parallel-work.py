@@ -3,8 +3,8 @@ import sys
 sys.path.insert(0, ".claude/skills/blog-illustration/scripts")
 from diagram import Diagram
 
-W, H = 854, 430
-bw, bh, gap, x0 = 134, 76, 24, 44
+W, H = 880, 430
+bw, bh, gap, x0 = 152, 76, 20, 20
 xs = [x0 + i * (bw + gap) for i in range(5)]
 ay, by, my = 70, 208, 346
 
