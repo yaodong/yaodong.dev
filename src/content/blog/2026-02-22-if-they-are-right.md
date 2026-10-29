@@ -47,35 +47,42 @@ This is the central paradox. The consumer economy (70% of GDP) runs on human inc
 What makes this particularly dangerous is the absence of a natural brake. The feedback loop runs like this:
 
 <figure>
-<svg viewBox="0 0 800 290" role="img" aria-label="The displacement spiral as a closed loop: AI improves, companies need fewer workers, white-collar layoffs follow, displaced workers spend less, margin pressure pushes firms to invest the labor savings in AI, and AI improves again." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="ds-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="44" y="40" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">AI improves</text>
-<text x="144" y="85" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">capabilities grow</text>
-<rect x="300" y="40" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">fewer workers needed</text>
-<text x="400" y="85" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">same output</text>
-<rect x="556" y="40" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="64" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">layoffs</text>
-<text x="656" y="85" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">white-collar roles</text>
-<rect x="556" y="196" width="200" height="64" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="656" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">spend less</text>
-<text x="656" y="241" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">displaced workers</text>
-<rect x="300" y="196" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">margin pressure</text>
-<text x="400" y="241" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">consumer demand falls</text>
-<rect x="44" y="196" width="200" height="64" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="220" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">invest more in AI</text>
-<text x="144" y="241" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">or fall behind rivals</text>
-<line x1="247" y1="72" x2="297" y2="72" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<line x1="503" y1="72" x2="553" y2="72" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<line x1="656" y1="108" x2="656" y2="192" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<text x="664" y="154" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">lost income</text>
-<line x1="553" y1="228" x2="503" y2="228" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<line x1="297" y1="228" x2="247" y2="228" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<line x1="144" y1="192" x2="144" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<text x="152" y="154" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">labor savings</text>
-</svg>
+<div class="fig-head"><div class="fig-title">The displacement spiral</div><div class="fig-sub">A feedback loop with no natural brake</div></div>
+<div class="fig-draw"><svg id="sp" viewBox="0 0 840 196" role="img" aria-label="The displacement spiral as a closed loop: AI improves, companies need fewer workers, white-collar layoffs follow, displaced workers spend less, margin pressure pushes firms to invest the labor savings in AI, and AI improves again."><style>#sp text{font-family:var(--font-body)}#sp .mono{font-family:var(--font-mono)}</style>
+<path d="M129.068 30 L300 30" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M296.0 33.5 L300 30 L296.0 26.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M478.284 30 L580 30" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M576.0 33.5 L580 30 L576.0 26.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M590 64 L590 138" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M586.5 134.0 L590 138 L593.5 134.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M580 150 L437.362 150" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M441.4 146.5 L437.362 150 L441.4 153.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M300 150 L161.044 150" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M165.0 146.5 L161.044 150 L165.0 153.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M30 138 L30 64" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M33.5 68.0 L30 64 L26.5 68.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="34.5" font-size="14" font-weight="500" style="fill:var(--color-text)">AI improves</text>
+<text x="44" y="52" font-size="12.5" style="fill:var(--color-text-muted)">capabilities grow</text>
+<circle cx="30" cy="30" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="324" y="34.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Fewer workers needed</text>
+<text x="324" y="52" font-size="12.5" style="fill:var(--color-text-muted)">same output</text>
+<circle cx="310" cy="30" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="604" y="34.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Layoffs</text>
+<text x="604" y="52" font-size="12.5" style="fill:var(--color-text-muted)">white-collar roles</text>
+<circle cx="590" cy="30" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="604" y="154.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Spend less</text>
+<text x="604" y="172" font-size="12.5" style="fill:var(--color-text-muted)">displaced workers</text>
+<circle cx="590" cy="150" r="5" stroke-width="1.5" style="fill:var(--color-bg);stroke:var(--color-text-body)"/>
+<text x="324" y="154.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Margin pressure</text>
+<text x="324" y="172" font-size="12.5" style="fill:var(--color-text-muted)">consumer demand falls</text>
+<circle cx="310" cy="150" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="44" y="154.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Invest more in AI</text>
+<text x="44" y="172" font-size="12.5" style="fill:var(--color-text-muted)">or fall behind rivals</text>
+<circle cx="30" cy="150" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="604" y="105.5" font-size="13" style="fill:var(--color-text-secondary)">lost income</text>
+<text x="44" y="105.5" font-size="13" style="fill:var(--color-text-secondary)">labor savings</text>
+</svg></div>
+<figcaption><span>Each step is rational for a single firm, and the labor savings fund the next round of AI.</span></figcaption>
 </figure>
 
 Each step is rational at the individual firm level. No one company can opt out. If your competitor cuts headcount and reinvests in AI, you either do the same or fall behind. The collective result is catastrophic. Every dollar saved on human labor funds the technology that makes the next round of cuts possible.

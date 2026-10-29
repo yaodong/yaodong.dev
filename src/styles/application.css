@@ -41,15 +41,18 @@
 
 /* ==========================================================================
    Monochrome Design System
-   Understated black & white: no accent color, no content card, no background
-   stripes. Fira Sans for body/titles, JetBrains Mono for metadata/UI chrome.
+   Understated black & white: no content card, no background stripes. The one
+   accent color marks the focal point of a figure and is used nowhere else.
+   Fira Sans for body/titles, JetBrains Mono for metadata/UI chrome.
    Light and dark are the same grayscale palette inverted.
    ========================================================================== */
 
 :root {
   /* Fonts */
-  --font-heading: "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* "Fira Sans Fallback" (fonts.css) is Arial resized to Fira's metrics, so
+     text doesn't re-wrap when the web font arrives. */
+  --font-heading: "Fira Sans", "Fira Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Fira Sans", "Fira Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Light theme */
@@ -64,7 +67,9 @@
   --color-btn-bg: #FFFFFF;
   --color-code-bg: #ECECE6;
   --color-pre-bg: #141412;
+  --color-pre-border: transparent;
   --color-pre-text: #E5E5E0;
+  --color-accent: #C15F3C;
 
   /* Elevation */
   --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -92,8 +97,10 @@
     --color-bg-subtle: #262624;
     --color-btn-bg: #1C1C1B;
     --color-code-bg: #242422;
-    --color-pre-bg: #0D0D0C;
+    --color-pre-bg: #1C1C1B;
+    --color-pre-border: #2A2A28;
     --color-pre-text: #D8D8D2;
+    --color-accent: #D97757;
     --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.5);
   }
 }
@@ -110,8 +117,10 @@
   --color-bg-subtle: #262624;
   --color-btn-bg: #1C1C1B;
   --color-code-bg: #242422;
-  --color-pre-bg: #0D0D0C;
+  --color-pre-bg: #1C1C1B;
+  --color-pre-border: #2A2A28;
   --color-pre-text: #D8D8D2;
+  --color-accent: #D97757;
   --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.5);
 }
 
@@ -642,7 +651,10 @@ a {
   color: var(--color-text);
 }
 
-.prose a {
+/* Authored components inside prose (link cards, project titles) style their
+   own links; :where() keeps this at .prose a's specificity so rules like
+   `.prose sup a` still win. */
+.prose a:where(:not(.not-prose, .not-prose *, .project-card-title)) {
   color: var(--color-text);
   font-weight: inherit;
   text-decoration: underline;
@@ -652,7 +664,7 @@ a {
   transition: text-decoration-color 0.15s ease;
 }
 
-.prose a:hover {
+.prose a:where(:not(.not-prose, .not-prose *, .project-card-title)):hover {
   text-decoration-color: var(--color-text);
   text-decoration-thickness: 2px;
 }
@@ -689,7 +701,7 @@ a {
   color: var(--color-pre-text);
   padding: 18px 22px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid var(--color-pre-border);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin: 0 0 20px;
@@ -733,29 +745,102 @@ a {
   color: var(--color-text-muted);
 }
 
-/* Figures widen past the text column when the viewport allows, so the 880-unit
-   SVG diagrams keep legible labels; on phones they match the column. */
+/* Figures are framed cards: a title and subtitle, the drawing, and a caption
+   numbered FIG A, FIG B, ... per post. They widen past the text column when
+   the viewport allows, so the 840-unit SVG diagrams keep their labels at full
+   size. */
+.prose {
+  counter-reset: fig;
+}
+
 .prose figure {
   width: min(var(--figure-width), 100vw - 2 * var(--gutter));
   margin: 2.5em 0;
   margin-left: calc(50% - min(var(--figure-width), 100vw - 2 * var(--gutter)) / 2);
+  border: 1px solid var(--color-border);
+  counter-increment: fig;
 }
 
-/* Narrow screens: the diagram keeps a legible size and scrolls sideways
-   inside its own box. The hint stays pinned while the figure scrolls. */
-@media (max-width: 719px) {
-  .prose figure {
+.prose .fig-head {
+  padding: 16px 16px 0;
+}
+
+.prose .fig-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-text);
+}
+
+.prose .fig-sub {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+.prose .fig-draw {
+  padding: 16px;
+}
+
+.prose .fig-draw > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* SVG text is painted with `fill`, which the inverted page selection's `color`
+   can't reach, so selected labels would vanish into the dark highlight. Figures
+   use a light wash instead, which every label color stays readable on. */
+.prose figure ::selection {
+  background: color-mix(in srgb, var(--color-text) 16%, var(--color-bg));
+  color: var(--color-text);
+}
+
+.prose figcaption {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin: 0;
+  padding: 10px 16px;
+  border-top: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.prose figcaption::before {
+  content: 'FIG ' counter(fig, upper-alpha);
+  min-width: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+/* Below 842px the card can't fit a 760px drawing (plus 82px of gutter, padding
+   and border), so the title and caption wrap to the card while the drawing keeps
+   a legible size and scrolls sideways inside it. The hint stays pinned while the
+   drawing scrolls. */
+@media (max-width: 841px) {
+  .prose .fig-draw {
     overflow-x: auto;
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
   }
 
-  .prose figure > svg {
+  .prose .fig-draw > svg {
     min-width: 760px;
   }
 
-  .prose figure:has(> svg)::before {
+  .prose .fig-draw::before {
     content: 'scroll →';
+    /* Visual hint only; the region's name already says it scrolls. */
+    content: 'scroll →' / '';
     position: sticky;
     left: 0;
     display: block;
@@ -765,15 +850,6 @@ a {
     font-size: 0.6875rem;
     color: var(--color-text-muted);
   }
-}
-
-.prose figcaption {
-  margin-top: 0.75em;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1.5;
-  text-align: center;
-  color: var(--color-text-muted);
 }
 
 /* Footnotes: quieter than the essay they support. */
@@ -1113,6 +1189,8 @@ a {
 .project-card-screenshot img {
   width: 100%;
   display: block;
+  /* Typography's `.prose img` margins would float it inside the frame. */
+  margin: 0;
 }
 
 .project-card-info {
@@ -1271,7 +1349,9 @@ button {
 }
 
 .copy-page__item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   width: 100%;
   padding: 7px 10px;
   font-size: 0.75rem;
@@ -1280,14 +1360,8 @@ button {
   background: transparent;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
-}
-
-.copy-page__item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .copy-page__ext {
@@ -1329,6 +1403,19 @@ button {
   outline: 2px solid var(--color-text);
   outline-offset: 3px;
   border-radius: 3px;
+}
+
+/* Scrollers made focusable by BaseLayout's script keep their own corners. A
+   figure's drawing spans its card, so its ring sits inside the border. */
+.prose pre:focus-visible,
+.prose table:focus-visible,
+.prose .fig-draw:focus-visible {
+  outline: 2px solid var(--color-text);
+  outline-offset: 3px;
+}
+
+.prose .fig-draw:focus-visible {
+  outline-offset: -3px;
 }
 
 /* --------------------------------------------------------------------------

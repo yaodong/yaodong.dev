@@ -34,6 +34,7 @@ const year = new Date().getFullYear();
               <a
                 href={item.url}
                 class:list={['nav-link', { 'nav-link-active': currentPath === item.url }]}
+                aria-current={currentPath === item.url ? 'page' : undefined}
               >
                 {item.title}
               </a>
@@ -92,7 +93,7 @@ const year = new Date().getFullYear();
           {
             SITE.footerLinks.map((item, i) => (
               <>
-                {i > 0 && <span class="site-footer__dot">&middot;</span>}
+                {i > 0 && <span class="site-footer__dot" aria-hidden="true">&middot;</span>}
                 <a href={item.url}>{item.title}</a>
               </>
             ))
@@ -166,6 +167,57 @@ const year = new Date().getFullYear();
         media.addEventListener('change', function () {
           if (!getStoredTheme()) applyTheme(null);
         });
+      })();
+    </script>
+
+    <script is:inline>
+      // Wide code blocks, tables and figures scroll sideways inside their own
+      // box. Safari doesn't let the keyboard reach a scroller with nothing
+      // focusable in it, so make the ones that actually overflow focusable and
+      // name them; the rest stay out of the tab order.
+      (function () {
+        var scrollers = document.querySelectorAll('.prose pre, .prose table, .prose .fig-draw');
+        if (!scrollers.length) return;
+
+        function nameOf(el) {
+          if (el.tagName === 'PRE') return 'Code block';
+          if (el.tagName === 'TABLE') return 'Table';
+          var title = el.parentNode.querySelector('.fig-title');
+          return title ? title.textContent : 'Figure';
+        }
+
+        function sync() {
+          scrollers.forEach(function (el) {
+            if (el.scrollWidth > el.clientWidth) {
+              el.setAttribute('tabindex', '0');
+              // A table keeps its own role; a region role would hide its rows
+              // and headers from screen readers.
+              if (el.tagName !== 'TABLE') el.setAttribute('role', 'region');
+              el.setAttribute('aria-label', nameOf(el) + ', scrolls sideways');
+            } else {
+              el.removeAttribute('tabindex');
+              el.removeAttribute('role');
+              el.removeAttribute('aria-label');
+            }
+          });
+        }
+
+        // Re-check whenever a scroller's box changes size, and once the fonts
+        // load, since a font swap can change content width without resizing it.
+        if (document.fonts) document.fonts.ready.then(sync);
+        if (window.ResizeObserver) {
+          var observer = new ResizeObserver(sync);
+          scrollers.forEach(function (el) {
+            observer.observe(el);
+          });
+        } else {
+          sync();
+          var timer;
+          window.addEventListener('resize', function () {
+            clearTimeout(timer);
+            timer = setTimeout(sync, 150);
+          });
+        }
       })();
     </script>
 

@@ -21,57 +21,69 @@ While all of that was happening, I'd noticed something interesting about the pro
 Both were happening at the same time. I wasn't waiting for either.
 
 <figure>
-<svg viewBox="0 0 880 430" role="img" aria-label="Two channels moving at the same time: in #project-hobby, Helm hands off to Builder, fixes the database when Builder gets stuck, then reviews and merges; in #write-room, Explorer pushes back, pulls in related pieces, and publishes a short piece, while I spend the whole time in #write-room." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="pw-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<text x="20" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">#PROJECT-HOBBY</text>
-<rect x="20" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="96" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
-<text x="34" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• handoff doc</text>
-<text x="34" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• channel, repo</text>
-<rect x="192" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="268" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">builder</text>
-<text x="268" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">starts building</text>
-<rect x="364" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="440" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
-<text x="440" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">postgres container</text>
-<rect x="536" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="612" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">builder</text>
-<text x="612" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">first version</text>
-<rect x="708" y="70" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="784" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
-<text x="722" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• finds a bug</text>
-<text x="722" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• merges the PR</text>
-<text x="20" y="190" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">#WRITE-ROOM</text>
-<rect x="20" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="96" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
-<text x="96" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">joins</text>
-<rect x="192" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="268" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
-<text x="268" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">pushes back</text>
-<text x="268" y="271" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">new angle</text>
-<rect x="364" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="440" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
-<text x="440" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">two related pieces</text>
-<rect x="536" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="612" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
-<text x="612" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">shapes a piece</text>
-<rect x="708" y="208" width="152" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="784" y="232" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
-<text x="784" y="253" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">publishes to</text>
-<text x="784" y="271" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">typefully</text>
-<line x1="175" y1="108" x2="189" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="347" y1="108" x2="361" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="519" y1="108" x2="533" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="691" y1="108" x2="705" y2="108" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="175" y1="246" x2="189" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="347" y1="246" x2="361" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="519" y1="246" x2="533" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<line x1="691" y1="246" x2="705" y2="246" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pw-a)"/>
-<text x="20" y="328" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">ME</text>
-<rect x="20" y="346" width="840" height="44" rx="8" style="fill:var(--color-bg);stroke:var(--color-text);stroke-width:1.4"/>
-<text x="440" y="372.9" text-anchor="middle" style="fill:var(--color-text);font-size:14px;font-weight:600">thinking out loud with explorer in #write-room</text>
-<text x="440" y="416" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">same stretch of time, left to right</text>
-</svg>
+<div class="fig-head"><div class="fig-title">Two channels at once</div><div class="fig-sub">The same stretch of time, left to right</div></div>
+<div class="fig-draw"><svg id="pw" viewBox="0 0 840 282" role="img" aria-label="Two channels moving at the same time: in #project-hobby, Helm hands off to Builder, fixes the database when Builder gets stuck, then reviews and merges; in #write-room, Explorer pushes back, pulls in related pieces, and publishes a short piece, while I think out loud with Explorer in #write-room."><style>#pw text{font-family:var(--font-body)}#pw .mono{font-family:var(--font-mono)}</style>
+<path d="M87.124 46 L185 46" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M181.0 49.5 L185 46 L181.0 42.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M265.326 46 L350 46" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M346.0 49.5 L350 46 L346.0 42.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M417.124 46 L515 46" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M511.0 49.5 L515 46 L511.0 42.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M595.326 46 L680 46" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M676.0 49.5 L680 46 L676.0 42.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M107.788 146 L185 146" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M181.0 149.5 L185 146 L181.0 142.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M272.788 146 L350 146" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M346.0 149.5 L350 146 L346.0 142.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M437.788 146 L515 146" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M511.0 149.5 L515 146 L511.0 142.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M602.788 146 L680 146" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M676.0 149.5 L680 146 L676.0 142.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M254.382 246 L824 246" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M820.0 249.5 L824 246 L820.0 242.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="22" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">#PROJECT-HOBBY</text>
+<text x="44" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Helm</text>
+<text x="44" y="68" font-size="12.5" style="fill:var(--color-text-muted)">handoff doc</text>
+<text x="44" y="85.5" font-size="12.5" style="fill:var(--color-text-muted)">channel, repo</text>
+<circle cx="30" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="209" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Builder</text>
+<text x="209" y="68" font-size="12.5" style="fill:var(--color-text-muted)">starts building</text>
+<circle cx="195" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="374" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Helm</text>
+<text x="374" y="68" font-size="12.5" style="fill:var(--color-text-muted)">Postgres container</text>
+<circle cx="360" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="539" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Builder</text>
+<text x="539" y="68" font-size="12.5" style="fill:var(--color-text-muted)">first version</text>
+<circle cx="525" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="704" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Helm</text>
+<text x="704" y="68" font-size="12.5" style="fill:var(--color-text-muted)">finds a bug</text>
+<text x="704" y="85.5" font-size="12.5" style="fill:var(--color-text-muted)">merges the PR</text>
+<circle cx="690" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="44" y="122" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">#WRITE-ROOM</text>
+<text x="44" y="150.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Explorer</text>
+<text x="44" y="168" font-size="12.5" style="fill:var(--color-text-muted)">joins</text>
+<circle cx="30" cy="146" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="209" y="150.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Explorer</text>
+<text x="209" y="168" font-size="12.5" style="fill:var(--color-text-muted)">pushes back</text>
+<text x="209" y="185.5" font-size="12.5" style="fill:var(--color-text-muted)">new angle</text>
+<circle cx="195" cy="146" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="374" y="150.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Explorer</text>
+<text x="374" y="168" font-size="12.5" style="fill:var(--color-text-muted)">two related pieces</text>
+<circle cx="360" cy="146" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="539" y="150.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Explorer</text>
+<text x="539" y="168" font-size="12.5" style="fill:var(--color-text-muted)">shapes a piece</text>
+<circle cx="525" cy="146" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="704" y="150.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Explorer</text>
+<text x="704" y="168" font-size="12.5" style="fill:var(--color-text-muted)">publishes to</text>
+<text x="704" y="185.5" font-size="12.5" style="fill:var(--color-text-muted)">Typefully</text>
+<circle cx="690" cy="146" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="44" y="222" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">ME</text>
+<text x="44" y="250.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Thinking out loud with Explorer</text>
+<text x="44" y="268" font-size="12.5" style="fill:var(--color-text-muted)">in #write-room</text>
+<circle cx="30" cy="246" r="5" stroke-width="1.5" style="fill:var(--color-bg);stroke:var(--color-accent)"/>
+<text x="539.191" y="239" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">meanwhile</text>
+</svg></div>
+<figcaption><span>Helm and Builder moved the project forward while I was thinking out loud with Explorer.</span></figcaption>
 </figure>
 
 That's the system in motion. Here's what's behind it: three agents, two Docker containers, one Discord server.
@@ -93,48 +105,53 @@ That trade-off didn't work for me. Builder needs a rich development environment 
 There's another dimension to this isolation that I didn't anticipate when I started: version independence. OpenClaw moves fast. Breaking changes happen, and I've had agents fail to start after an upgrade more than once. Because each container manages its own OpenClaw installation, I can upgrade one agent without touching the others. If Builder breaks after an update, Helm is still running on a stable version. More importantly, I can ask Helm to go fix Builder: shell into the container, diagnose the issue, and restore her. That's only possible because they don't share a runtime.
 
 <figure>
-<svg viewBox="0 0 800 424" role="img" aria-label="Three agents behind one Discord server: Helm runs on the host and sees every message; Builder and Explorer each run in their own Docker container and respond only when mentioned. Agents can call each other directly, and Helm can fix Builder's container." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="310" y="36" width="180" height="44" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">discord</text>
-<path d="M400.0,84 C400.0,118 144.0,104 144.0,132 L144.0,166" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<path d="M400.0,84 C400.0,118 656.0,104 656.0,132 L656.0,166" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<line x1="400" y1="84" x2="400" y2="166" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<text x="152" y="156" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">@mention</text>
-<text x="408" y="156" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">every message</text>
-<text x="648" y="156" text-anchor="end" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">@mention</text>
-<rect x="44" y="170" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">builder</text>
-<text x="58" y="216" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• coding agent</text>
-<text x="58" y="234" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requireMention: true</text>
-<rect x="300" y="170" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">helm</text>
-<text x="314" y="216" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• orchestrator</text>
-<text x="314" y="234" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requireMention: false</text>
-<rect x="556" y="170" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="194" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">explorer</text>
-<text x="570" y="216" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• goes deep on ideas</text>
-<text x="570" y="234" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• requireMention: true</text>
-<line x1="247" y1="208" x2="297" y2="208" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#ar-a)" marker-end="url(#ar-a)"/>
-<line x1="503" y1="208" x2="553" y2="208" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-start="url(#ar-a)" marker-end="url(#ar-a)"/>
-<line x1="144" y1="250" x2="144" y2="292" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<rect x="44" y="296" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">docker container</text>
-<text x="58" y="342" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own linux and tools</text>
-<text x="58" y="360" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own openclaw</text>
-<line x1="400" y1="250" x2="400" y2="292" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<rect x="300" y="296" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">host machine</text>
-<text x="400" y="341" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">own openclaw</text>
-<line x1="656" y1="250" x2="656" y2="292" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ar-a)"/>
-<rect x="556" y="296" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="320" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">docker container</text>
-<text x="570" y="342" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own linux and tools</text>
-<text x="570" y="360" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own openclaw</text>
-<line x1="297" y1="334" x2="247" y2="334" style="stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#ar-a)"/>
-<text x="272" y="326" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">fixes</text>
-<text x="400" y="406" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">dashed: agents reaching each other directly, outside discord</text>
-</svg>
+<div class="fig-head"><div class="fig-title">Three agents, one Discord server</div><div class="fig-sub">Where each agent runs, and which messages it sees</div></div>
+<div class="fig-draw"><svg id="ar" viewBox="0 0 840 274" role="img" aria-label="Three agents behind one Discord server: Helm runs on the host and sees every message; Builder runs in her own Docker container and responds when mentioned; Explorer runs in another container and lives in #write-room. Agents can call each other directly, and Helm can fix Builder's container."><style>#ar text{font-family:var(--font-body)}#ar .mono{font-family:var(--font-mono)}</style>
+<rect x="12" y="100" width="264" height="162" rx="2" style="fill:var(--color-bg-subtle)"/>
+<rect x="288" y="100" width="264" height="162" rx="2" style="fill:var(--color-bg-subtle)"/>
+<rect x="564" y="100" width="264" height="162" rx="2" style="fill:var(--color-bg-subtle)"/>
+<path d="M312,30 C312,64 36,54 36,90 L36,128" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M32.5 124.0 L36 128 L39.5 124.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M312,30 C312,64 588,54 588,90 L588,128" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M584.5 124.0 L588 128 L591.5 124.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M312 52 L312 128" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M308.5 124.0 L312 128 L315.5 124.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M106.326 140 L302 140" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M298.0 143.5 L302 140 L298.0 136.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M110.3 136.5 L106.326 140 L110.3 143.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M369.124 140 L578 140" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M574.0 143.5 L578 140 L574.0 136.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M373.1 136.5 L369.124 140 L373.1 143.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M312 152 L312 232 L252 232" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M256.0 228.5 L252 232 L256.0 235.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="50" y="248" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">DOCKER CONTAINER</text>
+<text x="326" y="248" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">HOST MACHINE</text>
+<text x="602" y="248" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">DOCKER CONTAINER</text>
+<text x="326" y="22.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Discord</text>
+<text x="326" y="40" font-size="12.5" style="fill:var(--color-text-muted)">channels and threads</text>
+<circle cx="312" cy="18" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="50" y="118" font-size="13" style="fill:var(--color-text-secondary)">@mention</text>
+<text x="326" y="118" font-size="13" style="fill:var(--color-text-secondary)">every message</text>
+<text x="602" y="118" font-size="13" style="fill:var(--color-text-secondary)">#write-room</text>
+<text x="50" y="144.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Builder</text>
+<text x="50" y="162" font-size="12.5" style="fill:var(--color-text-muted)">coding agent</text>
+<text x="50" y="179.5" font-size="12.5" style="fill:var(--color-text-muted)">requireMention: true</text>
+<circle cx="36" cy="140" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="326" y="144.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Helm</text>
+<text x="326" y="162" font-size="12.5" style="fill:var(--color-text-muted)">orchestrator</text>
+<text x="326" y="179.5" font-size="12.5" style="fill:var(--color-text-muted)">requireMention: false</text>
+<circle cx="312" cy="140" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="602" y="144.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Explorer</text>
+<text x="602" y="162" font-size="12.5" style="fill:var(--color-text-muted)">goes deep on ideas</text>
+<circle cx="588" cy="140" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="50" y="206" font-size="13" style="fill:var(--color-text-muted)">own Linux, tools, OpenClaw</text>
+<text x="326" y="206" font-size="13" style="fill:var(--color-text-muted)">own OpenClaw</text>
+<text x="602" y="206" font-size="13" style="fill:var(--color-text-muted)">own Linux, tools, OpenClaw</text>
+<text x="204.163" y="133" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">direct</text>
+<text x="473.562" y="133" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">direct</text>
+<text x="282" y="225" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">fixes</text>
+</svg></div>
+<figcaption><span>Helm sees every message and Builder answers when mentioned; agents can also reach each other directly, and Helm can fix Builder's container.</span></figcaption>
 </figure>
 
 The agents are the moving parts. The Discord server is what makes them usable.
@@ -146,31 +163,33 @@ When a conversation starts to go deep, I open a thread. This turned out to be th
 In practice, three kinds of channels emerged. Brainstorming channels are where unstructured ideas land. I open a thread for each new topic to keep conversations isolated. Project channels are for long-running work: when something from a brainstorming thread grows into a real project, it gets its own channel where Helm can push it forward. Automated channels handle recurring tasks, like a `#digest` channel where content summaries arrive daily, or a `#heartbeat` channel for monitoring.
 
 <figure>
-<svg viewBox="0 0 800 364" role="img" aria-label="How the Discord server is organized: brainstorming, project, and automated channels, each with a topic that works as its prompt. A thread is its own session and inherits the channel's settings, and a brainstorming thread can grow into its own project channel." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="ch-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<text x="44" y="52" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">CHANNELS</text>
-<rect x="44" y="70" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">#brainstorming</text>
-<text x="58" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• unstructured ideas</text>
-<text x="58" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• a thread per topic</text>
-<rect x="300" y="70" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="400" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">#project-hobby</text>
-<text x="314" y="116" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• one per project</text>
-<text x="314" y="134" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• builder follows</text>
-<rect x="556" y="70" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="656" y="94" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">#digest, #heartbeat</text>
-<text x="656" y="115" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">recurring tasks</text>
-<text x="44" y="214" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:600">THREADS</text>
-<rect x="44" y="232" width="200" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="144" y="256" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">project idea</text>
-<text x="58" y="278" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• own session</text>
-<text x="58" y="296" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">• inherits settings</text>
-<line x1="144" y1="150" x2="144" y2="228" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ch-a)"/>
-<text x="152" y="193" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">go deep</text>
-<path d="M248,270.0 C400.0,270.0 400.0,192 400.0,150" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#ch-a)"/>
-<text x="410" y="196" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">grows into a project</text>
-<text x="400" y="346" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">each channel's topic is read as its prompt</text>
-</svg>
+<div class="fig-head"><div class="fig-title">Channels for domains, threads for topics</div><div class="fig-sub">Each channel's topic is read as its prompt</div></div>
+<div class="fig-draw"><svg id="ch" viewBox="0 0 840 234" role="img" aria-label="How the Discord server is organized: brainstorming, project, and automated channels, each with a topic that works as its prompt. A thread is its own session and inherits the channel's settings, and a brainstorming thread can grow into its own project channel."><style>#ch text{font-family:var(--font-body)}#ch .mono{font-family:var(--font-mono)}</style>
+<path d="M30 97.5 L30 168" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M26.5 164.0 L30 168 L33.5 164.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M130.692 180 L310 180 L310 97.5" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M313.5 101.5 L310 97.5 L306.5 101.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="22" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">CHANNELS</text>
+<text x="44" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#brainstorming</text>
+<text x="44" y="68" font-size="12.5" style="fill:var(--color-text-muted)">unstructured ideas</text>
+<text x="44" y="85.5" font-size="12.5" style="fill:var(--color-text-muted)">a thread per topic</text>
+<circle cx="30" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="324" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#project-hobby</text>
+<text x="324" y="68" font-size="12.5" style="fill:var(--color-text-muted)">one per project</text>
+<text x="324" y="85.5" font-size="12.5" style="fill:var(--color-text-muted)">Builder follows</text>
+<circle cx="310" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="604" y="50.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#digest, #heartbeat</text>
+<text x="604" y="68" font-size="12.5" style="fill:var(--color-text-muted)">recurring tasks</text>
+<circle cx="590" cy="46" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="44" y="156" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">THREADS</text>
+<text x="44" y="184.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Project idea</text>
+<text x="44" y="202" font-size="12.5" style="fill:var(--color-text-muted)">own session</text>
+<text x="44" y="219.5" font-size="12.5" style="fill:var(--color-text-muted)">inherits settings</text>
+<circle cx="30" cy="180" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="44" y="126.25" font-size="13" style="fill:var(--color-text-secondary)">go deep</text>
+<text x="220.346" y="173" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">grows into a project</text>
+</svg></div>
+<figcaption><span>A thread is its own session and inherits its channel's settings; a brainstorming thread can grow into its own project channel.</span></figcaption>
 </figure>
 
 One detail that required some thought: `requireMention` is configured per channel, not globally. Helm passively monitors everything by default. But in project channels, Builder is the default observer. She sees everything in her own space, while other agents, including Helm, only engage when explicitly called. I had to list each channel explicitly in the config (it's a whitelist), but Helm manages that since she has visibility across the whole server.

@@ -1,15 +1,15 @@
 ---
 interface Props {
   title: string;
-  body: string;
   mdUrl: string; // absolute, e.g. https://yaodong.dev/<slug>.md
   pageUrl: string; // absolute canonical URL, e.g. https://yaodong.dev/<slug>/
 }
 
-const { title, body, mdUrl, pageUrl } = Astro.props;
+const { title, mdUrl, pageUrl } = Astro.props;
 
-// The clipboard content and the /<slug>.md file content are identical.
-const markdown = `# ${title}\n\n${body}`;
+// "Copy page" copies the /<slug>.md file itself, fetched from this origin so it
+// also works on the dev server and previews.
+const mdPath = new URL(mdUrl).pathname;
 const mdLink = `[${title}](${pageUrl})`;
 
 const prompt = `Read from ${mdUrl} so I can ask questions about it.`;
@@ -17,7 +17,7 @@ const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
 const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
 ---
 
-<div class="copy-page" data-copy-page>
+<div class="copy-page" data-copy-page data-md-path={mdPath}>
   <div class="copy-page__split">
     <button
       type="button"
@@ -117,13 +117,11 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     </li>
   </ul>
 
-  <!-- Inline copy sources for an instant, network-free clipboard write, keyed
-       by the data-copy-action value that should copy each one. Astro escapes
-       these text expressions, so textContent decodes back to the exact text
-       even if the body contains </script> or & or <. -->
   <span class="sr-only" role="status" aria-live="polite" data-copy-status></span>
 
-  <div class="copy-page__source" data-copy-value="markdown" hidden>{markdown}</div>
+  <!-- Inline copy sources for the two short values, keyed by the
+       data-copy-action value that copies each one. The page's Markdown isn't
+       inlined: it would double the size of every post for a rarely used button. -->
   <div class="copy-page__source" data-copy-value="link" hidden>{pageUrl}</div>
   <div class="copy-page__source" data-copy-value="mdlink" hidden>{mdLink}</div>
 </div>
@@ -138,6 +136,37 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
     const actions = root.querySelectorAll<HTMLElement>('[data-copy-action]');
     const defaultLabel = label ? label.textContent : 'Copy page';
     let resetTimer: ReturnType<typeof setTimeout>;
+    let markdownRequest: Promise<string> | undefined;
+
+    // One request per page view, started as soon as the reader heads for the
+    // button so the copy is usually instant.
+    function fetchMarkdown() {
+      markdownRequest ||= fetch(root!.getAttribute('data-md-path') || '').then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.text();
+      });
+      markdownRequest.catch(() => (markdownRequest = undefined));
+      return markdownRequest;
+    }
+
+    // Safari only allows a clipboard write that starts inside the click, so the
+    // write begins now and receives the text when the request finishes. Browsers
+    // without promise-valued ClipboardItems write the text once it arrives.
+    async function writeMarkdown() {
+      if (typeof ClipboardItem !== 'undefined' && navigator.clipboard.write) {
+        const blob = fetchMarkdown().then((text) => new Blob([text], { type: 'text/plain' }));
+        // Handled below; this only keeps a failed request out of the console.
+        blob.catch(() => {});
+        try {
+          await navigator.clipboard.write([new ClipboardItem({ 'text/plain': blob })]);
+          return;
+        } catch {
+          // A failed request can't be fixed by trying another way.
+          await blob;
+        }
+      }
+      await navigator.clipboard.writeText(await fetchMarkdown());
+    }
 
     function openMenu() {
       if (!menu || !toggle) return;
@@ -177,7 +206,8 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       const text = source ? source.textContent || '' : '';
       try {
         if (!navigator.clipboard) throw new Error('no clipboard');
-        await navigator.clipboard.writeText(text);
+        if (kind === 'markdown') await writeMarkdown();
+        else await navigator.clipboard.writeText(text);
         report('Copied!', announcements[kind] || 'Copied');
       } catch {
         // The raw Markdown stays reachable via "View as Markdown" in the menu.
@@ -187,6 +217,11 @@ const chatgptUrl = `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
       // The item that had focus is now hidden; hand focus back to the toggle.
       if (fromMenu) toggle?.focus();
     };
+
+    const main = root.querySelector('[data-copy-action="markdown"]');
+    ['pointerenter', 'focus', 'touchstart'].forEach((type) =>
+      main?.addEventListener(type, () => fetchMarkdown().catch(() => {}), { once: true, passive: true })
+    );
 
     toggle?.addEventListener('click', (e) => {
       e.stopPropagation();

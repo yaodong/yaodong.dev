@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "generate:og": "bun run scripts/generate-og-image.ts",
-    "generate:og:all": "for post in src/content/blog/*.md; do bun run scripts/generate-og-image.ts \"$post\"; done"
+    "generate:og:all": "for post in src/content/blog/*.md; do bun run scripts/generate-og-image.ts \"$post\"; done",
+    "figures": "for f in scripts/figures/*.ts; do bun \"$f\" || exit 1; done"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

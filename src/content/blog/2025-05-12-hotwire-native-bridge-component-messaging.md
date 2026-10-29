@@ -8,7 +8,40 @@ excerpt: "Bridge components in Hotwire Native offer no direct access to navigati
 
 In Hotwire Native, a Bridge Component simultaneously exists in JavaScript and native code. The interaction begins from JavaScript by calling `send(event, data, callback)`. The native side receives a structured `Message` object, processes it, and replies by calling `reply(...)`.
 
-<img src="/assets/images/hotwire-native-bridge-component-messaging.png" alt="Hotwire Native Bridge Component Messaging" width="624" height="552" loading="lazy" decoding="async">
+<figure>
+<div class="fig-head"><div class="fig-title">The web asks, native replies</div><div class="fig-sub">One message through a bridge component</div></div>
+<div class="fig-draw"><svg id="br" viewBox="0 0 840 226" role="img" aria-label="One bridge component message: JavaScript calls send with an event, data, and a callback; the native side receives it as a Message in onReceive, processes it, for example by showing native UI, and replies to that message; the reply comes back to the web, where the stored callback runs."><style>#br text{font-family:var(--font-body)}#br .mono{font-family:var(--font-mono)}</style>
+<path d="M172.762 172 L290 172" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M286.0 175.5 L290 172 L286.0 168.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M386.37 172 L560 172" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M556.0 175.5 L560 172 L556.0 168.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M30 91.5 L30 160" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M26.5 156.0 L30 160 L33.5 156.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M570 160 L570 74" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M573.5 78.0 L570 74 L566.5 78.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="16" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">WEB</text>
+<text x="44" y="148" font-size="12" font-weight="500" class="mono" letter-spacing="0.08em" style="fill:var(--color-text-secondary)">NATIVE</text>
+<text x="44" y="44.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Send an event</text>
+<text x="44" y="62" font-size="12.5" style="fill:var(--color-text-muted)">send(event, data, callback)</text>
+<text x="44" y="79.5" font-size="12.5" style="fill:var(--color-text-muted)">gets a message ID</text>
+<circle cx="30" cy="40" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="584" y="44.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Run the callback</text>
+<text x="584" y="62" font-size="12.5" style="fill:var(--color-text-muted)">found by message ID</text>
+<circle cx="570" cy="40" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="44" y="176.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Receive a Message</text>
+<text x="44" y="194" font-size="12.5" style="fill:var(--color-text-muted)">onReceive(message:)</text>
+<circle cx="30" cy="172" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="314" y="176.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Process it</text>
+<text x="314" y="194" font-size="12.5" style="fill:var(--color-text-muted)">e.g. show an action sheet</text>
+<circle cx="300" cy="172" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="584" y="176.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Reply</text>
+<text x="584" y="194" font-size="12.5" style="fill:var(--color-text-muted)">reply(with: message)</text>
+<circle cx="570" cy="172" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="44" y="118.25" font-size="13" style="fill:var(--color-text-secondary)">JSON message</text>
+<text x="584" y="118.25" font-size="13" style="fill:var(--color-text-secondary)">reply</text>
+</svg></div>
+<figcaption><span>Every exchange starts with a message from JavaScript, and the native side can only reply to it.</span></figcaption>
+</figure>
 
 ## Why the Bridge Component Hides Navigation
 

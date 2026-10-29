@@ -6,7 +6,7 @@ description: "Open source projects by Yaodong Zhao."
 
 <div class="project-card">
   <div class="project-card-screenshot">
-    <img src="/assets/images/projects/tmux-agent.png" alt="tmux-agent dashboard showing AI coding agents grouped by project" width="1706" height="505" loading="lazy" decoding="async">
+    <img src="/assets/images/projects/tmux-agent-1376.webp" srcset="/assets/images/projects/tmux-agent-688.webp 688w, /assets/images/projects/tmux-agent-1376.webp 1376w" sizes="(min-width: 688px) 640px, calc(100vw - 48px)" alt="tmux-agent dashboard showing AI coding agents grouped by project" width="1376" height="408" fetchpriority="high" decoding="async">
   </div>
   <div class="project-card-info">
     <a href="https://github.com/yaodong/tmux-agent" class="project-card-title" target="_blank" rel="noopener noreferrer">tmux-agent</a>

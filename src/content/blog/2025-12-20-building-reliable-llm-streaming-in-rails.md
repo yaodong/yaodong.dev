@@ -57,21 +57,24 @@ Once I accepted that Turbo Streams wasn't the right tool, I surveyed the alterna
 The simplest approach, and where I started exploring. Your controller calls the LLM API directly and streams chunks to the browser via Server-Sent Events.
 
 <figure>
-<svg viewBox="0 0 840 128" role="img" aria-label="Direct SSE: a controller calls the LLM API and streams chunks to the browser over SSE, holding a Puma thread for the whole call." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="ds-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="10" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="76" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">LLM API</text>
-<rect x="526" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="592" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">controller</text>
-<text x="592" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">calls the LLM</text>
-<text x="592" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">in a Puma thread</text>
-<rect x="698" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="764" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">browser</text>
-<line x1="145" y1="58" x2="523" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<text x="334" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">stream</text>
-<line x1="661" y1="58" x2="695" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ds-a)"/>
-<text x="678" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">SSE</text>
-</svg>
+<div class="fig-head"><div class="fig-title">The controller holds the call</div><div class="fig-sub">Direct SSE</div></div>
+<div class="fig-draw"><svg id="ds" viewBox="0 0 840 76" role="img" aria-label="Direct SSE: a controller calls the LLM API and streams chunks to the browser over SSE, holding a Puma thread for the whole call."><style>#ds text{font-family:var(--font-body)}#ds .mono{font-family:var(--font-mono)}</style>
+<path d="M103.168 24 L530 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M526.0 27.5 L530 24 L526.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M628.666 24 L700 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M696.0 27.5 L700 24 L696.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">LLM API</text>
+<circle cx="30" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="554" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Controller</text>
+<text x="554" y="46" font-size="12.5" style="fill:var(--color-text-muted)">calls the LLM</text>
+<text x="554" y="63.5" font-size="12.5" style="fill:var(--color-text-muted)">in a Puma thread</text>
+<circle cx="540" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="724" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Browser</text>
+<circle cx="710" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="316.584" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">stream</text>
+<text x="664.333" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">SSE</text>
+</svg></div>
+<figcaption><span>No extra infrastructure, but each response holds a Puma thread for the whole 30-120 second call.</span></figcaption>
 </figure>
 
 The simplicity is appealing—no extra infrastructure, easy to debug—but it holds a Puma thread for the entire LLM call, potentially 30-120 seconds. With 32 threads, a handful of concurrent requests can exhaust capacity. Error handling inside a web request also gets awkward.
@@ -83,27 +86,31 @@ I built a quick prototype. It worked beautifully for a single user. But I kept t
 This is what I'd tried first, the Rails-native approach. A background job calls the LLM API and broadcasts chunks via Turbo Streams over WebSocket.
 
 <figure>
-<svg viewBox="0 0 840 128" role="img" aria-label="ActionCable with a background job: the job calls the LLM API and broadcasts chunks through ActionCable to the browser over WebSocket, with no replay." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="ac-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="10" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="76" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">LLM API</text>
-<rect x="182" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="248" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">job</text>
-<text x="248" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">retry handling</text>
-<rect x="526" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="592" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">ActionCable</text>
-<text x="592" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">evented I/O</text>
-<text x="592" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">fire-and-forget</text>
-<rect x="698" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="764" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">browser</text>
-<text x="764" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">no replay</text>
-<line x1="145" y1="58" x2="179" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ac-a)"/>
-<text x="162" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">stream</text>
-<line x1="317" y1="58" x2="523" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ac-a)"/>
-<text x="420" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">broadcast</text>
-<line x1="661" y1="58" x2="695" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#ac-a)"/>
-<text x="678" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">WebSocket</text>
-</svg>
+<div class="fig-head"><div class="fig-title">Delivery without replay</div><div class="fig-sub">ActionCable with a background job</div></div>
+<div class="fig-draw"><svg id="ac" viewBox="0 0 840 76" role="img" aria-label="ActionCable with a background job: the job calls the LLM API and broadcasts chunks through ActionCable to the browser over WebSocket, with no replay."><style>#ac text{font-family:var(--font-body)}#ac .mono{font-family:var(--font-mono)}</style>
+<path d="M103.168 24 L190 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M186.0 27.5 L190 24 L186.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M244.888 24 L530 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M526.0 27.5 L530 24 L526.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M640.118 24 L700 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M696.0 27.5 L700 24 L696.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">LLM API</text>
+<circle cx="30" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="214" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Job</text>
+<text x="214" y="46" font-size="12.5" style="fill:var(--color-text-muted)">retry handling</text>
+<circle cx="200" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="554" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">ActionCable</text>
+<text x="554" y="46" font-size="12.5" style="fill:var(--color-text-muted)">evented I/O</text>
+<text x="554" y="63.5" font-size="12.5" style="fill:var(--color-text-muted)">fire-and-forget</text>
+<circle cx="540" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="724" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Browser</text>
+<text x="724" y="46" font-size="12.5" style="fill:var(--color-text-muted)">no replay</text>
+<circle cx="710" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="146.584" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">stream</text>
+<text x="387.444" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">broadcast</text>
+<text x="670.059" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">WebSocket</text>
+</svg></div>
+<figcaption><span>The LLM call moves into a job with retries, but a chunk broadcast while the browser is away is lost.</span></figcaption>
 </figure>
 
 It's built into Rails, and the LLM call happens in job infrastructure with retry handling. ActionCable uses evented I/O, so WebSocket connections don't hold Puma threads. But the downsides are the ones I'd already hit: fire-and-forget delivery, no resumability, race conditions.
@@ -117,33 +124,38 @@ What if I could get the benefits of both approaches? Keep the LLM call in job in
 The idea is to decouple the LLM call from browser delivery entirely. A background job writes chunks to Redis Streams; a separate SSE controller reads and delivers.
 
 <figure>
-<svg viewBox="0 0 840 128" role="img" aria-label="Redis Streams with SSE: the job writes chunks to a Redis stream with XADD, and a separate SSE controller reads them with XREAD and delivers them to the browser." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="rs-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="10" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="76" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">LLM API</text>
-<rect x="182" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="248" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">job</text>
-<text x="248" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">retry handling</text>
-<rect x="354" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="420" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">Redis stream</text>
-<text x="420" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">keeps chunks</text>
-<rect x="526" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="592" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">controller</text>
-<text x="592" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">waits on XREAD</text>
-<text x="592" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">in a Puma thread</text>
-<rect x="698" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="764" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">browser</text>
-<text x="764" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">resumes from</text>
-<text x="764" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">Last-Event-ID</text>
-<line x1="145" y1="58" x2="179" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rs-a)"/>
-<text x="162" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">stream</text>
-<line x1="317" y1="58" x2="351" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rs-a)"/>
-<text x="334" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">XADD</text>
-<line x1="489" y1="58" x2="523" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rs-a)"/>
-<text x="506" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">XREAD</text>
-<line x1="661" y1="58" x2="695" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#rs-a)"/>
-<text x="678" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">SSE</text>
-</svg>
+<div class="fig-head"><div class="fig-title">A stream between the job and the browser</div><div class="fig-sub">Redis Streams with SSE</div></div>
+<div class="fig-draw"><svg id="rs" viewBox="0 0 840 76" role="img" aria-label="Redis Streams with SSE: the job writes chunks to a Redis stream with XADD, and a separate SSE controller reads them with XREAD and delivers them to the browser."><style>#rs text{font-family:var(--font-body)}#rs .mono{font-family:var(--font-mono)}</style>
+<path d="M103.168 24 L190 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M186.0 27.5 L190 24 L186.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M244.888 24 L360 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M356.0 27.5 L360 24 L356.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M477.398 24 L530 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M526.0 27.5 L530 24 L526.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M628.666 24 L700 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M696.0 27.5 L700 24 L696.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">LLM API</text>
+<circle cx="30" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="214" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Job</text>
+<text x="214" y="46" font-size="12.5" style="fill:var(--color-text-muted)">retry handling</text>
+<circle cx="200" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="384" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Redis stream</text>
+<text x="384" y="46" font-size="12.5" style="fill:var(--color-text-muted)">keeps chunks</text>
+<circle cx="370" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="554" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Controller</text>
+<text x="554" y="46" font-size="12.5" style="fill:var(--color-text-muted)">waits on XREAD</text>
+<text x="554" y="63.5" font-size="12.5" style="fill:var(--color-text-muted)">in a Puma thread</text>
+<circle cx="540" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="724" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Browser</text>
+<text x="724" y="46" font-size="12.5" style="fill:var(--color-text-muted)">resumes from</text>
+<text x="724" y="63.5" font-size="12.5" style="fill:var(--color-text-muted)">Last-Event-ID</text>
+<circle cx="710" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="146.584" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">stream</text>
+<text x="302.444" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">XADD</text>
+<text x="503.699" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">XREAD</text>
+<text x="664.333" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">SSE</text>
+</svg></div>
+<figcaption><span>Chunks stay in Redis, so a browser that reconnects resumes from Last-Event-ID.</span></figcaption>
 </figure>
 
 This gives you the best of both worlds: LLM calls live in job infrastructure, chunks persist in Redis for resumability, and `Last-Event-ID` just works. The downside is more moving parts: you need Redis, and the SSE controller still holds a Puma thread during delivery.
@@ -153,26 +165,30 @@ This gives you the best of both worlds: LLM calls live in job infrastructure, ch
 The fourth option is to offload connection management entirely to a third-party service.
 
 <figure>
-<svg viewBox="0 0 840 128" role="img" aria-label="An external service: the job posts chunks to Pusher over HTTP, and Pusher delivers them to the browser over WebSocket with reconnection and replay." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="pu-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="10" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="76" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">LLM API</text>
-<rect x="182" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="248" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">job</text>
-<text x="248" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">retry handling</text>
-<rect x="526" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="592" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">Pusher</text>
-<text x="592" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">external service</text>
-<text x="592" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">replays messages</text>
-<rect x="698" y="20" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="764" y="63.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">browser</text>
-<line x1="145" y1="58" x2="179" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pu-a)"/>
-<text x="162" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">stream</text>
-<line x1="317" y1="58" x2="523" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pu-a)"/>
-<text x="420" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">HTTP POST</text>
-<line x1="661" y1="58" x2="695" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#pu-a)"/>
-<text x="678" y="114" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">WebSocket</text>
-</svg>
+<div class="fig-head"><div class="fig-title">Delivery handed to a service</div><div class="fig-sub">An external service such as Pusher or Ably</div></div>
+<div class="fig-draw"><svg id="pu" viewBox="0 0 840 76" role="img" aria-label="An external service: the job posts chunks to Pusher over HTTP, and Pusher delivers them to the browser over WebSocket with reconnection and replay."><style>#pu text{font-family:var(--font-body)}#pu .mono{font-family:var(--font-mono)}</style>
+<path d="M103.168 24 L190 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M186.0 27.5 L190 24 L186.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M244.888 24 L530 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M526.0 27.5 L530 24 L526.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M608.352 24 L700 24" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M696.0 27.5 L700 24 L696.0 20.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">LLM API</text>
+<circle cx="30" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="214" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Job</text>
+<text x="214" y="46" font-size="12.5" style="fill:var(--color-text-muted)">retry handling</text>
+<circle cx="200" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="554" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Pusher</text>
+<text x="554" y="46" font-size="12.5" style="fill:var(--color-text-muted)">external service</text>
+<text x="554" y="63.5" font-size="12.5" style="fill:var(--color-text-muted)">replays messages</text>
+<circle cx="540" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="724" y="28.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Browser</text>
+<circle cx="710" cy="24" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="146.584" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">stream</text>
+<text x="387.444" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">HTTP POST</text>
+<text x="654.176" y="17" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">WebSocket</text>
+</svg></div>
+<figcaption><span>Puma threads stay free and replay is built in, at the cost of an external dependency.</span></figcaption>
 </figure>
 
 The appeal is obvious: your Puma threads stay free, your servers remain stateless, and you get built-in reconnection and message replay. The cost is an external dependency and vendor lock-in.
@@ -196,42 +212,51 @@ For a small app, this is fine. With 32 Puma threads, you'd need 32 simultaneous 
 Here's the full flow:
 
 <figure>
-<svg viewBox="0 0 840 330" role="img" aria-label="How the Redis Streams and SSE flow works: the browser posts a message, the completions controller enqueues a job and returns a stream key, the browser opens an SSE connection, the job writes LLM chunks to a Redis stream, and the streams controller reads them and sends them to the browser. A reconnect sends Last-Event-ID and resumes without the job noticing." style="width:100%;height:auto;font-family:var(--font-mono)">
-<defs><marker id="fl-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"/></marker></defs>
-<rect x="182" y="20" width="304" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="334" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">completions controller</text>
-<text x="334" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">saves the message</text>
-<text x="334" y="83" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">returns at once</text>
-<rect x="698" y="20" width="132" height="232" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="764" y="44" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">browser</text>
-<text x="764" y="65" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">EventSource</text>
-<line x1="489" y1="58" x2="695" y2="58" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-start="url(#fl-a)" marker-end="url(#fl-a)"/>
-<text x="592" y="50" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">1 POST, 3 stream key</text>
-<line x1="248" y1="100" x2="248" y2="172" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#fl-a)"/>
-<text x="256" y="140" text-anchor="start" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">2 enqueue with key</text>
-<rect x="10" y="176" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="76" y="219.25" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">LLM API</text>
-<rect x="182" y="176" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="248" y="200" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">ConverseJob</text>
-<text x="248" y="221" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">calls the LLM</text>
-<rect x="354" y="176" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="420" y="200" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">Redis stream</text>
-<text x="420" y="221" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">one per key</text>
-<rect x="526" y="176" width="132" height="76" rx="8" style="fill:var(--color-bg-subtle)"/>
-<text x="592" y="200" text-anchor="middle" style="fill:var(--color-text);font-size:15px;font-weight:600">streams</text>
-<text x="592" y="221" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">controller</text>
-<text x="592" y="239" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">reads from Redis</text>
-<line x1="145" y1="214" x2="179" y2="214" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#fl-a)"/>
-<text x="162" y="270" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">5 chunks</text>
-<line x1="317" y1="214" x2="351" y2="214" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#fl-a)"/>
-<text x="334" y="270" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">5 XADD</text>
-<line x1="489" y1="214" x2="523" y2="214" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-end="url(#fl-a)"/>
-<text x="506" y="270" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">6 XREAD</text>
-<line x1="661" y1="214" x2="695" y2="214" style="stroke:var(--color-text-muted);stroke-width:1.4" marker-start="url(#fl-a)" marker-end="url(#fl-a)"/>
-<text x="678" y="270" text-anchor="middle" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">4 GET, 6 SSE</text>
-<path d="M794.0,256 V304 H572.0 V256" style="fill:none;stroke:var(--color-text-muted);stroke-width:1.4;stroke-dasharray:4 5" marker-end="url(#fl-a)"/>
-<text x="830" y="326" text-anchor="end" style="fill:var(--color-text-muted);font-size:12.5px;font-weight:400">reconnect with Last-Event-ID; the job never notices</text>
-</svg>
+<div class="fig-head"><div class="fig-title">The job and the browser never meet</div><div class="fig-sub">Redis Streams with SSE, step by step</div></div>
+<div class="fig-draw"><svg id="fl" viewBox="0 0 840 222" role="img" aria-label="How the Redis Streams and SSE flow works: the browser posts a message, the completions controller enqueues a job and returns a stream key, the browser opens an SSE connection, the job writes LLM chunks to a Redis stream, and the streams controller reads them and sends them to the browser. A reconnect sends Last-Event-ID and resumes without the job noticing."><style>#fl text{font-family:var(--font-body)}#fl .mono{font-family:var(--font-mono)}</style>
+<path d="M710 108 L710 20 L423.1 20" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M427.1 16.5 L423.1 20 L427.1 23.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M706.5 104.0 L710 108 L713.5 104.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M200 54 L200 108" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M196.5 104.0 L200 108 L203.5 104.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M103.168 120 L190 120" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M186.0 123.5 L190 120 L186.0 116.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M303.758 120 L360 120" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M356.0 123.5 L360 120 L356.0 116.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M477.398 120 L530 120" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M526.0 123.5 L530 120 L526.0 116.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M616.5 120 L700 120" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M696.0 123.5 L700 120 L696.0 116.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M620.5 116.5 L616.5 120 L620.5 123.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M710 132 L710 182 L540 182 L540 132" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M543.5 136.0 L540 132 L536.5 136.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="214" y="24.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Completions controller</text>
+<text x="214" y="42" font-size="12.5" style="fill:var(--color-text-muted)">saves the message, returns at once</text>
+<circle cx="200" cy="20" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="44" y="124.5" font-size="14" font-weight="500" style="fill:var(--color-text)">LLM API</text>
+<circle cx="30" cy="120" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="214" y="124.5" font-size="14" font-weight="500" style="fill:var(--color-text)">ConverseJob</text>
+<text x="214" y="142" font-size="12.5" style="fill:var(--color-text-muted)">calls the LLM</text>
+<circle cx="200" cy="120" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="384" y="124.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Redis stream</text>
+<text x="384" y="142" font-size="12.5" style="fill:var(--color-text-muted)">one per key</text>
+<circle cx="370" cy="120" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="554" y="124.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Streams</text>
+<text x="554" y="142" font-size="12.5" style="fill:var(--color-text-muted)">controller,</text>
+<text x="554" y="159.5" font-size="12.5" style="fill:var(--color-text-muted)">reads from Redis</text>
+<circle cx="540" cy="120" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="724" y="124.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Browser</text>
+<text x="724" y="142" font-size="12.5" style="fill:var(--color-text-muted)">EventSource</text>
+<circle cx="710" cy="120" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="561.55" y="13" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">1 POST, 3 stream key</text>
+<text x="214" y="85.5" font-size="13" style="fill:var(--color-text-secondary)">2 enqueue with key</text>
+<text x="146.584" y="113" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">5 chunks</text>
+<text x="331.879" y="113" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">5 XADD</text>
+<text x="503.699" y="113" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">6 XREAD</text>
+<text x="658.25" y="113" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">4 GET, 6 SSE</text>
+<text x="625" y="200" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">reconnect with Last-Event-ID</text>
+</svg></div>
+<figcaption><span>The job only writes to Redis and the streams controller only reads from it, so a reconnect never reaches the job.</span></figcaption>
 </figure>
 
 Decoupling is what makes this work. The job doesn't know about browser connections. It just writes to Redis. The SSE controller doesn't know about LLM APIs. It just reads from Redis. If the browser disconnects and reconnects, the SSE controller picks up from `Last-Event-ID`, and the job never even notices. Each piece becomes simpler and more testable.

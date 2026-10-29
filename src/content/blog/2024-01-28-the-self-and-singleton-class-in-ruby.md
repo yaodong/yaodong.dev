@@ -9,7 +9,58 @@ excerpt: "In Ruby, what look like class methods are instance methods defined on 
 
 In Ruby, everything is an object, and every object has an anonymous class, which defines the methods the object can respond to. This anonymous class is called the _singleton class_.
 
-<img src="/assets/images/2024-01-ruby-singleton-class-inheritance.png" alt="ruby singleton class inheritance" width="3002" height="900" loading="lazy" decoding="async">
+<figure>
+<div class="fig-head"><div class="fig-title">Lookup starts at the singleton class</div><div class="fig-sub">A # marks a singleton class: #Cat is Cat's</div></div>
+<div class="fig-draw"><svg id="sc" viewBox="0 0 840 196" role="img" aria-label="Method lookup for milo, an instance of Cat: milo's singleton class #milo comes first, and its superclass is Cat, followed by Animal and Object. Cat, Animal, and Object each have their own singleton class, #Cat, #Animal, and #Object, and those inherit from each other in the same order."><style>#sc text{font-family:var(--font-body)}#sc .mono{font-family:var(--font-mono)}</style>
+<path d="M82.154 62 L200 62" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M196.0 65.5 L200 62 L196.0 58.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M269.7 62 L380 62" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M376.0 65.5 L380 62 L376.0 58.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M434.846 62 L560 62" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M556.0 65.5 L560 62 L556.0 58.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M637.918 62 L740 62" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M736.0 65.5 L740 62 L736.0 58.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M30 50 L30 26 L390 26 L390 50" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M386.5 46.0 L390 50 L393.5 46.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M390 78.5 L390 158" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M386.5 154.0 L390 158 L393.5 154.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M570 78.5 L570 158" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M566.5 154.0 L570 158 L573.5 154.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M750 78.5 L750 158" fill="none" stroke-width="1" stroke-linejoin="round" stroke-dasharray="3 3" style="stroke:var(--color-text-muted)"/>
+<path d="M746.5 154.0 L750 158 L753.5 154.0" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M442.392 170 L560 170" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M556.0 173.5 L560 170 L556.0 166.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<path d="M645.464 170 L740 170" fill="none" stroke-width="1" stroke-linejoin="round" style="stroke:var(--color-text-muted)"/>
+<path d="M736.0 173.5 L740 170 L736.0 166.5" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--color-text-muted)"/>
+<text x="44" y="66.5" font-size="14" font-weight="500" style="fill:var(--color-text)">milo</text>
+<text x="44" y="84" font-size="12.5" style="fill:var(--color-text-muted)">an instance of Cat</text>
+<circle cx="30" cy="62" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="224" y="66.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#milo</text>
+<text x="224" y="84" font-size="12.5" style="fill:var(--color-text-muted)">checked first</text>
+<circle cx="210" cy="62" r="5.5" stroke-width="2" style="fill:var(--color-accent);stroke:var(--color-bg)"/>
+<text x="404" y="66.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Cat</text>
+<circle cx="390" cy="62" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="584" y="66.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Animal</text>
+<circle cx="570" cy="62" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="764" y="66.5" font-size="14" font-weight="500" style="fill:var(--color-text)">Object</text>
+<circle cx="750" cy="62" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="141.077" y="55" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">singleton_class</text>
+<text x="324.85" y="55" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">superclass</text>
+<text x="497.423" y="55" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">superclass</text>
+<text x="688.959" y="55" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">superclass</text>
+<text x="210" y="19" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">class</text>
+<text x="404" y="174.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#Cat</text>
+<circle cx="390" cy="170" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="584" y="174.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#Animal</text>
+<circle cx="570" cy="170" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="764" y="174.5" font-size="14" font-weight="500" style="fill:var(--color-text)">#Object</text>
+<circle cx="750" cy="170" r="5.5" stroke-width="2" style="fill:var(--color-text-body);stroke:var(--color-bg)"/>
+<text x="404" y="122.75" font-size="13" style="fill:var(--color-text-secondary)">singleton_class</text>
+<text x="497.423" y="163" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">superclass</text>
+<text x="688.959" y="163" text-anchor="middle" font-size="13" style="fill:var(--color-text-secondary)">superclass</text>
+</svg></div>
+<figcaption><span>milo's class is Cat, but a method call on milo checks #milo first, and each class's singleton class inherits from its superclass's.</span></figcaption>
+</figure>
 
 When calling a method on an object, Ruby will perform the method lookup by first checking on the object’s _singleton class_, before traversing the rest of the method chain.
 
