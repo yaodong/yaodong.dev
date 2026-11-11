@@ -35,17 +35,18 @@ const {
   related,
 } = Astro.props;
 
-// Mirror post.html's author resolution: page.author overrides the site author.
-let authorName: string | undefined = SITE.author.name;
-let authorUrl: string | undefined = SITE.author.url;
+// Every post is by the site author unless its front matter names someone else;
+// only then does the meta line carry a byline.
+let authorName: string | undefined;
+let authorUrl: string | undefined;
 if (author) {
   if (typeof author === 'string') {
     authorName = author;
-    authorUrl = undefined;
   } else {
     authorName = author.name;
     authorUrl = author.url;
   }
+  if (authorName === SITE.author.name) authorName = undefined;
 }
 
 // canonicalPath is `/<slug>/`; the Markdown twin lives at `/<slug>.md`.
@@ -77,31 +78,33 @@ const readingMinutes = Math.max(1, Math.round(words / 230));
     <article>
       <header class="post-header">
         <div class="post-top">
-          <a href="/" class="back-link">← back</a>
-          <CopyPage title={title} mdUrl={mdUrl} pageUrl={pageUrl} />
+          <a href="/" class="back-link" data-back-link>← back</a>
         </div>
 
         <h1 class="post-title">{title}</h1>
 
-        <div class="post-meta">
-          <time datetime={isoDate(created_date)}>{isoDate(created_date)}</time>
-          {
-            authorName && (
-              <>
-                <span class="post-meta__dot" aria-hidden="true">&middot;</span>
-                <span>
-                  by{' '}
-                  {authorUrl ? (
-                    <a href={authorUrl} rel="author">{authorName}</a>
-                  ) : (
-                    <span>{authorName}</span>
-                  )}
-                </span>
-              </>
-            )
-          }
-          <span class="post-meta__dot" aria-hidden="true">&middot;</span>
-          <span>{readingMinutes} min read</span>
+        <div class="post-byline">
+          <div class="post-meta">
+            <time datetime={isoDate(created_date)}>{isoDate(created_date)}</time>
+            {
+              authorName && (
+                <>
+                  <span class="post-meta__dot" aria-hidden="true">&middot;</span>
+                  <span>
+                    by{' '}
+                    {authorUrl ? (
+                      <a href={authorUrl} rel="author">{authorName}</a>
+                    ) : (
+                      <span>{authorName}</span>
+                    )}
+                  </span>
+                </>
+              )
+            }
+            <span class="post-meta__dot" aria-hidden="true">&middot;</span>
+            <span>{readingMinutes} min read</span>
+          </div>
+          <CopyPage title={title} mdUrl={mdUrl} pageUrl={pageUrl} />
         </div>
       </header>
 
@@ -115,15 +118,6 @@ const readingMinutes = Math.max(1, Math.round(words / 230));
         I'm <a href="/about/">Yaodong Zhao</a>, a software engineer. I build web
         applications, though these days I mostly supervise something else
         building them.
-      </p>
-      <p class="signoff__links">
-        <a href="/feed.xml">rss</a>
-        <span class="signoff__dot" aria-hidden="true">&middot;</span>
-        <a href="https://x.com/YaodongDev">x</a>
-        <span class="signoff__dot" aria-hidden="true">&middot;</span>
-        <a href="https://www.linkedin.com/in/yaodong/">linkedin</a>
-        <span class="signoff__dot" aria-hidden="true">&middot;</span>
-        <a href="https://github.com/yaodong">github</a>
       </p>
     </aside>
 
@@ -149,4 +143,35 @@ const readingMinutes = Math.max(1, Math.round(words / 230));
       )
     }
   </main>
+
+  <script is:inline>
+    // "← back" returns to wherever the reader came from on this site (home,
+    // archive, another post), with its scroll position; a direct visit or a
+    // new tab falls back to the home page. Jumping to an anchor on this page
+    // (skip link, footnotes) adds history entries, so after one the link just
+    // follows its href instead of stepping back through them.
+    (function () {
+      var link = document.querySelector('[data-back-link]');
+      if (!link || !document.referrer) return;
+      var from;
+      try {
+        from = new URL(document.referrer);
+      } catch (e) {
+        return;
+      }
+      if (from.origin !== location.origin || from.pathname === location.pathname) return;
+      link.href = from.pathname + from.search;
+      var jumped = false;
+      window.addEventListener('hashchange', function () {
+        jumped = true;
+      });
+      link.addEventListener('click', function (event) {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        if (!jumped && history.length > 1) {
+          event.preventDefault();
+          history.back();
+        }
+      });
+    })();
+  </script>
 </BaseLayout>

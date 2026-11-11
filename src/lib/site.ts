@@ -15,10 +15,10 @@ export const SITE = {
     'https://github.com/yaodong',
     'https://x.com/YaodongDev',
   ],
-  // Home is the logo; nav shows lowercase path-style links only.
+  // Home is the logo; nav shows lowercase links, matching the footer.
   navigation: [
-    { title: '/archive', url: '/archive/' },
-    { title: '/about', url: '/about/' },
+    { title: 'archive', url: '/archive/' },
+    { title: 'about', url: '/about/' },
   ],
   // Compact footer link row: `useful links · github · x · linkedin · rss`.
   footerLinks: [

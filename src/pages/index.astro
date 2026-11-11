@@ -22,6 +22,11 @@ const description =
 >
   <main id="main-content" tabindex="-1" class="page-main--home">
     <h1 class="sr-only">Writing by Yaodong Zhao</h1>
+    <p class="container home-intro">
+      I'm <a href="/about/">Yaodong Zhao</a>, a software engineer. I build web
+      applications, though these days I mostly supervise something else
+      building them.
+    </p>
     {
       featured && (
         <section class="featured" aria-label="Latest post">
@@ -39,13 +44,6 @@ const description =
             {featured.data.excerpt && (
               <p class="featured__excerpt">{featured.data.excerpt}</p>
             )}
-            <a
-              href={`/${postSlug(featured.id)}/`}
-              class="arrow-link featured__read"
-              aria-label={`Read ${featured.data.title}`}
-            >
-              read →
-            </a>
           </div>
         </section>
       )

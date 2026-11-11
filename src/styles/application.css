@@ -42,11 +42,16 @@
 /* ==========================================================================
    Monochrome Design System
    Understated black & white: no content card, no background stripes. The one
-   accent color marks the focal point of a figure and is used nowhere else.
-   Fira Sans for body/titles, JetBrains Mono for metadata/UI chrome.
-   Light and dark are the same grayscale palette inverted.
+   accent color marks the focal point of a figure and stamps the yuwei section
+   mark, and is used nowhere else.
+   Fira Sans for text and chrome; JetBrains Mono only for data (dates, reading
+   time, figure labels, code) and the logo.
+   Light and dark are the same warm-gray palette inverted.
    ========================================================================== */
 
+/* Colors are OKLCH. The neutrals carry a faint warm tint (hue ~107) so the
+   page never sits on pure gray; each token holds its light and dark value via
+   light-dark(), which follows the root's color-scheme below. */
 :root {
   /* Fonts */
   /* "Fira Sans Fallback" (fonts.css) is Arial resized to Fira's metrics, so
@@ -55,26 +60,26 @@
   --font-body: "Fira Sans", "Fira Sans Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Light theme */
-  --color-bg: #FBFBFA;
-  --color-text: #111111;
-  --color-text-body: #2A2A26;
-  --color-text-secondary: #5A5A54;
-  --color-text-muted: #686862;
-  --color-border: #E4E4E4;
-  --color-dot: #CCCCC6;
-  --color-bg-subtle: #EFEFEA;
-  --color-btn-bg: #FFFFFF;
-  --color-code-bg: #ECECE6;
-  --color-pre-bg: #141412;
-  --color-pre-border: transparent;
-  --color-pre-text: #E5E5E0;
-  --color-accent: #C15F3C;
+  /* Palette: light, dark */
+  --color-bg: light-dark(oklch(98.8% 0.0013 106.4), oklch(19.5% 0.002 106.6));
+  --color-text: light-dark(oklch(17.8% 0.003 106.6), oklch(91.1% 0.0067 106.5));
+  --color-text-body: light-dark(oklch(28.4% 0.0071 106.8), oklch(83.4% 0.0082 106.6));
+  --color-text-secondary: light-dark(oklch(46.6% 0.0095 106.8), oklch(71% 0.01 106.7));
+  --color-text-muted: light-dark(oklch(51.5% 0.0093 106.7), oklch(64.8% 0.0102 106.7));
+  --color-border: light-dark(oklch(91.9% 0.004 106.6), oklch(28.4% 0.0036 106.6));
+  --color-dot: light-dark(oklch(84.4% 0.0082 106.6), oklch(34.7% 0.0068 106.7));
+  --color-bg-subtle: light-dark(oklch(95.1% 0.0066 106.5), oklch(26.8% 0.0036 106.6));
+  --color-btn-bg: light-dark(oklch(99.7% 0.0011 106.4), oklch(22.6% 0.0019 106.6));
+  --color-code-bg: light-dark(oklch(94.1% 0.008 106.6), oklch(26% 0.0037 106.7));
+  --color-pre-bg: light-dark(oklch(19% 0.004 106.8), oklch(22.6% 0.0019 106.6));
+  --color-pre-border: light-dark(transparent, oklch(28.4% 0.0036 106.6));
+  --color-pre-text: light-dark(oklch(92.1% 0.0067 106.5), oklch(88.1% 0.0081 106.6));
+  --color-accent: light-dark(oklch(59.7% 0.1352 39.9), oklch(67.2% 0.1308 38.8));
 
   /* Elevation */
-  --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.1);
+  --shadow-menu: 0 6px 20px light-dark(oklch(0% 0 0 / 0.1), oklch(0% 0 0 / 0.5));
 
-  /* Layout: one column for chrome and text (640px of text at 17px is ~70ch);
+  /* Layout: one column for chrome and text (640px of text at 18px is ~72ch);
      figures may widen past it to --figure-width on large screens. */
   --column: 688px;
   --gutter: 24px;
@@ -84,46 +89,7 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Dark theme — via system preference (unless manually forced light) */
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --color-bg: #151514;
-    --color-text: #E2E2DD;
-    --color-text-body: #C9C9C3;
-    --color-text-secondary: #A2A29B;
-    --color-text-muted: #8F8F88;
-    --color-border: #2A2A28;
-    --color-dot: #3A3A36;
-    --color-bg-subtle: #262624;
-    --color-btn-bg: #1C1C1B;
-    --color-code-bg: #242422;
-    --color-pre-bg: #1C1C1B;
-    --color-pre-border: #2A2A28;
-    --color-pre-text: #D8D8D2;
-    --color-accent: #D97757;
-    --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.5);
-  }
-}
-
-/* Dark theme — via manual toggle */
-:root.dark {
-  --color-bg: #151514;
-  --color-text: #E2E2DD;
-  --color-text-body: #C9C9C3;
-  --color-text-secondary: #A2A29B;
-  --color-text-muted: #8F8F88;
-  --color-border: #2A2A28;
-  --color-dot: #3A3A36;
-  --color-bg-subtle: #262624;
-  --color-btn-bg: #1C1C1B;
-  --color-code-bg: #242422;
-  --color-pre-bg: #1C1C1B;
-  --color-pre-border: #2A2A28;
-  --color-pre-text: #D8D8D2;
-  --color-accent: #D97757;
-  --shadow-menu: 0 6px 20px rgba(0, 0, 0, 0.5);
-}
-
+/* The theme follows the system unless the toggle forced .light or .dark. */
 html {
   color-scheme: light;
   scrollbar-color: var(--color-dot) var(--color-bg);
@@ -181,11 +147,10 @@ a {
   box-sizing: border-box;
 }
 
-/* Monospace "→" / "← back" style link used for read / all posts. */
+/* Small underlined "→" link used for "all posts" and the 404 actions. */
 .arrow-link {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--color-text);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -204,8 +169,7 @@ a {
   top: 12px;
   z-index: 100;
   padding: 8px 14px;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--color-text);
   background: var(--color-bg);
   border: 1px solid var(--color-border);
@@ -264,8 +228,7 @@ a {
   display: flex;
   align-items: center;
   gap: 24px;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
 }
 
 .nav-link {
@@ -364,8 +327,7 @@ a {
 }
 
 .site-footer__copy {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--color-text-muted);
   white-space: nowrap;
 }
@@ -377,8 +339,7 @@ a {
   align-items: baseline;
   column-gap: 10px;
   row-gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
 }
 
 .site-footer__links a {
@@ -413,15 +374,11 @@ a {
 }
 
 .page-main--list {
-  padding: 20px var(--gutter) 56px;
-}
-
-.featured__read {
-  margin-top: 18px;
+  padding: 48px var(--gutter) 56px;
 }
 
 .post-list__more {
-  margin-top: 24px;
+  margin-top: 40px;
 }
 
 .page-main--post {
@@ -437,14 +394,33 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   Home — featured block
+   Home — intro line and featured block
    -------------------------------------------------------------------------- */
+/* One plain sentence telling a first-time visitor whose writing this is. */
+.home-intro {
+  padding: 56px var(--gutter) 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.home-intro a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-text-muted);
+  text-underline-offset: 0.2em;
+}
+
+.home-intro a:hover {
+  text-decoration-color: var(--color-text);
+}
+
 .featured {
   border-bottom: 1px solid var(--color-border);
 }
 
 .featured__inner {
-  padding: 64px var(--gutter) 56px;
+  padding: 40px var(--gutter) 56px;
 }
 
 .featured__title {
@@ -481,18 +457,11 @@ a {
 /* --------------------------------------------------------------------------
    Home — post list
    -------------------------------------------------------------------------- */
+/* Rows are separated by space alone; the title and its excerpt sit tight. */
 .post-list {
   display: flex;
   flex-direction: column;
-}
-
-.post-row {
-  padding: 24px 0;
-  border-bottom: 1px solid var(--color-border);
-}
-
-.post-row:last-child {
-  border-bottom: none;
+  gap: 36px;
 }
 
 .post-row__head {
@@ -525,7 +494,7 @@ a {
 
 .post-row__excerpt {
   max-width: 38em;
-  margin: 6px 0 0;
+  margin: 4px 0 0;
   font-size: 0.9375rem;
   line-height: 1.6;
   color: var(--color-text-secondary);
@@ -539,16 +508,11 @@ a {
 }
 
 .post-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   margin-bottom: 20px;
 }
 
 .back-link {
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--color-text-secondary);
 }
 
@@ -566,14 +530,29 @@ a {
   color: var(--color-text);
 }
 
-/* Date, author and reading time share one line below the title. */
+/* Below the title: the date and reading time on the left, the copy-page tool
+   on the right, out of the way until the reader wants it. */
+.post-byline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-top: 16px;
+}
+
+/* Stays right-aligned when the row wraps on narrow phones, so its menu
+   (anchored to the button's right edge) opens on screen. */
+.post-byline .copy-page {
+  margin-left: auto;
+}
+
 .post-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   column-gap: 8px;
   row-gap: 4px;
-  margin-top: 16px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--color-text-muted);
@@ -597,9 +576,11 @@ a {
    Post page — prose (Tailwind Typography uses zero-specificity :where()
    selectors, so these direct rules win without !important)
    -------------------------------------------------------------------------- */
+/* Body at 18px keeps the 640px column near 72 characters a line. Headings step
+   up by ~1.25: body 18, h3 22, h2 28, title 40. */
 .prose {
   max-width: none;
-  font-size: 1.0625rem;
+  font-size: 1.125rem;
   line-height: 1.7;
   color: var(--color-text-body);
   --tw-prose-body: var(--color-text-body);
@@ -629,11 +610,11 @@ a {
 
 .prose h2 {
   font-family: var(--font-heading);
-  font-size: 1.375rem;
+  font-size: 1.75rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-  margin: 2.5em 0 0.75em;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 2em 0 0.6em;
   color: var(--color-text);
 }
 
@@ -643,11 +624,11 @@ a {
 
 .prose h3 {
   font-family: var(--font-heading);
-  font-size: 1.125rem;
+  font-size: 1.375rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  line-height: 1.4;
-  margin: 2em 0 0.6em;
+  line-height: 1.3;
+  margin: 1.75em 0 0.5em;
   color: var(--color-text);
 }
 
@@ -728,21 +709,31 @@ a {
   content: none;
 }
 
-/* Section breaks (`---` in Markdown) set as a centered dinkus. */
+/* Section breaks (`---` in Markdown) set as a yuwei, the fish-tail mark printed
+   on the center fold of woodblock books as a guide for folding the sheet. It
+   takes the accent, like a seal on the page. */
 .prose hr {
   margin: 2.75em 0;
   border: 0;
   height: auto;
-  text-align: center;
-  line-height: 1;
 }
 
 .prose hr::after {
-  content: '* * *';
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  letter-spacing: 0.5em;
-  color: var(--color-text-muted);
+  content: '';
+  display: block;
+  width: 20px;
+  height: 12px;
+  margin-inline: auto;
+  background: var(--color-accent);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 58%, 0 100%);
+  print-color-adjust: exact;
+}
+
+@media (forced-colors: active) {
+  .prose hr::after {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
 }
 
 /* Figures are framed cards: a title and subtitle, the drawing, and a caption
@@ -950,35 +941,12 @@ a {
   text-decoration-color: var(--color-text);
 }
 
-.signoff__links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 10px;
-  margin: 12px 0 0;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-}
-
-.signoff__links a {
-  color: var(--color-text-secondary);
-}
-
-.signoff__links a:hover {
-  color: var(--color-text);
-}
-
-.signoff__dot {
-  color: var(--color-dot);
-}
-
 .related {
   margin-top: 40px;
 }
 
 .related__label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--color-text-muted);
   margin-bottom: 14px;
 }
@@ -1285,7 +1253,6 @@ button {
    -------------------------------------------------------------------------- */
 .copy-page {
   position: relative;
-  font-family: var(--font-mono);
   flex-shrink: 0;
 }
 
@@ -1304,7 +1271,7 @@ button {
   align-items: center;
   gap: 6px;
   padding: 5px 10px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--color-text-secondary);
   background: transparent;
   border: none;
@@ -1354,7 +1321,7 @@ button {
   gap: 6px;
   width: 100%;
   padding: 7px 10px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   text-align: left;
   color: var(--color-text-secondary);
   background: transparent;
@@ -1398,8 +1365,8 @@ button {
 .archive-row__title:focus-visible,
 .related__title:focus-visible,
 .site-footer__links a:focus-visible,
-.signoff__links a:focus-visible,
-.signoff__text a:focus-visible {
+.signoff__text a:focus-visible,
+.home-intro a:focus-visible {
   outline: 2px solid var(--color-text);
   outline-offset: 3px;
   border-radius: 3px;
@@ -1453,8 +1420,7 @@ button {
     min-height: 44px;
   }
 
-  .site-footer__links a,
-  .signoff__links a {
+  .site-footer__links a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
